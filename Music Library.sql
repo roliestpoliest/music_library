@@ -1,6 +1,6 @@
 CREATE TABLE `users` (
   `user_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `user_role` ENUM('User', 'Artist', 'Admin') NOT NULL,
+  `user_role` ENUM('User', 'Artist', 'Admin') NOT NULL DEFAULT 'User',
   `name` VARCHAR(255) NOT NULL,
   `bio` TEXT,
   `age` INT,
@@ -14,7 +14,7 @@ CREATE TABLE `users` (
 
 CREATE TABLE `artists` (
   `user_id` BIGINT UNSIGNED NOT NULL,
-  `listens` INT,
+  `listens` INT DEFAULT 0,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_artists_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 );
@@ -34,7 +34,7 @@ CREATE TABLE `record_labels` (
 
 CREATE TABLE `albums` (
   `album_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `title` VARCHAR(255),
+  `title` VARCHAR(255) NOT NULL DEFAULT "Untitled Album",
   `format` ENUM('Album', 'Single', 'EP', 'LP', 'SP'),
   `release_date` DATE,
   `rating` INT,
@@ -46,10 +46,10 @@ CREATE TABLE `albums` (
 
 CREATE TABLE `songs` (
   `song_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `title` VARCHAR(255),
-  `audio_format` ENUM('MP3', 'M4A', 'WAV'),
-  `duration` INT,
-  `listens` INT,
+  `title` VARCHAR(255) NOT NULL DEFAULT "Untitled Song",
+  `audio_format` ENUM('MP3', 'M4A', 'WAV') NOT NULL,
+  `duration` INT DEFAULT 0,
+  `listens` INT DEFAULT 0,
   `rating` INT,
   `album_id` BIGINT UNSIGNED,
   CONSTRAINT `fk_songs_albums` FOREIGN KEY (`album_id`) REFERENCES `albums` (`album_id`)
@@ -65,7 +65,7 @@ CREATE TABLE `song_artists` (
 
 CREATE TABLE `genres` (
   `genre_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `title` VARCHAR(255),
+  `title` VARCHAR(255) NOT NULL,
   `description` TEXT
 );
 
@@ -79,23 +79,23 @@ CREATE TABLE `song_genres` (
 
 CREATE TABLE `subscription_plans` (
   `subscription_plan_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `subscription_plan_type` ENUM('Free', 'Individual', 'Student'),
+  `subscription_plan_type` ENUM('Free', 'Individual', 'Student') DEFAULT 'Free',
   `description` TEXT,
-  `term_length` INT,
-  `price` FLOAT
+  `term_length` INT DEFAULT 0,
+  `price` FLOAT DEFAULT 0
 );
 
 CREATE TABLE `playlists` (
   `playlist_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `user_id` BIGINT UNSIGNED,
-  `title` VARCHAR(255),
+  `title` VARCHAR(255) DEFAULT "Unititled Playlist",
   CONSTRAINT `fk_playlists_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`)
 );
 
 CREATE TABLE `playlist_songs` (
   `playlist_id` BIGINT UNSIGNED,
   `song_id` BIGINT UNSIGNED,
-  `order` INT,
+  `order` INT DEFAULT 1 AUTO_INCREMENT,
   PRIMARY KEY (`playlist_id`, `song_id`),
   CONSTRAINT `fk_playlist_songs_playlists` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`),
   CONSTRAINT `fk_playlist_songs_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
@@ -103,7 +103,7 @@ CREATE TABLE `playlist_songs` (
 
 CREATE TABLE `listening_histories` (
   `listening_history_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `timestamp` TIMESTAMP NOT NULL,
+  `timestamp` TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
   `user_id` BIGINT UNSIGNED,
   `song_id` BIGINT UNSIGNED,
   CONSTRAINT `fk_listening_histories_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
@@ -112,9 +112,9 @@ CREATE TABLE `listening_histories` (
 
 CREATE TABLE `transactions` (
   `transaction_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `payment_date` TIMESTAMP NOT NULL,
-  `payment_source` INT, -- Consider changing to VARCHAR if storing payment method details
-  `total` FLOAT,
+  `payment_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `payment_source` INT NOT NULL, -- Consider changing to VARCHAR if storing payment method details
+  `total` FLOAT NOT NULL,
   `user_id` BIGINT UNSIGNED,
   `subscription_plan_id` BIGINT UNSIGNED,
   CONSTRAINT `fk_transactions_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`),
