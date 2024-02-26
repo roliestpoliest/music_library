@@ -29,7 +29,7 @@ CREATE TABLE `admins` (
 CREATE TABLE `record_labels` (
   `record_label_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `name` VARCHAR(255),
-  `description` TEXT
+  `description` TEXT NOT NULL
 );
 
 CREATE TABLE `albums` (
@@ -45,7 +45,8 @@ CREATE TABLE `albums` (
 );
 
 CREATE TABLE `songs` (
-  `song_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `song_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< Updated upstream
   `title` VARCHAR(255) NOT NULL DEFAULT "Untitled Song",
   `audio_format` ENUM('MP3', 'M4A', 'WAV') NOT NULL,
   `duration` INT DEFAULT 0,
@@ -64,9 +65,14 @@ CREATE TABLE `song_artists` (
 );
 
 CREATE TABLE `genres` (
-  `genre_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `genre_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+<<<<<<< Updated upstream
   `title` VARCHAR(255) NOT NULL,
   `description` TEXT
+=======
+  `title` VARCHAR(255),
+  `description` TEXT NOT NULL
+>>>>>>> Stashed changes
 );
 
 CREATE TABLE `song_genres` (
