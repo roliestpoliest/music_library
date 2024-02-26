@@ -46,7 +46,6 @@ CREATE TABLE `albums` (
 
 CREATE TABLE `songs` (
   `song_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< Updated upstream
   `title` VARCHAR(255) NOT NULL DEFAULT "Untitled Song",
   `audio_format` ENUM('MP3', 'M4A', 'WAV') NOT NULL,
   `duration` INT DEFAULT 0,
@@ -66,13 +65,8 @@ CREATE TABLE `song_artists` (
 
 CREATE TABLE `genres` (
   `genre_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-<<<<<<< Updated upstream
-  `title` VARCHAR(255) NOT NULL,
-  `description` TEXT
-=======
   `title` VARCHAR(255),
-  `description` TEXT NOT NULL
->>>>>>> Stashed changes
+  `description` TEXT
 );
 
 CREATE TABLE `song_genres` (
