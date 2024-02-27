@@ -4,9 +4,10 @@ CREATE TABLE `accounts` (
   `user_role` ENUM('User', 'Artist', 'Admin') NOT NULL DEFAULT 'User',
   `name` VARCHAR(255) NOT NULL,
   `bio` TEXT,
-  `gender` TINYINT,
+  `gender` CHAR,
   `DOB` DATE,
   `region` VARCHAR(255),
+  `profile_picture` BLOB,
   `email` VARCHAR(255) UNIQUE NOT NULL,
   `password` VARCHAR(255) NOT NULL
 );
@@ -50,8 +51,8 @@ CREATE TABLE `albums` (
   `rating` INT,
   `artist_id` INT UNSIGNED,
   `record_label_id` INT UNSIGNED,
-  --new song keys
-  `song_id_1` INT UNSIGNED,
+  `artwork` BLOB,
+  `song_id_1` INT UNSIGNED NOT NULL,
   `song_id_2` INT UNSIGNED,
   `song_id_3` INT UNSIGNED,
   `song_id_4` INT UNSIGNED,
@@ -62,8 +63,7 @@ CREATE TABLE `albums` (
   `song_id_9` INT UNSIGNED,
   `song_id_10` INT UNSIGNED,
   CONSTRAINT `fk_albums_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`user_id`),
-  CONSTRAINT `fk_albums_record_labels` FOREIGN KEY (`record_label_id`) REFERENCES `record_labels` (`record_label_id`)
-  --new constraints
+  CONSTRAINT `fk_albums_record_labels` FOREIGN KEY (`record_label_id`) REFERENCES `record_labels` (`record_label_id`),
   CONSTRAINT `fk_albums_songs_1` FOREIGN KEY (`song_id_1`) REFERENCES `songs` (`song_id`),
   CONSTRAINT `fk_albums_songs_2` FOREIGN KEY (`song_id_2`) REFERENCES `songs` (`song_id`),
   CONSTRAINT `fk_albums_songs_3` FOREIGN KEY (`song_id_3`) REFERENCES `songs` (`song_id`),
@@ -104,8 +104,8 @@ CREATE TABLE `playlists` (
   `playlist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT UNSIGNED,
   `title` VARCHAR(255) DEFAULT "Unititled Playlist",
-  --new song keys
-  `song_id_1` INT UNSIGNED,
+  `artwork` BLOB,
+  `song_id_1` INT UNSIGNED NOT NULL,
   `song_id_2` INT UNSIGNED,
   `song_id_3` INT UNSIGNED,
   `song_id_4` INT UNSIGNED,
@@ -115,8 +115,7 @@ CREATE TABLE `playlists` (
   `song_id_8` INT UNSIGNED,
   `song_id_9` INT UNSIGNED,
   `song_id_10` INT UNSIGNED,
-  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`)
-  --new constraints
+  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`),
   CONSTRAINT `fk_playlists_songs_1` FOREIGN KEY (`song_id_1`) REFERENCES `songs` (`song_id`),
   CONSTRAINT `fk_playlists_songs_2` FOREIGN KEY (`song_id_2`) REFERENCES `songs` (`song_id`),
   CONSTRAINT `fk_playlists_songs_3` FOREIGN KEY (`song_id_3`) REFERENCES `songs` (`song_id`),
@@ -128,16 +127,6 @@ CREATE TABLE `playlists` (
   CONSTRAINT `fk_playlists_songs_9` FOREIGN KEY (`song_id_9`) REFERENCES `songs` (`song_id`),
   CONSTRAINT `fk_playlists_songs_10` FOREIGN KEY (`song_id_10`) REFERENCES `songs` (`song_id`)
 );
-
--- DROP TABLE IF EXISTS `playlist_songs`;
--- CREATE TABLE `playlist_songs` (
---   `playlist_id` INT UNSIGNED,
---   `song_id` INT UNSIGNED,
---   `order` INT,
---   PRIMARY KEY (`playlist_id`, `song_id`),
---   CONSTRAINT `fk_playlist_songs_playlists` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`),
---   CONSTRAINT `fk_playlist_songs_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
--- );
 
 DROP TABLE IF EXISTS `subscription_plans`;
 CREATE TABLE `subscription_plans` (
