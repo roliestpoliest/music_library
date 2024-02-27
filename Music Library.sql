@@ -50,8 +50,30 @@ CREATE TABLE `albums` (
   `rating` INT,
   `artist_id` INT UNSIGNED,
   `record_label_id` INT UNSIGNED,
+  --new song keys
+  `song_id_1` INT UNSIGNED,
+  `song_id_2` INT UNSIGNED,
+  `song_id_3` INT UNSIGNED,
+  `song_id_4` INT UNSIGNED,
+  `song_id_5` INT UNSIGNED,
+  `song_id_6` INT UNSIGNED,
+  `song_id_7` INT UNSIGNED,
+  `song_id_8` INT UNSIGNED,
+  `song_id_9` INT UNSIGNED,
+  `song_id_10` INT UNSIGNED,
   CONSTRAINT `fk_albums_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`user_id`),
   CONSTRAINT `fk_albums_record_labels` FOREIGN KEY (`record_label_id`) REFERENCES `record_labels` (`record_label_id`)
+  --new constraints
+  CONSTRAINT `fk_albums_songs_1` FOREIGN KEY (`song_id_1`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_2` FOREIGN KEY (`song_id_2`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_3` FOREIGN KEY (`song_id_3`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_4` FOREIGN KEY (`song_id_4`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_5` FOREIGN KEY (`song_id_5`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_6` FOREIGN KEY (`song_id_6`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_7` FOREIGN KEY (`song_id_7`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_8` FOREIGN KEY (`song_id_8`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_9` FOREIGN KEY (`song_id_9`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_albums_songs_10` FOREIGN KEY (`song_id_10`) REFERENCES `songs` (`song_id`)
 );
 
 DROP TABLE IF EXISTS `songs`;
@@ -82,7 +104,29 @@ CREATE TABLE `playlists` (
   `playlist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `user_id` INT UNSIGNED,
   `title` VARCHAR(255) DEFAULT "Unititled Playlist",
+  --new song keys
+  `song_id_1` INT UNSIGNED,
+  `song_id_2` INT UNSIGNED,
+  `song_id_3` INT UNSIGNED,
+  `song_id_4` INT UNSIGNED,
+  `song_id_5` INT UNSIGNED,
+  `song_id_6` INT UNSIGNED,
+  `song_id_7` INT UNSIGNED,
+  `song_id_8` INT UNSIGNED,
+  `song_id_9` INT UNSIGNED,
+  `song_id_10` INT UNSIGNED,
   CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`)
+  --new constraints
+  CONSTRAINT `fk_playlists_songs_1` FOREIGN KEY (`song_id_1`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_2` FOREIGN KEY (`song_id_2`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_3` FOREIGN KEY (`song_id_3`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_4` FOREIGN KEY (`song_id_4`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_5` FOREIGN KEY (`song_id_5`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_6` FOREIGN KEY (`song_id_6`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_7` FOREIGN KEY (`song_id_7`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_8` FOREIGN KEY (`song_id_8`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_9` FOREIGN KEY (`song_id_9`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_playlists_songs_10` FOREIGN KEY (`song_id_10`) REFERENCES `songs` (`song_id`)
 );
 
 -- DROP TABLE IF EXISTS `playlist_songs`;
