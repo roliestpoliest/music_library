@@ -1,37 +1,47 @@
+DROP TABLE IF EXISTS `accounts`;
 CREATE TABLE `accounts` (
   `user_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `user_role` ENUM('User', 'Artist', 'Admin') NOT NULL DEFAULT 'User',
   `name` VARCHAR(255) NOT NULL,
   `bio` TEXT,
-  `age` INT,
   `gender` TINYINT,
   `DOB` DATE,
-  `country` VARCHAR(255), -- Changed from Countries to VARCHAR
-  `region` VARCHAR(255), -- Changed from Regions to VARCHAR
+  `region` VARCHAR(255),
   `email` VARCHAR(255) UNIQUE NOT NULL,
   `password` VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE `artists` (
-  `user_id` INT UNSIGNED NOT NULL,
-  `listens` INT DEFAULT 0,
-  PRIMARY KEY (`user_id`),
-  CONSTRAINT `fk_artists_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`)
-);
-
+DROP TABLE IF EXISTS `admins`;
 CREATE TABLE `admins` (
   `user_id` INT UNSIGNED NOT NULL,
-  `projects` VARCHAR(255),
+  `audit_trail` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`user_id`),
   CONSTRAINT `fk_admins_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`)
 );
 
+DROP TABLE IF EXISTS `artists`;
+CREATE TABLE `artists` (
+  `user_id` INT UNSIGNED NOT NULL,
+  `listens` INT UNSIGNED,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_artists_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`)
+);
+
+DROP TABLE IF EXISTS `genres`;
+CREATE TABLE `genres` (
+  `genre_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255),
+  `description` TEXT
+);
+
+DROP TABLE IF EXISTS `record_labels`;
 CREATE TABLE `record_labels` (
   `record_label_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `name` VARCHAR(255),
+  `name` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL
 );
 
+DROP TABLE IF EXISTS `albums`;
 CREATE TABLE `albums` (
   `album_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `title` VARCHAR(255) NOT NULL DEFAULT "Untitled Album",
@@ -44,39 +54,48 @@ CREATE TABLE `albums` (
   CONSTRAINT `fk_albums_record_labels` FOREIGN KEY (`record_label_id`) REFERENCES `record_labels` (`record_label_id`)
 );
 
+DROP TABLE IF EXISTS `songs`;
 CREATE TABLE `songs` (
-  `song_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `song_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `title` VARCHAR(255) NOT NULL DEFAULT "Untitled Song",
   `audio_format` ENUM('MP3', 'M4A', 'WAV') NOT NULL,
-  `duration` INT DEFAULT 0,
-  `listens` INT DEFAULT 0,
+  `duration` INT,
+  `listens` INT,
   `rating` INT,
   `album_id` INT UNSIGNED,
-  CONSTRAINT `fk_songs_albums` FOREIGN KEY (`album_id`) REFERENCES `albums` (`album_id`)
+  `genre_id` INT UNSIGNED,
+  CONSTRAINT `fk_songs_albums` FOREIGN KEY (`album_id`) REFERENCES `albums` (`album_id`),
+  CONSTRAINT `fk_songs_genre` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`)
 );
 
-CREATE TABLE `song_artists` (
-  `song_artist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+DROP TABLE IF EXISTS `song_associations`;
+CREATE TABLE `song_associations` (
+  `song_association_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `song_id` INT UNSIGNED,
   `artist_id` INT UNSIGNED,
-  CONSTRAINT `fk_song_artists_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_song_artists_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`user_id`)
+  CONSTRAINT `fk_song_associations_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_song_associations_artist` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`user_id`)
 );
 
-CREATE TABLE `genres` (
-  `genre_id` BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `title` VARCHAR(255),
-  `description` TEXT
+DROP TABLE IF EXISTS `playlists`;
+CREATE TABLE `playlists` (
+  `playlist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT UNSIGNED,
+  `title` VARCHAR(255) DEFAULT "Unititled Playlist",
+  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`)
 );
 
-CREATE TABLE `song_genres` (
-  `song_genre_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `song_id` INT UNSIGNED,
-  `genre_id` INT UNSIGNED,
-  CONSTRAINT `fk_song_genres_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_song_genres_genres` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`)
-);
+-- DROP TABLE IF EXISTS `playlist_songs`;
+-- CREATE TABLE `playlist_songs` (
+--   `playlist_id` INT UNSIGNED,
+--   `song_id` INT UNSIGNED,
+--   `order` INT,
+--   PRIMARY KEY (`playlist_id`, `song_id`),
+--   CONSTRAINT `fk_playlist_songs_playlists` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`),
+--   CONSTRAINT `fk_playlist_songs_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
+-- );
 
+DROP TABLE IF EXISTS `subscription_plans`;
 CREATE TABLE `subscription_plans` (
   `subscription_plan_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `subscription_plan_type` ENUM('Free', 'Individual', 'Student') DEFAULT 'Free',
@@ -85,35 +104,11 @@ CREATE TABLE `subscription_plans` (
   `price` FLOAT DEFAULT 0
 );
 
-CREATE TABLE `playlists` (
-  `playlist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `user_id` INT UNSIGNED,
-  `title` VARCHAR(255) DEFAULT "Unititled Playlist",
-  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`)
-);
-
-CREATE TABLE `playlist_songs` (
-  `playlist_id` INT UNSIGNED,
-  `song_id` INT UNSIGNED,
-  `order` INT,
-  PRIMARY KEY (`playlist_id`, `song_id`),
-  CONSTRAINT `fk_playlist_songs_playlists` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`),
-  CONSTRAINT `fk_playlist_songs_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
-);
-
-CREATE TABLE `listening_histories` (
-  `listening_history_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `timestamp` TIMESTAMP DEFAULT NOT NULL CURRENT_TIMESTAMP,
-  `user_id` INT UNSIGNED,
-  `song_id` INT UNSIGNED,
-  CONSTRAINT `fk_listening_histories_accounts` FOREIGN KEY (`user_id`) REFERENCES `accounts` (`user_id`),
-  CONSTRAINT `fk_listening_histories_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
-);
-
+DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions` (
   `transaction_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `payment_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `payment_source` INT NOT NULL, -- Consider changing to VARCHAR if storing payment method details
+  `payment_source` VARCHAR(16) NOT NULL,
   `total` FLOAT NOT NULL,
   `user_id` INT UNSIGNED,
   `subscription_plan_id` INT UNSIGNED,
