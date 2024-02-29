@@ -88,6 +88,15 @@ CREATE TABLE `song_associations` (
   CONSTRAINT `fk_song_associations_artist` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
 );
 
+DROP TABLE IF EXISTS `song_to_album`;
+CREATE TABLE song_album (
+  `song_id` INT UNSIGNED,
+  `album_id` INT UNSIGNED,
+  PRIMARY KEY(`song_id`, `album_id`),
+  CONSTRAINT `fk_song_album_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_song_album_album` FOREIGN KEY (`album_id`) REFERENCES `albums` (`album_id`)
+);
+
 DROP TABLE IF EXISTS `liked_songs`;
 CREATE TABLE `liked_songs` (
   `account_id` INT UNSIGNED,
@@ -113,6 +122,16 @@ CREATE TABLE `playlists` (
   `title` VARCHAR(255) DEFAULT "Unititled Playlist",
   CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
 );
+
+DROP TABLE IF EXISTS `song_to_playlist`;
+CREATE TABLE song_album (
+  `song_id` INT UNSIGNED,
+  `playlist_id` INT UNSIGNED,
+  PRIMARY KEY(`song_id`, `playlist_id`),
+  CONSTRAINT `fk_song_album_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
+  CONSTRAINT `fk_song_playlist_playlist` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`)
+);
+
 
 DROP TABLE IF EXISTS `subscription_plans`;
 CREATE TABLE `subscription_plans` (
