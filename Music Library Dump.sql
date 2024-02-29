@@ -24,14 +24,14 @@ DROP TABLE IF EXISTS `accounts`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `accounts` (
   `account_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `user_role` enum('Listener','Artist','Admin') NOT NULL DEFAULT 'Listener',
+  `user_role` enum('User','Artist','Admin') NOT NULL,
   `name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `bio` text,
   `gender` char(1) DEFAULT NULL,
   `DOB` date DEFAULT NULL,
   `region` varchar(255) DEFAULT NULL,
-  `profile_picture` blob,
-  `is_student` tinyint(1) DEFAULT '0',
+  `is_student` tinyint(1) DEFAULT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`account_id`),
@@ -83,47 +83,16 @@ DROP TABLE IF EXISTS `albums`;
 CREATE TABLE `albums` (
   `album_id` int unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT 'Untitled Album',
-  `format` enum('Album','Single','EP','LP','SP') DEFAULT NULL,
+  `format` enum('Album','Single','EP','LP','SP') NOT NULL,
   `release_date` date DEFAULT NULL,
   `rating` int DEFAULT NULL,
   `artist_id` int unsigned DEFAULT NULL,
   `record_label_id` int unsigned DEFAULT NULL,
-  `artwork` blob,
-  `song_id_1` int unsigned NOT NULL,
-  `song_id_2` int unsigned DEFAULT NULL,
-  `song_id_3` int unsigned DEFAULT NULL,
-  `song_id_4` int unsigned DEFAULT NULL,
-  `song_id_5` int unsigned DEFAULT NULL,
-  `song_id_6` int unsigned DEFAULT NULL,
-  `song_id_7` int unsigned DEFAULT NULL,
-  `song_id_8` int unsigned DEFAULT NULL,
-  `song_id_9` int unsigned DEFAULT NULL,
-  `song_id_10` int unsigned DEFAULT NULL,
   PRIMARY KEY (`album_id`),
   KEY `fk_albums_artists` (`artist_id`),
   KEY `fk_albums_record_labels` (`record_label_id`),
-  KEY `fk_albums_songs_1` (`song_id_1`),
-  KEY `fk_albums_songs_2` (`song_id_2`),
-  KEY `fk_albums_songs_3` (`song_id_3`),
-  KEY `fk_albums_songs_4` (`song_id_4`),
-  KEY `fk_albums_songs_5` (`song_id_5`),
-  KEY `fk_albums_songs_6` (`song_id_6`),
-  KEY `fk_albums_songs_7` (`song_id_7`),
-  KEY `fk_albums_songs_8` (`song_id_8`),
-  KEY `fk_albums_songs_9` (`song_id_9`),
-  KEY `fk_albums_songs_10` (`song_id_10`),
   CONSTRAINT `fk_albums_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`),
   CONSTRAINT `fk_albums_record_labels` FOREIGN KEY (`record_label_id`) REFERENCES `record_labels` (`record_label_id`),
-  CONSTRAINT `fk_albums_songs_1` FOREIGN KEY (`song_id_1`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_10` FOREIGN KEY (`song_id_10`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_2` FOREIGN KEY (`song_id_2`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_3` FOREIGN KEY (`song_id_3`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_4` FOREIGN KEY (`song_id_4`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_5` FOREIGN KEY (`song_id_5`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_6` FOREIGN KEY (`song_id_6`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_7` FOREIGN KEY (`song_id_7`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_8` FOREIGN KEY (`song_id_8`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_albums_songs_9` FOREIGN KEY (`song_id_9`) REFERENCES `songs` (`song_id`),
   CONSTRAINT `albums_chk_1` CHECK (((`rating` >= 0) and (`rating` <= 5)))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -147,7 +116,6 @@ DROP TABLE IF EXISTS `artists`;
 CREATE TABLE `artists` (
   `artist_id` int unsigned NOT NULL AUTO_INCREMENT,
   `account_id` int unsigned NOT NULL,
-  `listens` int unsigned DEFAULT NULL,
   PRIMARY KEY (`artist_id`),
   KEY `fk_artists_accounts` (`account_id`),
   CONSTRAINT `fk_artists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`)
@@ -174,12 +142,11 @@ CREATE TABLE `events` (
   `event_id` int unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
   `description` text,
-  `date` date DEFAULT NULL,
-  `start_time` time DEFAULT NULL,
-  `end_time` time DEFAULT NULL,
-  `region` varchar(255) DEFAULT NULL,
-  `artist_id` int unsigned DEFAULT NULL,
-  `artwork` blob,
+  `date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `region` varchar(255) NOT NULL,
+  `artist_id` int unsigned NOT NULL,
   PRIMARY KEY (`event_id`),
   KEY `fk_events_artists` (`artist_id`),
   CONSTRAINT `fk_events_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
@@ -193,6 +160,32 @@ CREATE TABLE `events` (
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `followed_artists`
+--
+
+DROP TABLE IF EXISTS `followed_artists`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `followed_artists` (
+  `account_id` int unsigned NOT NULL,
+  `artist_id` int unsigned NOT NULL,
+  PRIMARY KEY (`account_id`,`artist_id`),
+  KEY `fk_followed_artists_artists` (`artist_id`),
+  CONSTRAINT `fk_followed_artists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
+  CONSTRAINT `fk_followed_artists_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `followed_artists`
+--
+
+LOCK TABLES `followed_artists` WRITE;
+/*!40000 ALTER TABLE `followed_artists` DISABLE KEYS */;
+/*!40000 ALTER TABLE `followed_artists` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -220,62 +213,6 @@ LOCK TABLES `genres` WRITE;
 UNLOCK TABLES;
 
 --
--- Table structure for table `liked_artists`
---
-
-DROP TABLE IF EXISTS `liked_artists`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `liked_artists` (
-  `liked_artist_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `account_id` int unsigned DEFAULT NULL,
-  `artist_id` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`liked_artist_id`),
-  KEY `fk_liked_artists_accounts` (`account_id`),
-  KEY `fk_liked_artists_artists` (`artist_id`),
-  CONSTRAINT `fk_liked_artists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
-  CONSTRAINT `fk_liked_artists_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`account_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liked_artists`
---
-
-LOCK TABLES `liked_artists` WRITE;
-/*!40000 ALTER TABLE `liked_artists` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liked_artists` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `liked_songs`
---
-
-DROP TABLE IF EXISTS `liked_songs`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `liked_songs` (
-  `liked_song_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `account_id` int unsigned DEFAULT NULL,
-  `song_id` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`liked_song_id`),
-  KEY `fk_liked_songs_accounts` (`account_id`),
-  KEY `fk_liked_songs_songs` (`song_id`),
-  CONSTRAINT `fk_liked_songs_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
-  CONSTRAINT `fk_liked_songs_songs` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liked_songs`
---
-
-LOCK TABLES `liked_songs` WRITE;
-/*!40000 ALTER TABLE `liked_songs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liked_songs` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `playlists`
 --
 
@@ -286,40 +223,9 @@ CREATE TABLE `playlists` (
   `playlist_id` int unsigned NOT NULL AUTO_INCREMENT,
   `account_id` int unsigned DEFAULT NULL,
   `title` varchar(255) DEFAULT 'Unititled Playlist',
-  `artwork` blob,
-  `song_id_1` int unsigned NOT NULL,
-  `song_id_2` int unsigned DEFAULT NULL,
-  `song_id_3` int unsigned DEFAULT NULL,
-  `song_id_4` int unsigned DEFAULT NULL,
-  `song_id_5` int unsigned DEFAULT NULL,
-  `song_id_6` int unsigned DEFAULT NULL,
-  `song_id_7` int unsigned DEFAULT NULL,
-  `song_id_8` int unsigned DEFAULT NULL,
-  `song_id_9` int unsigned DEFAULT NULL,
-  `song_id_10` int unsigned DEFAULT NULL,
   PRIMARY KEY (`playlist_id`),
   KEY `fk_playlists_accounts` (`account_id`),
-  KEY `fk_playlists_songs_1` (`song_id_1`),
-  KEY `fk_playlists_songs_2` (`song_id_2`),
-  KEY `fk_playlists_songs_3` (`song_id_3`),
-  KEY `fk_playlists_songs_4` (`song_id_4`),
-  KEY `fk_playlists_songs_5` (`song_id_5`),
-  KEY `fk_playlists_songs_6` (`song_id_6`),
-  KEY `fk_playlists_songs_7` (`song_id_7`),
-  KEY `fk_playlists_songs_8` (`song_id_8`),
-  KEY `fk_playlists_songs_9` (`song_id_9`),
-  KEY `fk_playlists_songs_10` (`song_id_10`),
-  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
-  CONSTRAINT `fk_playlists_songs_1` FOREIGN KEY (`song_id_1`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_10` FOREIGN KEY (`song_id_10`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_2` FOREIGN KEY (`song_id_2`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_3` FOREIGN KEY (`song_id_3`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_4` FOREIGN KEY (`song_id_4`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_5` FOREIGN KEY (`song_id_5`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_6` FOREIGN KEY (`song_id_6`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_7` FOREIGN KEY (`song_id_7`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_8` FOREIGN KEY (`song_id_8`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_playlists_songs_9` FOREIGN KEY (`song_id_9`) REFERENCES `songs` (`song_id`)
+  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -341,7 +247,7 @@ DROP TABLE IF EXISTS `record_labels`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `record_labels` (
   `record_label_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   PRIMARY KEY (`record_label_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -364,11 +270,9 @@ DROP TABLE IF EXISTS `song_associations`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `song_associations` (
-  `song_association_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `song_id` int unsigned DEFAULT NULL,
-  `artist_id` int unsigned DEFAULT NULL,
-  PRIMARY KEY (`song_association_id`),
-  KEY `fk_song_associations_song` (`song_id`),
+  `song_id` int unsigned NOT NULL,
+  `artist_id` int unsigned NOT NULL,
+  PRIMARY KEY (`song_id`,`artist_id`),
   KEY `fk_song_associations_artist` (`artist_id`),
   CONSTRAINT `fk_song_associations_artist` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`),
   CONSTRAINT `fk_song_associations_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
@@ -394,8 +298,6 @@ DROP TABLE IF EXISTS `songs`;
 CREATE TABLE `songs` (
   `song_id` int unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT 'Untitled Song',
-  `audio_format` enum('MP3','M4A','WAV') NOT NULL,
-  `audio_file` blob NOT NULL,
   `duration` int DEFAULT NULL,
   `listens` int DEFAULT NULL,
   `rating` int DEFAULT NULL,
@@ -417,6 +319,58 @@ LOCK TABLES `songs` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `songs_to_album`
+--
+
+DROP TABLE IF EXISTS `songs_to_album`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `songs_to_album` (
+  `song_id` int unsigned NOT NULL,
+  `album_id` int unsigned NOT NULL,
+  PRIMARY KEY (`song_id`,`album_id`),
+  KEY `fk_songs_to_album_album` (`album_id`),
+  CONSTRAINT `fk_songs_to_album_album` FOREIGN KEY (`album_id`) REFERENCES `albums` (`album_id`),
+  CONSTRAINT `fk_songs_to_album_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `songs_to_album`
+--
+
+LOCK TABLES `songs_to_album` WRITE;
+/*!40000 ALTER TABLE `songs_to_album` DISABLE KEYS */;
+/*!40000 ALTER TABLE `songs_to_album` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `songs_to_playlist`
+--
+
+DROP TABLE IF EXISTS `songs_to_playlist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `songs_to_playlist` (
+  `song_id` int unsigned NOT NULL,
+  `playlist_id` int unsigned NOT NULL,
+  PRIMARY KEY (`song_id`,`playlist_id`),
+  KEY `fk_songs_to_playlist_playlist` (`playlist_id`),
+  CONSTRAINT `fk_songs_to_playlist_playlist` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`),
+  CONSTRAINT `fk_songs_to_playlist_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `songs_to_playlist`
+--
+
+LOCK TABLES `songs_to_playlist` WRITE;
+/*!40000 ALTER TABLE `songs_to_playlist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `songs_to_playlist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `subscription_plans`
 --
 
@@ -425,9 +379,9 @@ DROP TABLE IF EXISTS `subscription_plans`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `subscription_plans` (
   `subscription_plan_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `subscription_plan_type` enum('Free','Individual','Student') DEFAULT 'Free',
+  `subscription_plan_type` enum('Free','Individual','Student') NOT NULL,
   `description` text,
-  `term_length` int NOT NULL,
+  `term_days_length` int NOT NULL,
   `price` float NOT NULL,
   PRIMARY KEY (`subscription_plan_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -443,6 +397,36 @@ LOCK TABLES `subscription_plans` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `subscriptions`
+--
+
+DROP TABLE IF EXISTS `subscriptions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `subscriptions` (
+  `subscription_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `start_date` timestamp NOT NULL,
+  `end_date` timestamp NOT NULL,
+  `account_id` int unsigned DEFAULT NULL,
+  `subscription_plan_id` int unsigned DEFAULT NULL,
+  PRIMARY KEY (`subscription_id`),
+  KEY `fk_subscriptions_accounts` (`account_id`),
+  KEY `fk_subscriptions_subscription_plans` (`subscription_plan_id`),
+  CONSTRAINT `fk_subscriptions_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
+  CONSTRAINT `fk_subscriptions_subscription_plans` FOREIGN KEY (`subscription_plan_id`) REFERENCES `subscription_plans` (`subscription_plan_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subscriptions`
+--
+
+LOCK TABLES `subscriptions` WRITE;
+/*!40000 ALTER TABLE `subscriptions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `subscriptions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `transactions`
 --
 
@@ -451,7 +435,7 @@ DROP TABLE IF EXISTS `transactions`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `transactions` (
   `transaction_id` int unsigned NOT NULL AUTO_INCREMENT,
-  `payment_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `payment_date` timestamp NOT NULL,
   `payment_source` varchar(16) NOT NULL,
   `total` float NOT NULL,
   `account_id` int unsigned DEFAULT NULL,
@@ -482,4 +466,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-02-27 23:47:18
+-- Dump completed on 2024-02-29 17:16:43
