@@ -54,19 +54,6 @@ CREATE TABLE `record_labels` (
   `description` TEXT NOT NULL
 );
 
-DROP TABLE IF EXISTS `albums`;
-CREATE TABLE `albums` (
-  `album_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  `title` VARCHAR(255) DEFAULT "Untitled Album",
-  `format` ENUM('Album', 'Single', 'EP', 'LP', 'SP') NOT NULL,
-  `release_date` DATE,
-  `rating` INT CHECK (rating >= 0 AND rating <= 5),
-  `artist_id` INT UNSIGNED,
-  `record_label_id` INT UNSIGNED,
-  CONSTRAINT `fk_albums_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`),
-  CONSTRAINT `fk_albums_record_labels` FOREIGN KEY (`record_label_id`) REFERENCES `record_labels` (`record_label_id`)
-);
-
 DROP TABLE IF EXISTS `songs`;
 CREATE TABLE `songs` (
   `song_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -78,6 +65,29 @@ CREATE TABLE `songs` (
   CONSTRAINT `fk_songs_genre` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`)
 );
 
+DROP TABLE IF EXISTS `songs_in_album`;
+CREATE TABLE `songs_in_album` (
+  `songs_in_album_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `order` INT UNSIGNED UNIQUE,
+  `song_id` INT UNSIGNED,
+  CONSTRAINT `fk_songs_in_album_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
+);
+
+DROP TABLE IF EXISTS `albums`;
+CREATE TABLE `albums` (
+  `album_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(255) DEFAULT "Untitled Album",
+  `format` ENUM('Album', 'Single', 'EP', 'LP', 'SP') NOT NULL,
+  `release_date` DATE,
+  `rating` INT CHECK (rating >= 0 AND rating <= 5),
+  `artist_id` INT UNSIGNED,
+  `record_label_id` INT UNSIGNED,
+  `list_of_songs` INT UNSIGNED,
+  CONSTRAINT `fk_albums_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`),
+  CONSTRAINT `fk_albums_record_labels` FOREIGN KEY (`record_label_id`) REFERENCES `record_labels` (`record_label_id`),
+  CONSTRAINT `fk_albums_songs_in_album` FOREIGN KEY (`list_of_songs`) REFERENCES `songs_in_album` (`songs_in_album_id`)
+);
+
 DROP TABLE IF EXISTS `song_associations`;
 CREATE TABLE `song_associations` (
   `song_id` INT UNSIGNED,
@@ -87,14 +97,14 @@ CREATE TABLE `song_associations` (
   CONSTRAINT `fk_song_associations_artist` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
 );
 
-DROP TABLE IF EXISTS `songs_to_album`;
-CREATE TABLE `songs_to_album` (
-  `song_id` INT UNSIGNED,
-  `album_id` INT UNSIGNED,
-  PRIMARY KEY(`song_id`, `album_id`),
-  CONSTRAINT `fk_songs_to_album_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_songs_to_album_album` FOREIGN KEY (`album_id`) REFERENCES `albums` (`album_id`)
-);
+-- DROP TABLE IF EXISTS `songs_in_album`;
+-- CREATE TABLE `songs_in_album` (
+--   `song_id` INT UNSIGNED,
+--   `album_id` INT UNSIGNED,
+--   PRIMARY KEY(`song_id`, `album_id`),
+--   CONSTRAINT `fk_songs_in_album_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
+--   CONSTRAINT `fk_songs_in_album_album` FOREIGN KEY (`album_id`) REFERENCES `albums` (`album_id`)
+-- );
 
 DROP TABLE IF EXISTS `followed_artists`;
 CREATE TABLE `followed_artists` (
@@ -105,22 +115,32 @@ CREATE TABLE `followed_artists` (
   CONSTRAINT `fk_followed_artists_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`account_id`)
 );
 
+DROP TABLE IF EXISTS `songs_in_playlist`;
+CREATE TABLE `songs_in_playlist` (
+  `songs_in_playlist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `order` INT UNSIGNED UNIQUE,
+  `song_id` INT UNSIGNED,
+  CONSTRAINT `fk_songs_in_playlist_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`)
+);
+
 DROP TABLE IF EXISTS `playlists`;
 CREATE TABLE `playlists` (
   `playlist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   `account_id` INT UNSIGNED,
   `title` VARCHAR(255) DEFAULT "Unititled Playlist",
-  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`)
+  `list_of_songs` INT UNSIGNED,
+  CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`),
+  CONSTRAINT `fk_playlists_songs_in_playlist` FOREIGN KEY (`list_of_songs`) REFERENCES `songs_in_playlist` (`songs_in_playlist_id`)
 );
 
-DROP TABLE IF EXISTS `songs_to_playlist`;
-CREATE TABLE `songs_to_playlist` (
-  `song_id` INT UNSIGNED,
-  `playlist_id` INT UNSIGNED,
-  PRIMARY KEY(`song_id`, `playlist_id`),
-  CONSTRAINT `fk_songs_to_playlist_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
-  CONSTRAINT `fk_songs_to_playlist_playlist` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`)
-);
+-- DROP TABLE IF EXISTS `songs_in_playlist`;
+-- CREATE TABLE `songs_in_playlist` (
+--   `song_id` INT UNSIGNED,
+--   `playlist_id` INT UNSIGNED,
+--   PRIMARY KEY(`song_id`, `playlist_id`),
+--   CONSTRAINT `fk_songs_in_playlist_song` FOREIGN KEY (`song_id`) REFERENCES `songs` (`song_id`),
+--   CONSTRAINT `fk_songs_in_playlist_playlist` FOREIGN KEY (`playlist_id`) REFERENCES `playlists` (`playlist_id`)
+-- );
 
 DROP TABLE IF EXISTS `subscription_plans`;
 CREATE TABLE `subscription_plans` (
