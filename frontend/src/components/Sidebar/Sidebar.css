@@ -1,0 +1,21 @@
+.sidebar {
+  width: 15%;
+  min-width: 13em;
+  height: 100vh;
+  background-color: #282727;
+  color: white;
+  display: flex;
+  justify-content: left;
+}
+
+.header {
+  padding: 15px;
+  color: white;
+  font-weight: bold;
+  display: flex;
+  justify-content: left;
+}
+
+.white-icon {
+  color: white;
+}
