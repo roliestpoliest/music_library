@@ -1,10 +1,10 @@
 .al-card {
   width: 14rem;
   margin: 1rem;
-  background-color: #AF9E76;
+  background-color: #af9e76;
   display: flex;
   flex-direction: column;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   box-sizing: border-box;
   margin: 1.5em;
 }
@@ -12,21 +12,21 @@
 .album-image {
   aspect-ratio: 1/1;
   width: 90%;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 }
 
-.al-card-image{
+.al-card-image {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: .75em 0;
+  padding: 0.75em 0;
 }
 
 .al-card-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 .75em .75em .75em;
+  padding: 0 0.75em 0.75em 0.75em;
 }
 
 .al-album-title {
@@ -35,6 +35,6 @@
 }
 
 .al-artist-name {
-  padding: .25em 0;
+  padding: 0.25em 0;
   font-size: 1em;
 }

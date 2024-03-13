@@ -1,7 +1,7 @@
 .art-card {
   width: 14rem;
   margin: 1rem;
-  background-color: #AF9E76;
+  background-color: #af9e76;
   display: flex;
   flex-direction: column;
   border-radius: 15%;
@@ -15,22 +15,22 @@
   border-radius: 50%;
 }
 
-.art-card-image{
+.art-card-image {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: .75em 0;
+  padding: 0.75em 0;
 }
 
 .art-card-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 .75em .75em .75em;
+  padding: 0 0.75em 0.75em 0.75em;
 }
 
 .art-artist-name {
   font-size: 1.25em;
   font-weight: bold;
-  padding: .25em
+  padding: 0.25em;
 }
