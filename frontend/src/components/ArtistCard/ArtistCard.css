@@ -1,40 +1,36 @@
-.al-card {
+.art-card {
   width: 14rem;
   margin: 1rem;
   background-color: #AF9E76;
   display: flex;
   flex-direction: column;
-  border-radius: .5rem;
+  border-radius: 15%;
   box-sizing: border-box;
   margin: 1.5em;
 }
 
-.album-image {
+.artist-image {
   aspect-ratio: 1/1;
   width: 90%;
-  border-radius: .25rem;
+  border-radius: 50%;
 }
 
-.al-card-image{
+.art-card-image{
   display: flex;
   justify-content: center;
   align-items: center;
   padding: .75em 0;
 }
 
-.al-card-content {
+.art-card-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: 0 .75em .75em .75em;
 }
 
-.al-album-title {
+.art-artist-name {
   font-size: 1.25em;
   font-weight: bold;
-}
-
-.al-artist-name {
-  padding: .25em 0;
-  font-size: 1em;
+  padding: .25em
 }

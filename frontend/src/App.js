@@ -1,8 +1,9 @@
+import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
 import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
 import AlbumCard from "./components/AlbumCard/AlbumCard";
-import "./App.css";
+import ArtistCard from "./components/ArtistCard/ArtistCard";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <AlbumCard />
               <AlbumCard />
               <AlbumCard />
+              <ArtistCard />
             </div>
           </div>
         </div>
