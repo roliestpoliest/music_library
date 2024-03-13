@@ -1,16 +1,29 @@
+import "./App.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
 import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
-import "./Home.css";
+import AlbumCard from "./components/AlbumCard/AlbumCard";
+import ArtistCard from "./components/ArtistCard/ArtistCard";
 
-function Home() {
+function App() {
   return (
     <div className="App">
       <div className="body">
         <Sidebar />
         <div className="content">
           <Navbar />
-          <div className="display">rest of website...</div>
+          <div className="display">
+            rest of website...
+            <div className="cards">
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <ArtistCard />
+            </div>
+          </div>
         </div>
       </div>
       <MusicPlayer />
@@ -18,4 +31,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default App;
