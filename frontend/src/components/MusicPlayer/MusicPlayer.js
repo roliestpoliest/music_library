@@ -1,7 +1,7 @@
 import React from "react";
 import "./MusicPlayer.css";
 import MusicControls from "./MusicControls/MusicControls";
-import CurrentlyPlaying from "./MusicControls/CurrentlyPlaying/CurrentlyPlaying";
+import CurrentlyPlaying from "./CurrentlyPlaying/CurrentlyPlaying";
 
 export default function MusicPlayer() {
   return (
