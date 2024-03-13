@@ -1,6 +1,7 @@
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
 import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
+import AlbumCard from "./components/AlbumCard/AlbumCard";
 import "./App.css";
 
 function App() {
@@ -10,7 +11,17 @@ function App() {
         <Sidebar />
         <div className="content">
           <Navbar />
-          <div className="display">rest of website...</div>
+          <div className="display">
+            rest of website...
+            <div className="cards">
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+            </div>
+          </div>
         </div>
       </div>
       <MusicPlayer />

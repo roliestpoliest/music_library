@@ -1,8 +1,9 @@
 .MusicPlayer {
   width: 100vw;
   display: flex;
-  bottom: 0;
   justify-content: space-between;
   padding: 1em;
   box-sizing: border-box;
+  /* position: sticky; */
+  bottom: 0;
 }

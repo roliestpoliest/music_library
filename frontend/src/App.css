@@ -6,6 +6,8 @@
   box-sizing: border-box;
   background-color: #000000;
   color: white;
+  /* overflow-y: hidden; */
+  /* filter: blur(npx); */
 }
 
 .content {
@@ -27,4 +29,11 @@
   padding: 1em;
   border-radius: .5rem;
   margin-right: 1.5em;
+  /* overflow-y: scroll; */
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
 }
