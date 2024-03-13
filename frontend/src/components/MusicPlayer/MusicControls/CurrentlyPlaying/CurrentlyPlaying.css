@@ -1,0 +1,21 @@
+.container {
+    left: 0;
+    display: flex;
+    flex-direction: row;
+}
+.display-image {
+    aspect-ratio: 1/1;
+    height: 2.5em;
+    border-radius: 0.25rem;
+    margin-right: 1.25em;
+}
+
+.display-title{
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.display-name {
+    font-size: 0.75em;
+    padding: 0.5em 0;
+}
