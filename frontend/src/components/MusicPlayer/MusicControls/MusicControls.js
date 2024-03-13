@@ -5,6 +5,7 @@ import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
 
+
 function MusicControls() {
   const [isPlaying, setIsPlaying] = useState(false);
 
