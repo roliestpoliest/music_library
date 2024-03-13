@@ -1,4 +1,30 @@
 .App {
-  text-align: center;
+  text-align: left;
   display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #000000;
+  color: white;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.body {
+  display: flex;
+  flex-grow: 1;
+}
+
+.display {
+  /* background-color: #121212; */
+  background-color: white;
+  color: black;
+  flex-grow: 1;
+  padding: 1em;
+  border-radius: .5rem;
+  margin-right: 1.5em;
 }

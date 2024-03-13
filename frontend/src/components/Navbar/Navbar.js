@@ -23,7 +23,7 @@ export default function Navbar() {
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <div className="navbar-item"> Account</div>
+        <div className="navbar-item">Account</div>
       </Button>
       <Menu
         id="basic-menu"
@@ -38,30 +38,30 @@ export default function Navbar() {
         <MenuItem onClick={handleClose}>My account</MenuItem>
         <MenuItem onClick={handleClose}>Logout</MenuItem>
       </Menu>
-
-      {/* <Button
-        className="navbar-item"
-        id="basic-button"
-        aria-controls={open ? "basic-menu" : undefined}
-        aria-haspopup="true"
-        aria-expanded={open ? "true" : undefined}
-        onClick={handleClick}
-      >
-        Premium
-      </Button>
-      <Menu
-        id="basic-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        MenuListProps={{
-          "aria-labelledby": "basic-button",
-        }}
-      >
-        <MenuItem onClick={handleClose}>My Subscriptions</MenuItem>
-        <MenuItem onClick={handleClose}>Subscription Plans</MenuItem>
-        <MenuItem onClick={handleClose}>Billing</MenuItem>
-      </Menu> */}
     </div>
   );
 }
+
+// {/* <Button
+//   className="navbar-item"
+//   id="basic-button"
+//   aria-controls={open ? "basic-menu" : undefined}
+//   aria-haspopup="true"
+//   aria-expanded={open ? "true" : undefined}
+//   onClick={handleClick}
+// >
+//   Premium
+// </Button>
+// <Menu
+//   id="basic-menu"
+//   anchorEl={anchorEl}
+//   open={open}
+//   onClose={handleClose}
+//   MenuListProps={{
+//     "aria-labelledby": "basic-button",
+//   }}
+// >
+//   <MenuItem onClick={handleClose}>My Subscriptions</MenuItem>
+//   <MenuItem onClick={handleClose}>Subscription Plans</MenuItem>
+//   <MenuItem onClick={handleClose}>Billing</MenuItem>
+// </Menu> */}
