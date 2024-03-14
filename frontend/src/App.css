@@ -31,23 +31,32 @@ body{
   background-color: red;
   width: 40%;
   padding: 15px 20px;
-  margin: 8px 0;
+  margin: 8px;
   box-sizing: border-box;
   border: 2px solid red;
-  margin-bottom: 20px;
+  margin-bottom:20px;
 }
-.input1{
-  margin-bottom: 20px;
-  min-height: 75vh;
+.space{
+  line-height: 1px;
 }
 .password{
   color: white;
   background-color: red;
   width: 40%;
   padding: 15px 20px;
-  margin: 4px 0;
+  margin: 8px;
   box-sizing: border-box;
   border: 2px solid red;
+  margin-bottom: 20px;
+}
+.forgotPassword{
+  color:white;
+  background-color: black;
+  margin-bottom: 20px;
+}
+.newAccount{
+  color:white;
+  background-color: black;
   margin-bottom: 20px;
 }
 ::placeholder{
