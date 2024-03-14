@@ -1,51 +1,34 @@
-import React, {useState} from 'react';
-import './App.css';
-// <li><a href = '#'>Create new account </a></li>
-//import './logintest.css';
-//<p> Username: </p>
-//<p> Password: </p>
-//<button onClick = {clickLogin}> Login </button>
-/*<button className = "forgotPassword" onClick = {forgotPassword}> Forgot Password? </button>
-      <button className = "newAccount" onClick = {newAccount}> New Account? </button> */
-function App() {
+import "./App.css";
+import Sidebar from "./components/Sidebar/Sidebar";
+import Navbar from "./components/Navbar/Navbar";
+import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
+import AlbumCard from "./components/AlbumCard/AlbumCard";
+import ArtistCard from "./components/ArtistCard/ArtistCard";
 
-    const [name, setName] = useState("")
-    const [password,setPassword] = useState("")
-    function handleNameChange(event)
-    {
-      setName(event.target.value);
-    }
-    function handlePasswordChange(event)
-    {
-      setPassword(event.target.value)
-    }
-    /*function clickLogin()
-    {
-      alert("Logging to home page")
-    } */
-    function forgotPassword()
-    {
-      alert("Heading to forgot password page")
-    }
-    function newAccount()
-    {
-      alert("Heading to new account page")
-    } 
-    return (
-    <div>
-      <div className = 'title'>
-        <p> DisCoogs </p>
+function App() {
+  return (
+    <div className="App">
+      <div className="body">
+        <Sidebar />
+        <div className="content">
+          <Navbar />
+          <div className="display">
+            rest of website...
+            <div className="cards">
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <AlbumCard />
+              <ArtistCard />
+            </div>
+          </div>
+        </div>
       </div>
-      <input className = 'username' value = {name} onChange = {handleNameChange} placeholder = "Username" />
-      <div className = 'space'>
-      </div>
-      <input className = "password" value1 = {password} onChange = {handlePasswordChange} placeholder = "Password"/>
-      <div className= 'space'>
-      </div>
-      <button className = "forgotPassword" onClick = {forgotPassword}> Forgot Password? </button>
-      <div className = 'space'></div>
-      <button className = "newAccount" onClick = {newAccount}> New Account? </button>
+      <MusicPlayer />
     </div>
   );
 }
+
 export default App;
