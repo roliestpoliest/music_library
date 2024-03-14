@@ -1,0 +1,17 @@
+.navbar {
+  height: 2em;
+  padding: .5em 0; 
+  display: flex;
+  flex-direction: row-reverse;
+  /* top: 0; */
+  /* position: sticky; */
+}
+
+.navbar-item {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-right: 1em;
+}
+
