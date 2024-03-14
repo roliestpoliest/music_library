@@ -13,7 +13,6 @@ function App() {
         <div className="content">
           <Navbar />
           <div className="display">
-            rest of website...
             <div className="cards">
               <AlbumCard />
               <AlbumCard />
