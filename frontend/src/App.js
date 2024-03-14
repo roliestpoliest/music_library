@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import './App.css';
 // <li><a href = '#'>Create new account </a></li>
 //import './logintest.css';
+//<p> Username: </p>
+//<p> Password: </p>
 function App() {
 
     const [name, setName] = useState("Username")
@@ -23,11 +25,8 @@ function App() {
       <div className = 'title'>
         <p> DisCoogs </p>
       </div>
-      <p> Username: </p>
-      <input value = {name} onChange = {handleNameChange}/>
-      <p> Password: </p>
-      <input password = {password} onChange = {handlePasswordChange}/>
-      <p></p>
+      <input className = 'username col-xs-3' value = {name} onChange = {handleNameChange} placeholder = "Username" />
+      <input className = "password col-xs-4 col-xs-offset-2" value1 = {password} onChange = {handlePasswordChange} placeholder = "Password"/>
       <button onClick = {clickLogin}> Login </button>
     </div>
   );
