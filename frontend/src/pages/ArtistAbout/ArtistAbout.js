@@ -1,13 +1,12 @@
+import React from 'react'
 import "./ArtistAbout.css";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Navbar from "./components/Navbar/Navbar";
-import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
-import AlbumCard from "./components/AlbumCard/AlbumCard";
-import ArtistCard from "./components/ArtistCard/ArtistCard";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Navbar from "../../components/Navbar/Navbar";
+import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
 
-function App() {
+export default function ArtistAbout() {
   return (
-    <div className="App">
+    <div className="ArtistAbout">
       <div className="body">
         <Sidebar />
         <div className="content">
@@ -21,5 +20,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

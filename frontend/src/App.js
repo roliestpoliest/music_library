@@ -8,7 +8,6 @@ import ArtistHome from "./pages/ArtistHome/ArtistHome";
 import CreateUser from "./pages/CreateUser/CreateUser";
 import Login from "./pages/Login/Login";
 
-
 function App() {
   return (
     <div>

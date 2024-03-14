@@ -5,7 +5,7 @@ import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
 import AlbumCard from "../../components/AlbumCard/AlbumCard";
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
 
-function Home() {
+export default function Home() {
   return (
     <div className="Home">
       <div className="body">
@@ -52,5 +52,3 @@ function Home() {
     </div>
   );
 }
-
-export default Home;
