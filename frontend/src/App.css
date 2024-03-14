@@ -1,19 +1,16 @@
-.app{
-  text-align: center;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  box-sizing: border-box;
-  background-color: red;
-  color: white;
-}
+
+
 body{
   text-align: center;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
   box-sizing: border-box;
-  background-color: red;
+  background-color: black;
   color: white;
-
+}
+.title{
+  text-align: center;
+  color: white;
+  min-height: 25vh;
 }

@@ -4,8 +4,8 @@ import './App.css';
 //import './logintest.css';
 function App() {
 
-    const [name, setName] = useState("")
-    const [password,setPassword] = useState("")
+    const [name, setName] = useState("Username")
+    const [password,setPassword] = useState("Password")
     function handleNameChange(event)
     {
       setName(event.target.value);
@@ -19,8 +19,10 @@ function App() {
       alert("Logging to home page")
     }
     return (
-    <div classname = "logindemo">
-      <p> DisCoogs </p>
+    <div>
+      <div className = 'title'>
+        <p> DisCoogs </p>
+      </div>
       <p> Username: </p>
       <input value = {name} onChange = {handleNameChange}/>
       <p> Password: </p>
