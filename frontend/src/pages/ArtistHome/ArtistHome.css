@@ -2,12 +2,11 @@
     text-align: left;
     display: flex;
     min-height: 100vh;
+    overflow-y: hidden;
     flex-direction: column;
     box-sizing: border-box;
     background-color: #000000;
     color: white;
-    /* overflow-y: hidden; */
-    /* filter: blur(npx); */
   }
   
   .content {

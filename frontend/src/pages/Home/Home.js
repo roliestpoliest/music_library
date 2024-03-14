@@ -13,13 +13,36 @@ function Home() {
         <div className="content">
           <Navbar />
           <div className="display">
+
+            {/* <ScrollArea.Root>
+              <ScrollArea.Viewport>
+                <div>
+                  Your content here
+                  <div className="cards">
+                    <AlbumCard />
+                    <AlbumCard />
+                    <AlbumCard />
+                    <AlbumCard />
+                    <AlbumCard />
+                    <AlbumCard />
+                    <ArtistCard />
+                  </div>
+                </div>
+              </ScrollArea.Viewport>
+              <ScrollArea.Scrollbar orientation="vertical">
+                <ScrollArea.Thumb />
+              </ScrollArea.Scrollbar>
+              <ScrollArea.Scrollbar>
+                <ScrollArea.Thumb />
+              </ScrollArea.Scrollbar>
+              <ScrollArea.Corner />
+            </ScrollArea.Root> */}
+
             <div className="cards">
               <AlbumCard />
               <AlbumCard />
               <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
+              <ArtistCard />
               <ArtistCard />
             </div>
           </div>

@@ -1,4 +1,4 @@
-import "./Artist-Page.css";
+import "./ArtistAbout.css";
 import Sidebar from "./components/Sidebar/Sidebar";
 import Navbar from "./components/Navbar/Navbar";
 import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
