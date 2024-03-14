@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
-//import './App.css';
+import './App.css';
 // <li><a href = '#'>Create new account </a></li>
-import './logintest.css';
+//import './logintest.css';
 function App() {
 
     const [name, setName] = useState("")
