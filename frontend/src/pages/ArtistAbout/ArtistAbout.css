@@ -1,4 +1,4 @@
-.Home {
+.ArtistAbout {
   text-align: left;
   display: flex;
   min-height: 100vh;
@@ -6,7 +6,8 @@
   box-sizing: border-box;
   background-color: #000000;
   color: white;
-  overflow: hidden;
+  /* overflow-y: hidden; */
+  /* filter: blur(npx); */
 }
 
 .content {
@@ -21,13 +22,14 @@
 }
 
 .display {
+  /* background-color: #121212; */
   background-color: white;
   color: black;
   flex-grow: 1;
   padding: 1em;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   margin-right: 1.5em;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .cards {

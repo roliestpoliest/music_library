@@ -1,32 +1,24 @@
 import "./App.css";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Navbar from "./components/Navbar/Navbar";
-import MusicPlayer from "./components/MusicPlayer/MusicPlayer";
-import AlbumCard from "./components/AlbumCard/AlbumCard";
-import ArtistCard from "./components/ArtistCard/ArtistCard";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home/Home";
+import About from "./pages/About/About";
+import ArtistAbout from "./pages/ArtistAbout/ArtistAbout";
+import ArtistHome from "./pages/ArtistHome/ArtistHome";
+import CreateUser from "./pages/CreateUser/CreateUser";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
-    <div className="App">
-      <div className="body">
-        <Sidebar />
-        <div className="content">
-          <Navbar />
-          <div className="display">
-            rest of website...
-            <div className="cards">
-              <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
-              <ArtistCard />
-            </div>
-          </div>
-        </div>
-      </div>
-      <MusicPlayer />
+    <div>
+      <Routes>
+        <Route path="/Home" element={<Home />} />
+        <Route path="/About" element={<About />} />
+        <Route path="/ArtistAbout" element={<ArtistAbout />} />
+        <Route path="/ArtistHome" element={<ArtistHome />} />
+        <Route path="/CreateUser" element={<CreateUser />} />
+        <Route path="/Login" element={<Login />} />
+      </Routes>
     </div>
   );
 }
