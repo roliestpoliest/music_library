@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import './Login.css';
-
 export default function Login() {
 
     const [name, setName] = useState("")
@@ -13,20 +12,32 @@ export default function Login() {
     {
       setPassword(event.target.value)
     }
-    function clickLogin()
+    /*function clickLogin()
     {
       alert("Logging to home page")
+    } */
+    function forgotPassword()
+    {
+      alert("Heading to forgot password page")
     }
+    function newAccount()
+    {
+      alert("Heading to new account page")
+    } 
     return (
-    <div classname = "login">
-      <p> DisCoogs </p>
-      <p> Username: </p>
-      <input value = {name} onChange = {handleNameChange}/>
-      <p> Password: </p>
-      <input className = 'password' password = {password} onChange = {handlePasswordChange}/>
-      <p></p>
-      <button onClick = {clickLogin}> Login </button>
-      <li><a href = '#'>Create new account </a></li>
+    <div>
+      <div className = 'title'>
+        <p> DisCoogs </p>
+      </div>
+      <input className = 'username' value = {name} onChange = {handleNameChange} placeholder = "Username" />
+      <div className = 'space'>
+      </div>
+      <input className = "password" value1 = {password} onChange = {handlePasswordChange} placeholder = "Password"/>
+      <div className= 'space'>
+      </div>
+      <button className = "forgotPassword" onClick = {forgotPassword}> Forgot Password? </button>
+      <div className = 'space'></div>
+      <button className = "newAccount" onClick = {newAccount}> New Account? </button>
     </div>
   );
 }
