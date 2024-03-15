@@ -1,0 +1,53 @@
+body{
+  text-align: center;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: black;
+  color: white;
+}
+.title{
+  text-align: center;
+  color: white;
+  min-height: 50vh;
+  margin-top: 50px;
+  font-size: 50px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+.username{
+  color: white;
+  background-color: red;
+  width: 40%;
+  padding: 15px 20px;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 2px solid red;
+  margin-bottom:20px;
+}
+.space{
+  line-height: 1px;
+}
+.password{
+  color: white;
+  background-color: red;
+  width: 40%;
+  padding: 15px 20px;
+  margin: 8px;
+  box-sizing: border-box;
+  border: 2px solid red;
+  margin-bottom: 20px;
+}
+.forgotPassword{
+  color:white;
+  background-color: black;
+  margin-bottom: 20px;
+}
+.newAccount{
+  color:white;
+  background-color: black;
+  margin-bottom: 20px;
+}
+::placeholder{
+  color: white;
+}
