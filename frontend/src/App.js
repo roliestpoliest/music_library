@@ -7,17 +7,21 @@ import ArtistAbout from "./pages/ArtistAbout/ArtistAbout";
 import ArtistHome from "./pages/ArtistHome/ArtistHome";
 import CreateUser from "./pages/CreateUser/CreateUser";
 import Login from "./pages/Login/Login";
+import Insert from './pages/Insert/Insert'
+import Modify from "./pages/Modify/Modify";
 
 function App() {
   return (
     <div>
       <Routes>
-        <Route path="/Home" element={<Home />} />
+        <Route path="/" element={<Home />} />
         <Route path="/About" element={<About />} />
         <Route path="/ArtistAbout" element={<ArtistAbout />} />
         <Route path="/ArtistHome" element={<ArtistHome />} />
         <Route path="/CreateUser" element={<CreateUser />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/Insert" element={<Insert />} />
+        <Route path="/Modify" element={<Modify />} />
       </Routes>
     </div>
   );
