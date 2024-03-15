@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import "./Login.css";
 
 export default function Login() {
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleNameChange(event) {
-    setName(event.target.value);
+  function handleUsername(event) {
+    setUsername(event.target.value);
   }
 
-  function handlePasswordChange(event) {
+  function handlePassword(event) {
     setPassword(event.target.value);
   }
 
-  // function clickLogin() {
-  //   alert("Logging to home page");
-  // }
+  function handleLogin() {
+    alert("Logging to home page");
+  }
 
   function forgotPassword() {
     alert("Heading to forgot password page");
   }
 
-  function newAccount() {
+  function handleSignUp() {
     alert("Heading to new account page");
   }
 
@@ -29,25 +29,31 @@ export default function Login() {
     <div className="login">
       <div className="title">DisCoogs</div>
       <input
-        className="username"
-        value={name}
-        onChange={handleNameChange}
+        className="loginInput"
+        value={username}
+        onChange={handleUsername}
         placeholder="Username"
       />
       <input
-        className="password"
+        className="loginInput"
         value1={password}
-        onChange={handlePasswordChange}
+        onChange={handlePassword}
         placeholder="Password"
       />
-      <button className="forgotPassword" onClick={forgotPassword}>
-        {" "}
-        Forgot Password?{" "}
-      </button>
-      <button className="newAccount" onClick={newAccount}>
-        {" "}
-        New Account?{" "}
-      </button>
+      <div className="displayButtons">
+        <button className="loginButton" onClick={handleLogin}>
+          {" "}
+          Log in{" "}
+        </button>
+        <button className="loginButton" onClick={forgotPassword}>
+          {" "}
+          Forgot Password?{" "}
+        </button>
+        <button className="loginButton" onClick={handleSignUp}>
+          {" "}
+          Sign Up{" "}
+        </button>
+      </div>
     </div>
   );
 }
