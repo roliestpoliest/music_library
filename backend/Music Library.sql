@@ -1,3 +1,12 @@
+DROP DATABASE IF EXISTS `token_storage`;
+
+CREATE TABLE
+  token_storage (
+    account_id INT NOT NULL,
+    token VARCHAR(555) NOT NULL,
+    createdDate VARCHAR(255) NOT NULL
+  );
+
 DROP TABLE IF EXISTS `accounts`;
 
 CREATE TABLE
