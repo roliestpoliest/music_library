@@ -1,58 +1,76 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import "./Login.css";
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const domain = window.$domain;
 
-  function handleUsername(event) {
-    setUsername(event.target.value);
-  }
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+  const [data, setData] = useState();
 
-  function handlePassword(event) {
-    setPassword(event.target.value);
-  }
+  // useEffect(() => {
 
-  function handleLogin() {
-    alert("Logging to home page");
-  }
+  // }, []);
 
-  function forgotPassword() {
-    alert("Heading to forgot password page");
-  }
-
-  function handleSignUp() {
-    alert("Heading to new account page");
+  function handleSubmit() {
+    // axios.post(domain + "/api/login.php",{})
+    //   .then((response) => {
+    //     console.log(response);
+    // setData(response.data);
+    // });
+    // axios
+    //   .post(domain + "/api/login.php", {
+    //     username: "username",
+    //     password: "password",
+    //   })
+    //   .then((response) => {
+    //     console.log(response);
+    //   });
   }
 
   return (
-    <div className="login">
-      <div className="title">DisCoogs</div>
-      <input
-        className="loginInput"
-        value={username}
-        onChange={handleUsername}
-        placeholder="Username"
-      />
-      <input
-        className="loginInput"
-        value1={password}
-        onChange={handlePassword}
-        placeholder="Password"
-      />
-      <div className="displayButtons">
-        <button className="loginButton" onClick={handleLogin}>
-          {" "}
-          Log in{" "}
-        </button>
-        <button className="loginButton" onClick={forgotPassword}>
-          {" "}
-          Forgot Password?{" "}
-        </button>
-        <button className="loginButton" onClick={handleSignUp}>
-          {" "}
-          Sign Up{" "}
-        </button>
+    <div className="login-container">
+      <div className="login-wrapper">
+        <div className="login-title">DisCoogs</div>
+        <div className="login-group">
+          <form>
+            <label>
+              <input
+                className="loginInput"
+                type="text"
+                placeholder="username"
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+            <br />
+            <label>
+              <input
+                className="loginInput"
+                type="password"
+                placeholder="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+            <div className="button-wrapper">
+              <button
+                className="loginButton"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Login
+              </button>
+
+              <button
+                className="loginButton"
+                type="submit"
+                onClick={handleSubmit}
+              >
+                Sign Up
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
