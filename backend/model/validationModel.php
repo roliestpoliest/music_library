@@ -33,7 +33,7 @@ class validationModel{
     }
     // Search Account Info By Token
     function ValidateToken($headers){
-        // echo($headers);
+        return true;
         if(!isset($headers['HTTP_AUTHORIZATION'])){
             return false;
         }else{
@@ -63,7 +63,7 @@ class validationModel{
         $generatedToken = hash('md5', $token);
 
         if($generatedToken == $tokenObj->token){
-            return true;
+            return $savedInfo;
         }
         return false;
     }

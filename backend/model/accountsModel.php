@@ -7,16 +7,16 @@ class accountsModel{
     public function __construct(
         public ? int $account_id = null,
         public ? string $user_role = null,
-        public $fname = null,
-        public $lname = null,
-        public $username = null,
-        public $bio = null,
-        public $gender = null,
+        public ? string $fname = null,
+        public ? string $lname = null,
+        public ? string $username = null,
+        public ? string $bio = null,
+        public ? string $gender = null,
         public ? string $DOB = null,
-        public $region = null,
-        public $email = null,
-        public $password = null,
-        public bool $isAdmin = false,
+        public ? string $region = null,
+        public ? string $email = null,
+        public ? string $password = null,
+        public ? bool $isAdmin = false,
     ) {}
     // Get by id
     function GetAccountById($id){
@@ -164,6 +164,7 @@ class accountsModel{
         }
         return $result;
     }
+    // Detele
     function Delete(){
         $db = new db();
         $query = $db->query("DELETE FROM accounts
