@@ -7,7 +7,7 @@ import ArtistAbout from "./pages/ArtistAbout/ArtistAbout";
 import ArtistHome from "./pages/ArtistHome/ArtistHome";
 import CreateUser from "./pages/CreateUser/CreateUser";
 import Login from "./pages/Login/Login";
-import Insert from './pages/Insert/Insert'
+import Insert from "./pages/Insert/Insert";
 import Modify from "./pages/Modify/Modify";
 
 function App() {

@@ -12,7 +12,8 @@ CREATE TABLE
     `DOB` DATE,
     `region` VARCHAR(255),
     `email` VARCHAR(255) UNIQUE NOT NULL,
-    `password` VARCHAR(255) NOT NULL
+    `password` VARCHAR(255) NOT NULL,
+    `image_path` VARCHAR(255)
   );
 
 DROP DATABASE IF EXISTS `token_storage`;
@@ -23,7 +24,6 @@ CREATE TABLE
     token VARCHAR(555) NOT NULL,
     createdDate VARCHAR(255) NOT NULL,
     CONSTRAINT `fk_token_storage_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`)
-
   );
 
 DROP TABLE IF EXISTS `admins`;
@@ -56,6 +56,7 @@ CREATE TABLE
     `end_time` TIME NOT NULL,
     `region` VARCHAR(255) NOT NULL,
     `artist_id` INT UNSIGNED NOT NULL,
+    `image_path` VARCHAR(255) NOT NULL,
     CONSTRAINT `fk_events_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
   );
 
@@ -81,6 +82,7 @@ CREATE TABLE
       AND rating <= 5
     ),
     `genre_id` INT UNSIGNED,
+    `audio_path` VARCHAR(255) NOT NULL,
     CONSTRAINT `fk_songs_genre` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`),
     CONSTRAINT `fk_songs_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
   );
@@ -99,6 +101,7 @@ CREATE TABLE
       rating >= 0
       AND rating <= 5
     ),
+    `image_path` VARCHAR(255),
     CONSTRAINT `fk_albums_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
   );
 
@@ -131,6 +134,7 @@ CREATE TABLE
     `playlist_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `account_id` INT UNSIGNED,
     `title` VARCHAR(255) DEFAULT "Unititled Playlist",
+    `image_path` VARCHAR(255),
     CONSTRAINT `fk_playlists_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`)
   );
 
