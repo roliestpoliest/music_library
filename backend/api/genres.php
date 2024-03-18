@@ -1,6 +1,6 @@
 <?php
 include '../model/accountsModel.php';
-include '../model/followed_artistsModel.php';
+include '../model/genresModel.php';
 
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
@@ -9,16 +9,13 @@ if(!$canGo){
     echo(json_encode($errMsg));
     return;
 }
-
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $model = new followed_artistsModels();
-    if(isset($_GET['account_id'])){
-        $result = $model->GetArtistFollowedByAccountId($_GET['account_id']);
-    }elseif (isset($_GET['artist_id'])){
-        $result = $model->GetAccountstFollowingArtistId($_GET['artist_id']);
+    $model = new genresModel();
+    if(isset($_GET['title'])){
+        $result = $model->GetGeneresByTitle($_GET['title']);
     }else{
-        $result = $model->GetAllFollowed();
+        $result = $model->GetAllGeneres();
     }
     echo(json_encode($result));
     return;
@@ -27,10 +24,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-    $model = new followed_artistsModels();
-    $model->account_id = $data->account_id;
-    $model->artist_id = $data->artist_id;
-    $result = $model->Save();
+    $model = new genresModel();
+    $model->genre_id = $data->genre_id;
+    $model->title = $data->title;
+    $result = $model->SaveOrUpdate();
     echo(json_encode($result));
     return;
 }
@@ -38,9 +35,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-    $model = new followed_artistsModels();
-    $model->account_id = $data->account_id;
-    $model->artist_id = $data->artist_id;
+    $model = new genresModel();
+    $model->genre_id = $data->genre_id;
+    $model->title = $data->title;
     $result = $model->Delete();
     echo(json_encode($result));
     return;

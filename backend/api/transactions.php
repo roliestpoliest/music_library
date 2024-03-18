@@ -1,6 +1,6 @@
 <?php
 include '../model/accountsModel.php';
-include '../model/followed_artistsModel.php';
+include '../model/transactionsModel.php';
 
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
@@ -9,16 +9,13 @@ if(!$canGo){
     echo(json_encode($errMsg));
     return;
 }
-
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $model = new followed_artistsModels();
+    $model = new transactionsModel();
     if(isset($_GET['account_id'])){
-        $result = $model->GetArtistFollowedByAccountId($_GET['account_id']);
-    }elseif (isset($_GET['artist_id'])){
-        $result = $model->GetAccountstFollowingArtistId($_GET['artist_id']);
+        $result = $model->GetTransactionsByAccountId($_GET['account_id']);
     }else{
-        $result = $model->GetAllFollowed();
+        $result = $model->GetAllTransactions();
     }
     echo(json_encode($result));
     return;
@@ -27,10 +24,14 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-    $model = new followed_artistsModels();
+    $model = new transactionsModel();
+    // $model->playlist_id = $data->playlist_id;
+    $model->transaction_id = $data->transaction_id;
     $model->account_id = $data->account_id;
-    $model->artist_id = $data->artist_id;
-    $result = $model->Save();
+    $model->payment_date = $data->payment_date;
+    $model->payment_source = $data->payment_source;
+    $model->total = $data->total;
+    $result = $model->SaveOrUpdate();
     echo(json_encode($result));
     return;
 }
@@ -38,9 +39,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-    $model = new followed_artistsModels();
+    $model = new transactionsModel();
+    $model->transaction_id = $data->transaction_id;
     $model->account_id = $data->account_id;
-    $model->artist_id = $data->artist_id;
+    $model->payment_date = $data->payment_date;
+    $model->payment_source = $data->payment_source;
+    $model->total = $data->total;
     $result = $model->Delete();
     echo(json_encode($result));
     return;

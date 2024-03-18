@@ -40,21 +40,24 @@ class accountsModel{
     }
     // Get by email
     function GetAccountByUsername($username){
+        $result = null;
         $db = new db();
         $query = $db->query('SELECT *, CASE  WHEN (SELECT admin_id FROM admins WHERE account_id = a.account_id IS NOT NULL) THEN 1 ELSE 0 END as isAdmin FROM `accounts` as a where a.username = ?', $username)->fetchSingle();
-        $result = new accountsModel();
-        $result->account_id = $query["account_id"];
-        $result->user_role = $query["user_role"];
-        $result->fname = $query["fname"];
-        $result->lname = $query["lname"];
-        $result->username = $query["username"];
-        $result->bio = $query["bio"];
-        $result->gender = $query["gender"];
-        $result->DOB = $query["DOB"];
-        $result->region = $query["region"];
-        $result->email = $query["email"];
-        $result->password = $query["password"];
-        $result->isAdmin = $query["isAdmin"];
+        if(isset($query) && sizeof($query)){
+            $result = new accountsModel();
+            $result->account_id = $query["account_id"];
+            $result->user_role = $query["user_role"];
+            $result->fname = $query["fname"];
+            $result->lname = $query["lname"];
+            $result->username = $query["username"];
+            $result->bio = $query["bio"];
+            $result->gender = $query["gender"];
+            $result->DOB = $query["DOB"];
+            $result->region = $query["region"];
+            $result->email = $query["email"];
+            $result->password = $query["password"];
+            $result->isAdmin = $query["isAdmin"];
+        }
         $db->close();
         return $result;
     }
@@ -177,8 +180,8 @@ class accountsModel{
     function logIn($userInfo){
         $account = new accountsModel();
         $savedInfo = $account->GetAccountByUsername($userInfo->username);
-        
-        if($userInfo->username == $savedInfo->username && $userInfo->password == $savedInfo->password){
+        if(isset($savedInfo) && $userInfo->username == $savedInfo->username && 
+        $userInfo->password == $savedInfo->password){
             $val = new validationModel();
             $token = $val->GenerateToken($savedInfo);
 

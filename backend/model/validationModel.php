@@ -119,10 +119,10 @@ class validationModel{
         $result = $this->GetTokenByAcountId($account_id);
         // echo(json_encode($result));
         if($result == null){
-            echo("save");
+            // echo("save");
             $result = $this->Save($account_id, $token, $time);
         }else{
-            echo("update");
+            // echo("update");
             $result = $this->Update($account_id, $token, $time);
         }
         return $result;

@@ -1,6 +1,6 @@
 <?php
 include '../model/accountsModel.php';
-include '../model/followed_artistsModel.php';
+include '../model/subscriptionsModel.php';
 
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
@@ -9,16 +9,13 @@ if(!$canGo){
     echo(json_encode($errMsg));
     return;
 }
-
 // GET
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
-    $model = new followed_artistsModels();
+    $model = new subscriptionsModel();
     if(isset($_GET['account_id'])){
-        $result = $model->GetArtistFollowedByAccountId($_GET['account_id']);
-    }elseif (isset($_GET['artist_id'])){
-        $result = $model->GetAccountstFollowingArtistId($_GET['artist_id']);
+        $result = $model->GetSubscriptionByAccountId($_GET['account_id']);
     }else{
-        $result = $model->GetAllFollowed();
+        $result = $model->GetAllSubscriptions();
     }
     echo(json_encode($result));
     return;
@@ -27,10 +24,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 if($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-    $model = new followed_artistsModels();
+    $model = new subscriptionsModel();
+    $model->subscription_id = $data->subscription_id;
+    $model->start_date = $data->start_date;
+    $model->end_date = $data->end_date;
     $model->account_id = $data->account_id;
-    $model->artist_id = $data->artist_id;
-    $result = $model->Save();
+    $model->description = $data->description;
+    $result = $model->SaveOrUpdate();
     echo(json_encode($result));
     return;
 }
@@ -38,9 +38,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
 if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
-    $model = new followed_artistsModels();
+    $model = new subscriptionsModel();
+    $model->subscription_id = $data->subscription_id;
+    $model->start_date = $data->start_date;
+    $model->end_date = $data->end_date;
     $model->account_id = $data->account_id;
-    $model->artist_id = $data->artist_id;
+    $model->description = $data->description;
     $result = $model->Delete();
     echo(json_encode($result));
     return;
