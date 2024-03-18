@@ -25,6 +25,7 @@ export default function SizeAvatars() {
             <div className="songs">
                 <h1>Latest Release</h1>
                 <div className="list-songs">
+                    <SongCard />
                     <AlbumCard />
                     <AlbumCard />
                     <AlbumCard />
@@ -34,9 +35,8 @@ export default function SizeAvatars() {
                 <h1>Popular Songs</h1>
                 <div className="list-songs">
                     <SongCard />
-                    <AlbumCard />
-                    <AlbumCard />
-                    <AlbumCard />
+                    <SongCard />
+                    <SongCard />
                 </div>
             </div>
         </div>
