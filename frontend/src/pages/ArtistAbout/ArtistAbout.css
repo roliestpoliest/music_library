@@ -23,13 +23,14 @@
 
 .display {
   /* background-color: #121212; */
-  background-color: white;
-  color: black;
+  background-color:black;
+  color: white;
   flex-grow: 1;
   padding: 1em;
   border-radius: 0.5rem;
   margin-right: 1.5em;
   /* overflow-y: scroll; */
+  border: 2px solid gray;
 }
 
 .cards {

@@ -1,6 +1,6 @@
 import "./App.css";
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Link,Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import ArtistAbout from "./pages/ArtistAbout/ArtistAbout";
@@ -23,6 +23,34 @@ function App() {
         <Route path="/Insert" element={<Insert />} />
         <Route path="/Modify" element={<Modify />} />
       </Routes>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/About">About</Link>
+          </li>
+          <li>
+            <Link to="/ArtistAbout">Artist About</Link>
+          </li>
+          <li>
+            <Link to="/ArtistHome">Artist Home</Link>
+          </li>
+          <li>
+            <Link to="/CreateUser">Create User</Link>
+          </li>
+          <li>
+            <Link to="/Login">Login</Link>
+          </li>
+          <li>
+            <Link to="/Insert">Insert</Link>
+          </li>
+          <li>
+            <Link to="/Modify">Modify</Link>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 }
