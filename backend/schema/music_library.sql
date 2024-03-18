@@ -6,7 +6,7 @@ CREATE TABLE
     `user_role` ENUM ('User', 'Artist', 'Admin') NOT NULL,
     `fname` VARCHAR(255) NOT NULL,
     `lname` VARCHAR(255) NOT NULL,
-    `username` VARCHAR(255) NOT NULL,
+    `username` VARCHAR(255) UNIQUE NOT NULL,
     `bio` TEXT,
     `gender` CHAR,
     `DOB` DATE,
