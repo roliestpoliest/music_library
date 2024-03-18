@@ -1,0 +1,36 @@
+.container{
+    display: flex;
+}
+
+.avatar{
+    display: flex;
+    background-color: black;
+    align-items: center;
+    gap: 40px;
+    flex:1;
+}
+h1{
+    font-size: 40px;
+}
+
+.list-songs{
+    display: flex;
+}
+
+
+.artist{
+    flex:1;
+}
+
+.ratings{
+    width: 300px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid gray;
+}
+
+.red-text{
+    color: red;
+}
+

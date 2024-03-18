@@ -3,6 +3,8 @@ import "./ArtistAbout.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
+import ArtistInfo from "../../components/ArtistInfo/ArtistInfo"
+
 
 export default function ArtistAbout() {
   return (
@@ -12,7 +14,7 @@ export default function ArtistAbout() {
         <div className="content">
           <Navbar />
           <div className="display">
-            Artist information goes here
+            <ArtistInfo />
           </div>
         </div>
       </div>

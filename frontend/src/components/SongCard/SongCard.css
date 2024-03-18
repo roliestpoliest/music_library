@@ -1,0 +1,41 @@
+.sg-card {
+    width: 14rem;
+    margin: 1rem;
+    background-color: #891c2d;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    margin: 1.5em;
+  }
+  
+  .song-image {
+    aspect-ratio: 1/1;
+    width: 90%;
+    border-radius: 0.25rem;
+  }
+  
+  .sg-card-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.75em 0;
+  }
+  
+  .sg-card-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 0.75em 0.75em 0.75em;
+  }
+  
+  .song-title {
+    font-size: 1.25em;
+    font-weight: bold;
+  }
+  
+  .sg-artist-name {
+    padding: 0.25em 0;
+    font-size: 1em;
+  }
+  
