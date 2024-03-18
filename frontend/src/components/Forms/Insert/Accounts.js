@@ -1,7 +1,9 @@
 import { React, useState, useEffect } from "react";
 import "./Insert.css";
+import axios from "axios";
 
 export default function Accounts() {
+  const [role, setRole] = useState();
   const [fname, setFname] = useState();
   const [lname, setLname] = useState();
   const [username, setUsername] = useState();
@@ -14,10 +16,51 @@ export default function Accounts() {
 
   const [complete, setComplete] = useState(false);
 
+  const handleSubmitAccounts = (e) => {
+    e.preventDefault();
+    console.log("foo");
+    console.log(
+      `${role}, ${fname}, ${lname}, ${username}, ${bio}, ${gender}, ${DOB}, ${region}, ${email}, ${password}`
+    );
+    
+    axios
+      .post("http://localhost:8888/api/accounts.php", {
+        account_id : null,
+        user_role: role,
+        fname: fname,
+        lname: lname,
+        username: username,
+        bio: bio,
+        gender: gender,
+        DOB: DOB,
+        region: region,
+        email: email,
+        password: password,
+        isAdmin: null
+      })
+      .then((response) => {
+        console.log(response.data)
+      });
+  };
+
   return (
-    <div>
+    <div className="accounts-body">
       <form>
         <h1>Account</h1>
+        <div>
+          <label>User Role</label>
+          <select
+            className="Accounts"
+            onChange={(e) => setRole(e.target.value)}
+          >
+            <option value="none" selected disabled hidden>
+              Select an Option
+            </option>
+            <option value="User">User</option>
+            <option value="Artist">Artist</option>
+            <option value="Admin">Admin</option>
+          </select>
+        </div>
         <div>
           <label>First Name</label>
           <input
@@ -43,14 +86,6 @@ export default function Accounts() {
           />
         </div>
         <div>
-          <label>Username</label>
-          <input
-            type="text"
-            className="Accounts"
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
           <label>Bio</label>
           <input
             type="text"
@@ -60,27 +95,41 @@ export default function Accounts() {
         </div>
         <div>
           <label>Gender</label>
-          <input
-            type="text"
+          <select
             className="Accounts"
             onChange={(e) => setGender(e.target.value)}
-          />
+          >
+            <option value="none" selected disabled hidden>
+              Select an Option
+            </option>
+            <option value="F">Female</option>
+            <option value="M">Male</option>
+            <option value="O">Other</option>
+          </select>
         </div>
         <div>
           <label>DOB</label>
           <input
-            type="text"
+            type="date"
             className="Accounts"
             onChange={(e) => setDOB(e.target.value)}
           />
         </div>
         <div>
           <label>Region</label>
-          <input
-            type="text"
+          <select
             className="Accounts"
             onChange={(e) => setRegion(e.target.value)}
-          />
+          >
+            <option value="none" selected disabled hidden>
+              Select an Option
+            </option>
+            <option value="NE">Northeast</option>
+            <option value="SW">Southwest</option>
+            <option value="W">West</option>
+            <option value="SE">Southeast</option>
+            <option value="MW">Midwest</option>
+          </select>
         </div>
         <div>
           <label>Email</label>
@@ -98,7 +147,9 @@ export default function Accounts() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <button type="submit">Submit</button>
+        <button type="submit" onClick={handleSubmitAccounts}>
+          Submit
+        </button>
       </form>
     </div>
   );
