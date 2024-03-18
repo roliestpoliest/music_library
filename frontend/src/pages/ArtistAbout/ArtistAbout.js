@@ -3,7 +3,7 @@ import "./ArtistAbout.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import MusicPlayer from "../../components/MusicPlayer/MusicPlayer";
-import ArtistAvatar from "../../components/ArtistAvatar/ArtistAvatar"
+import ArtistInfo from "../../components/ArtistInfo/ArtistInfo"
 
 
 export default function ArtistAbout() {
@@ -14,7 +14,7 @@ export default function ArtistAbout() {
         <div className="content">
           <Navbar />
           <div className="display">
-            <ArtistAvatar />
+            <ArtistInfo />
           </div>
         </div>
       </div>

@@ -1,3 +1,7 @@
+.container{
+    display: flex;
+}
+
 .avatar{
     display: flex;
     background-color: black;
@@ -13,19 +17,16 @@ h1{
     display: flex;
 }
 
-.container{
-    display: flex;
-}
+
 .artist{
     flex:1;
-    
 }
 
 .ratings{
+    width: 300px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 300px;
     border: 1px solid gray;
 }
 

@@ -1,9 +1,10 @@
 import React from "react";
-import "./ArtistAvatar.css";
+import "./ArtistInfo.css";
 import Avatar from '@mui/material/Avatar';
 import AlbumCard from "../AlbumCard/AlbumCard";
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import SongCard from "../SongCard/SongCard"
 
 
 
@@ -32,6 +33,7 @@ export default function SizeAvatars() {
             <div className="songs">
                 <h1>Popular Songs</h1>
                 <div className="list-songs">
+                    <SongCard />
                     <AlbumCard />
                     <AlbumCard />
                     <AlbumCard />
