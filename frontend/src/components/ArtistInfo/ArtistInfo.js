@@ -25,9 +25,8 @@ export default function SizeAvatars() {
             <div className="songs">
                 <h1>Latest Release</h1>
                 <div className="list-songs">
+                    <AlbumCard />
                     <SongCard />
-                    <AlbumCard />
-                    <AlbumCard />
                     <AlbumCard />
                 </div>
             </div>
@@ -47,7 +46,6 @@ export default function SizeAvatars() {
             <Rating
             name="simple-controlled"
             value={value}
-            precision={0.5}
             size="large"
             emptyIcon={<StarIcon style={{opacity:0.10}} fontsize='inherit'/>}
             onChange={(event, newValue) => {
