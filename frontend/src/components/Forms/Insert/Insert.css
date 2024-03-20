@@ -1,7 +1,7 @@
-.accounts-body {
+.accounts-body .albums-body{
   background-color: bisque;
 }
 
-.Accounts{
+.Accounts, .Albums{
   margin: 0.5em;
 }
