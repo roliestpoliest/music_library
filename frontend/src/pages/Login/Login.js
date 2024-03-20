@@ -10,7 +10,6 @@ export default function Login() {
   const [password, setPassword] = useState();
 
   const handleLogin = () => {
-    console.log("foo");
     console.log(username);
     console.log(password);
     axios
@@ -28,11 +27,7 @@ export default function Login() {
     console.log("sign up!");
     navigate("/SignUp")
   };
-
-  const shoot = () => {
-    alert("Great Shot!");
-  };
-
+  
   return (
     <div className="login-container">
       <div className="login-wrapper">
