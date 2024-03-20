@@ -1,6 +1,6 @@
 <?php
-include '../model/accountsModel.php';
-include '../model/albumsModel.php';
+include_once '../model/accountsModel.php';
+include_once '../model/albumsModel.php';
 
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);

@@ -1,5 +1,5 @@
 <?php
-// include 'db.php';
+include_once 'db.php';
 
 class albumsModel{
     //constructor
@@ -11,7 +11,7 @@ class albumsModel{
         public ? string $format = null,
         public ? string $release_date = null,
         public ? int $rating = null,
-        public ? array $songs = [],
+        //public ? array $songs = [],
     ){}
     //Get All Albums
     function GetAllAlbums(){
@@ -78,7 +78,7 @@ class albumsModel{
         $db = new db();
         $result = Array();
         $title = str_replace("'","", $title);
-        $q = "SELECT * FROM `albums` as a where a.title like '%".$title."%' ORDER BY a.title";
+        $q = "SELECT * FROM `albums` as a where a.title_album like '%".$title."%' ORDER BY a.title";
         $query = $db->query($q)->fetchAll();
         foreach($query as $row){
             $obj = new albumsModel();
@@ -172,7 +172,7 @@ class albumsModel{
         $query = $db->query("UPDATE albums SET
                 record_label = ?,
                 artist_id = ?,
-                title = ?,
+                title_album = ?,
                 format = ?,
                 release_date = ?,
                 rating = ?
