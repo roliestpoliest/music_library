@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./Insert.css";
+import axios from "axios";
 
 export default function Songs() {
   const [artist, setArtist] = useState();
@@ -10,6 +11,29 @@ export default function Songs() {
   const [genre, setGenre] = useState();
 
   const [complete, setComplete] = useState(false);
+
+
+  const handleSumbitSongs = (e) => {
+    e.preventDefault();
+    console.log("foo");
+    console.log(
+      `${artist}, ${title}, ${genre}`
+    );
+
+    axios
+      .post("http://localhost:8888/api/songs.php", {
+        song_id: null,
+        artist_id: artist,
+        title: title,
+        duration: null,
+        listens: null,
+        rating: null,
+        genre_id: genre
+      })
+      .then((response) => {
+        console.log(response.data)
+      }); 
+  };
 
   return (
     <div>

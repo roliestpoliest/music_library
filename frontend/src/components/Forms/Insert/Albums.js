@@ -30,7 +30,7 @@ export default function Albums() {
         rating: null
       })
       .then((response) => {
-        //console.log(response.data)
+        console.log(response.data)
       }); 
   };
 
@@ -74,7 +74,7 @@ export default function Albums() {
         <div>
           <label>Release Date</label>
           <input
-            type="text"
+            type="date"
             className="Albums"
             onChange={(e) => setReleaseDate(e.target.value)}
           />

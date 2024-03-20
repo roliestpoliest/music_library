@@ -11,7 +11,7 @@ class albumsModel{
         public ? string $format = null,
         public ? string $release_date = null,
         public ? int $rating = null,
-        //public ? array $songs = [],
+        
     ){}
     //Get All Albums
     function GetAllAlbums(){
@@ -140,6 +140,7 @@ class albumsModel{
     function Save(){
         $db = new db();
         $query = $db->query("INSERT INTO albums(
+            album_id,
             record_label,
             artist_id,
             title,
@@ -155,6 +156,7 @@ class albumsModel{
             ?,
             ?
             )", 
+            $this->album_id,
             $this->record_label,
             $this->artist_id,
             $this->title,
