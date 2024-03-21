@@ -37,6 +37,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $model->format = $data->format;
     $model->release_date = $data->release_date;
     $model->rating = $data->rating;
+    $model->image_path = $data->image_path;
     $result = $model->SaveOrUpdate();
     echo(json_encode($result));
     return;
@@ -53,6 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $model->format = $data->format;
     $model->release_date = $data->release_date;
     $model->rating = $data->rating;
+    $model->image_path = $data->image_path;
     $result = $model->Delete();
     echo(json_encode($result));
     return;

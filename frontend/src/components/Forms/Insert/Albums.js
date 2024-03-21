@@ -27,7 +27,8 @@ export default function Albums() {
         title: title,
         format: format,
         release_date: release_date,
-        rating: null
+        rating: null,
+        image_path: null
       })
       .then((response) => {
         console.log(response.data)

@@ -161,6 +161,7 @@ class albumsModel{
             ?,
             ?,
             ?,
+            ?,
             ?
             )", 
             $this->album_id,
@@ -169,7 +170,8 @@ class albumsModel{
             $this->title,
             $this->format,
             $this->release_date,
-            $this->rating
+            $this->rating,
+            $this->image_path
         );
         $result = $query->lastInsertID();
         $db->close();
