@@ -1,6 +1,6 @@
 <?php
-include 'db.php';
-include 'validationModel.php';
+include_once 'db.php';
+include_once 'validationModel.php';
 
 class accountsModel{
     // Constructor

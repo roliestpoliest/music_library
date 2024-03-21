@@ -1,5 +1,5 @@
 <?php
-// include 'db.php';
+include_once 'db.php';
 
 class albumsModel{
     //constructor
@@ -81,7 +81,7 @@ class albumsModel{
         $db = new db();
         $result = Array();
         $title = str_replace("'","", $title);
-        $q = "SELECT * FROM `albums` as a where a.title like '%".$title."%' ORDER BY a.title";
+        $q = "SELECT * FROM `albums` as a where a.title_album like '%".$title."%' ORDER BY a.title";
         $query = $db->query($q)->fetchAll();
         foreach($query as $row){
             $obj = new albumsModel();
@@ -146,6 +146,7 @@ class albumsModel{
     function Save(){
         $db = new db();
         $query = $db->query("INSERT INTO albums(
+            album_id,
             record_label,
             artist_id,
             title,
@@ -160,14 +161,17 @@ class albumsModel{
             ?,
             ?,
             ?,
+            ?,
             ?
             )", 
+            $this->album_id,
             $this->record_label,
             $this->artist_id,
             $this->title,
             $this->format,
             $this->release_date,
-            $this->rating
+            $this->rating,
+            $this->image_path
         );
         $result = $query->lastInsertID();
         $db->close();
@@ -179,7 +183,7 @@ class albumsModel{
         $query = $db->query("UPDATE albums SET
                 record_label = ?,
                 artist_id = ?,
-                title = ?,
+                title_album = ?,
                 format = ?,
                 release_date = ?,
                 rating = ?,

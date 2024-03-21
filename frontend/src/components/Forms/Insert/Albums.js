@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./Insert.css";
+import axios from "axios";
 
 export default function Albums() {
   const [recordLabel, setRecordLabel] = useState();
@@ -10,6 +11,30 @@ export default function Albums() {
   // const [rating, setRating] = useState();  
 
   const [complete, setComplete] = useState(false);
+
+  const handleSumbitAlbums = (e) => {
+    e.preventDefault();
+    console.log("foo");
+    console.log(
+      `${recordLabel}, ${artist}, ${title}, ${format}, ${release_date}`
+    );
+
+    axios
+      .post("http://localhost:8888/api/albums.php", {
+        album_id: null,
+        record_label:recordLabel,
+        artist_id: artist,
+        title: title,
+        format: format,
+        release_date: release_date,
+        rating: null,
+        image_path: null
+      })
+      .then((response) => {
+        console.log(response.data)
+      }); 
+  };
+
 
   return (
     <div className="albums-body">
@@ -50,13 +75,14 @@ export default function Albums() {
         <div>
           <label>Release Date</label>
           <input
-            type="text"
+            type="date"
             className="Albums"
             onChange={(e) => setReleaseDate(e.target.value)}
           />
           TBA songs in album
         </div>
-        <button>Submit</button>
+        <button onClick={handleSumbitAlbums}>
+          Submit</button>
       </form>
     </div>
   );
