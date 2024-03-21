@@ -39,6 +39,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $model->listens = $data->listens;
     $model->rating = $data->rating;
     $model->genre_id = $data->genre_id;
+    $model->audio_path = $data->audio_path;
     $result = $model->SaveOrUpdate();
     echo(json_encode($result));
     return;
@@ -55,6 +56,7 @@ if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $model->listens = $data->listens;
     $model->rating = $data->rating;
     $model->genre_id = $data->genre_id;
+    $model->audio_path = $data->audio_path;
     $result = $model->Delete();
     echo(json_encode($result));
     return;

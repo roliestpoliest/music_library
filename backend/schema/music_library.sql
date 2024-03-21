@@ -54,9 +54,9 @@ CREATE TABLE
     `date` DATE NOT NULL,
     `start_time` TIME NOT NULL,
     `end_time` TIME NOT NULL,
-    `region` VARCHAR(255) NOT NULL,
+    `region` VARCHAR(255),
     `artist_id` INT UNSIGNED NOT NULL,
-    `image_path` VARCHAR(255) NOT NULL,
+    `image_path` VARCHAR(255),
     CONSTRAINT `fk_events_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
   );
 
@@ -82,7 +82,7 @@ CREATE TABLE
       AND rating <= 5
     ),
     `genre_id` INT UNSIGNED,
-    `audio_path` VARCHAR(255) NOT NULL,
+    `audio_path` VARCHAR(255),
     CONSTRAINT `fk_songs_genre` FOREIGN KEY (`genre_id`) REFERENCES `genres` (`genre_id`),
     CONSTRAINT `fk_songs_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`)
   );

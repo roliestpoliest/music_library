@@ -5,7 +5,7 @@ import axios from "axios";
 export default function Songs() {
   const [artist, setArtist] = useState();
   const [title, setTitle] = useState();
-  // const [duration, setDuration] = useState();
+  const [duration, setDuration] = useState();
   // const [listens, setListens] = useState();
   // const [rating, setRating] = useState();
   const [genre, setGenre] = useState();

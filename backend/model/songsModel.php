@@ -9,6 +9,7 @@ class songsModel{
         public ? int $listens = null,
         public ? int $rating = null,
         public ? int $genre_id = null,
+        public ? string $audio_path = null,
     ){}
 
     // Get all songs
@@ -26,6 +27,7 @@ class songsModel{
             $obj->listens = $row["listens"];
             $obj->rating = $row["rating"];
             $obj->genre_id = $row["genre_id"];
+            $obj->audio_path = $row["audio_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -47,6 +49,7 @@ class songsModel{
             $obj->listens = $row["listens"];
             $obj->rating = $row["rating"];
             $obj->genre_id = $row["genre_id"];
+            $obj->audio_path = $row["audio_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -68,6 +71,7 @@ class songsModel{
             $obj->listens = $row["listens"];
             $obj->rating = $row["rating"];
             $obj->genre_id = $row["genre_id"];
+            $obj->audio_path = $row["audio_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -89,6 +93,7 @@ class songsModel{
             $obj->listens = $row["listens"];
             $obj->rating = $row["rating"];
             $obj->genre_id = $row["genre_id"];
+            $obj->audio_path = $row["audio_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -110,6 +115,7 @@ class songsModel{
             $result->listens = $query["listens"];
             $result->rating = $query["rating"];
             $result->genre_id = $query["genre_id"];
+            $result->audio_path = $query["audio_path"];
         }
         $db->close();
         return $result;
@@ -123,8 +129,10 @@ class songsModel{
             duration,
             listens,
             rating,
-            genre_id
+            genre_id,
+            audio_path
             )VALUES(
+            ?,
             ?,
             ?,
             ?,
@@ -137,7 +145,8 @@ class songsModel{
             $this->duration,
             $this->listens,
             $this->rating,
-            $this->genre_id
+            $this->genre_id,
+            $this->audio_path
         );
         $result = $query->lastInsertID();
         $db->close();
@@ -152,7 +161,8 @@ class songsModel{
                 duration = ?,
                 listens = ?,
                 rating = ?,
-                genre_id = ?
+                genre_id = ?,
+                audio_path = ?
             WHERE song_id = ?",
                 $this->artist_id,
                 $this->title,
@@ -160,7 +170,8 @@ class songsModel{
                 $this->listens,
                 $this->rating,
                 $this->genre_id,
-                $this->song_id
+                $this->song_id,
+                $this->audio_path
         );
         $result = $query->affectedRows();
         $db->close();

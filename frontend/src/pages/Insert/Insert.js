@@ -7,10 +7,11 @@ import Albums from "../../components/Forms/Insert/Albums";
 import Playlists from "../../components/Forms/Insert/Playlists";
 import Subscriptions from "../../components/Forms/Insert/Subscriptions";
 import Transactions from "../../components/Forms/Insert/Transactions";
+import "./Insert.css";
 
 export default function Insert() {
   return (
-    <div>
+    <div className="insert">
       <Accounts />
       <hr />
       <Events />

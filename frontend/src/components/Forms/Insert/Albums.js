@@ -8,7 +8,7 @@ export default function Albums() {
   const [title, setTitle] = useState();
   const [format, setFormat] = useState();
   const [release_date, setReleaseDate] = useState();
-  // const [rating, setRating] = useState();
+  // const [rating, setRating] = useState();  
 
   const [complete, setComplete] = useState(false);
 
@@ -36,7 +36,7 @@ export default function Albums() {
 
 
   return (
-    <div>
+    <div className="albums-body">
       <form>
         <h1>Album</h1>
         <div>

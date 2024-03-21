@@ -11,7 +11,8 @@ class albumsModel{
         public ? string $format = null,
         public ? string $release_date = null,
         public ? int $rating = null,
-        
+        public ? array $songs = [],
+        public ? string $image_path = null
     ){}
     //Get All Albums
     function GetAllAlbums(){
@@ -28,6 +29,7 @@ class albumsModel{
             $obj->format = $row["format"];
             $obj->release_date = $row["release_date"];
             $obj->rating = $row["rating"];
+            $obj->image_path = $row["image_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -69,6 +71,7 @@ class albumsModel{
             $result->format = $query["format"];
             $result->release_date = $query["release_date"];
             $result->rating = $query["rating"];
+            $result->image_path = $query["image_path"];
         }
         $db->close();
         return $result;
@@ -89,6 +92,7 @@ class albumsModel{
             $obj->format = $row["format"];
             $obj->release_date = $row["release_date"];
             $obj->rating = $row["rating"];
+            $obj->image_path = $row["image_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -110,6 +114,7 @@ class albumsModel{
             $obj->format = $row["format"];
             $obj->release_date = $row["release_date"];
             $obj->rating = $row["rating"];
+            $obj->image_path = $row["image_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -131,6 +136,7 @@ class albumsModel{
             $obj->format = $row["format"];
             $obj->release_date = $row["release_date"];
             $obj->rating = $row["rating"];
+            $obj->image_path = $row["image_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -146,7 +152,8 @@ class albumsModel{
             title,
             format,
             release_date,
-            rating
+            rating,
+            image_path
             )VALUES(
             ?,
             ?,
@@ -177,7 +184,8 @@ class albumsModel{
                 title_album = ?,
                 format = ?,
                 release_date = ?,
-                rating = ?
+                rating = ?,
+                image_path = ?
             WHERE album_id = ?",
                 $this->record_label,
                 $this->artist_id,
@@ -185,7 +193,8 @@ class albumsModel{
                 $this->format,
                 $this->release_date,
                 $this->rating,
-                $this->album_id
+                $this->album_id,
+                $this->image_path
         );
         $result = $query->affectedRows();
         $db->close();
