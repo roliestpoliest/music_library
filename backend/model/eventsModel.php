@@ -147,6 +147,7 @@ class eventsModel{
     function Save(){
         $db = new db();
         $query = $db->query("INSERT INTO events(
+            event_id,
             title,
             description,
             date,
@@ -161,8 +162,10 @@ class eventsModel{
             ?,
             ?,
             ?,
+            ?,
             ?
             )", 
+            $this->event_id,
             $this->title,
             $this->description,
             $this->date,
