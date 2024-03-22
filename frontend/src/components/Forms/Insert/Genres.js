@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import "./Insert.css";
+import axios from "axios";
 
 export default function Genres() {
   const [title, setTitle] = useState();
