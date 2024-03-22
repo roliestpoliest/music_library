@@ -32,17 +32,18 @@ export default function Albums() {
     console.log(
       `${recordLabel}, ${artist}, ${title}, ${format}, ${release_date}`
     );
+    const toNullIfEmpty = (value) => (value === "" ? null : value);
 
     try {
       const response = await axios.post(
         "http://localhost:8888/api/albums.php",
         {
           album_id: null,
-          record_label: recordLabel,
-          artist_id: artist,
-          title: title,
-          format: format,
-          release_date: release_date,
+          record_label: toNullIfEmpty(recordLabel),
+          artist_id: toNullIfEmpty(artist),
+          title: toNullIfEmpty(title),
+          format: toNullIfEmpty(format),
+          release_date: toNullIfEmpty(release_date),
           rating: 0,
           image_path: null,
         }

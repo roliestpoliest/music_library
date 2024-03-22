@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import "./Insert.css";
 import axios from "axios";
 
-
 export default function Events() {
   //const [event_id, setEvent_id] = useState();
   const [title, setTitle] = useState();

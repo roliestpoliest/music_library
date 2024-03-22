@@ -38,6 +38,7 @@ class accountsModel{
         $db->close();
         return $result;
     }
+    
     // Get by email
     function GetAccountByUsername($username){
         $result = null;
@@ -65,7 +66,12 @@ class accountsModel{
     function GetAllAccounts(){
         $db = new db();
         $result = Array();
-        $query = $db->query('SELECT *, CASE  WHEN (SELECT admin_id FROM admins WHERE account_id = a.account_id IS NOT NULL) THEN 1 ELSE 0 END as isAdmin FROM `accounts` as a')->fetchAll();
+        // $query = $db->query('SELECT *, CASE  WHEN (SELECT admin_id FROM admins WHERE account_id = a.account_id IS NOT NULL) THEN 1 ELSE 0 END as isAdmin FROM `accounts` as a')->fetchAll();
+        $query = $db->query("SELECT a.*, CASE  
+        WHEN EXISTS (SELECT 1 FROM admins WHERE account_id = a.account_id) THEN 1 
+        ELSE 0 
+        END as isAdmin 
+        FROM `accounts` as a")->fetchAll();
         foreach($query as $row){
             $obj = new accountsModel();
             $obj->account_id = $row["account_id"];

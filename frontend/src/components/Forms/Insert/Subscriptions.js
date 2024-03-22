@@ -2,7 +2,6 @@ import { React, useState, useEffect } from "react";
 import "./Insert.css";
 import axios from "axios";
 
-
 export default function Subscriptions() {
   return (
     <div>
