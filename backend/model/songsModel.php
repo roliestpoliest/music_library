@@ -55,6 +55,27 @@ class songsModel{
         $db->close();
         return $result;
     }
+
+    // Get All Songs ID and titles
+    function GetAllSongTitles() {
+        $db = new db();
+        $result = array();
+        $query = $db->query("
+            SELECT songs.`song_id`, songs.`title`
+            FROM songs
+            ORDER BY songs.`title`")->fetchAll();
+        
+        foreach ($query as $row) {
+            $songInfo = array(
+                "song_id" => $row["song_id"],
+                "title" => $row["title"],
+            );
+            array_push($result, $songInfo);
+        }
+        $db->close();
+        return $result;
+    }
+
     // Get songs by title
     function GetSongsByTitle($title){
         $db = new db();

@@ -16,31 +16,38 @@ export default function Accounts() {
 
   const [complete, setComplete] = useState(false);
 
-  const handleSubmitAccounts = (e) => {
+  const handleSubmitAccounts = async (e) => {
     e.preventDefault();
-    console.log("foo");
     console.log(
       `${role}, ${fname}, ${lname}, ${username}, ${bio}, ${gender}, ${DOB}, ${region}, ${email}, ${password}`
     );
-    
-    axios
-      .post("http://localhost:8888/api/accounts.php", {
-        account_id : null,
-        user_role: role,
-        fname: fname,
-        lname: lname,
-        username: username,
-        bio: bio,
-        gender: gender,
-        DOB: DOB,
-        region: region,
-        email: email,
-        password: password,
-        isAdmin: null
-      })
-      .then((response) => {
-        console.log(response.data)
-      });
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8888/api/accounts.php",
+        {
+          account_id: null,
+          user_role: role,
+          fname: fname,
+          lname: lname,
+          username: username,
+          bio: bio,
+          gender: gender,
+          DOB: DOB,
+          region: region,
+          email: email,
+          password: password,
+          isAdmin: null,
+        }
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.error(
+        "There was an error!",
+        error.response ? error.response : error
+      );
+    }
   };
 
   return (

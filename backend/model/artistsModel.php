@@ -19,6 +19,29 @@ class artistsModel{
         $db->close();
         return $result;
     }
+    // Get All ID and Artist Names
+    function GetAllArtistNames() {
+        $db = new db();
+        $result = array();
+        $query = $db->query("
+            SELECT artists.`artist_id`, accounts.`fname`, accounts.`lname`
+            FROM accounts, artists
+            WHERE accounts.`account_id` = artists.`account_id`
+            ORDER BY accounts.`fname`, accounts.`lname`")->fetchAll();
+        
+        foreach ($query as $row) {
+            $artistInfo = array(
+                "artist_id" => $row["artist_id"],
+                // "account_id" => $row["account_id"],
+                "fname" => $row["fname"],
+                "lname" => $row["lname"],
+            );
+            array_push($result, $artistInfo);
+        }
+        $db->close();
+        return $result;
+    }
+
     // Get Artist By Artist Id
     function GetArtistByArtistId($artist_id){
         $db = new db();
