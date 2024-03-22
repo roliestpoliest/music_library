@@ -6,46 +6,86 @@ export default function Songs() {
   const [artist, setArtist] = useState();
   const [title, setTitle] = useState();
   const [duration, setDuration] = useState();
-  // const [listens, setListens] = useState();
-  // const [rating, setRating] = useState();
   const [genre, setGenre] = useState();
 
-  const [complete, setComplete] = useState(false);
+  const [genres, setGenres]=useState([]);
+  useEffect(() =>{
+    async function fetchGenreData(){
+      try {
+        const response = await axios.get(
+          "http://localhost:8888/api/genres/GenreNames.php"
+        );
+        setGenres(response.data);
+      } catch(error) {
+        console.error("Error fetching genre data: ", error);
+      }
+    }
+    fetchGenreData();
+  }, []);
+
+  const [artists, setArtists] = useState([]);
+  useEffect(() => {
+    async function fetchArtistData() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8888/api/artists/names.php"
+        );
+        setArtists(response.data);
+      } catch (error) {
+        console.error("Error fetching artist data:", error);
+      }
+    }
+
+    fetchArtistData();
+  }, []);
 
 
-  const handleSumbitSongs = (e) => {
+  const handleSumbitSongs = async (e) => {
     e.preventDefault();
-    console.log("foo");
     console.log(
       `${artist}, ${title}, ${genre}`
     );
 
-    axios
-      .post("http://localhost:8888/api/songs.php", {
+    try {
+      const response = axios.post(
+      "http://localhost:8888/api/songs.php", 
+      {
         song_id: null,
         artist_id: artist,
         title: title,
         duration: null,
         listens: null,
         rating: null,
-        genre_id: genre
-      })
-      .then((response) => {
-        console.log(response.data)
-      }); 
+        genre_id: genre,
+        audio_path: null
+      }
+    );
+    console.log(response.data);
+    }
+    catch (error) {
+      console.error("There was an error!", error.response);
+    }
   };
 
   return (
-    <div>
+    <div className="insert-body">
       <form>
         <h1>Song</h1>
         <div>
-          <label>Artist</label>
-          <input
-            type="text"
-            className="Songs"
+        <label>Artist</label>
+          <select
+            className="Albums"
             onChange={(e) => setArtist(e.target.value)}
-          />
+          >
+            <option value="none" selected disabled hidden>
+              Select an Option
+            </option>
+            {artists.map((artist) => (
+              <option key={artist.artist_id} value={artist.artist_id}>
+                {artist.fname} {artist.lname}
+              </option>
+            ))}
+          </select>{" "}
         </div>
         <div>
           <label>Title</label>
@@ -57,13 +97,22 @@ export default function Songs() {
         </div>
         <div>
           <label>Genre</label>
-          <input
-            type="text"
-            className="Songs"
+          <select
+            className="Albums"
             onChange={(e) => setGenre(e.target.value)}
-          />
+          >
+            <option value="none" selected disabled hidden>
+              Select an Option
+            </option>
+            {genres.map((genre) => (
+              <option key={genre.genre_id} value={genre.genre_id}>
+                {genre.title} 
+              </option>
+            ))}
+          </select>{" "}
         </div>
-        <button>Submit</button>
+        <button onClick={handleSumbitSongs}>
+          Submit</button>
       </form>
     </div>
   )

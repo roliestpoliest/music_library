@@ -1,35 +1,32 @@
 import { React, useState, useEffect } from "react";
 import "./Insert.css";
+import axios from "axios";
 
 export default function Transactions() {
+
+
   return (
-    <div>
-      <form>
+    <div className="insert-body">
+      {/* <form>
         <h1>Transaction</h1>
-        not actual fields
         <div>
-          <label>Transaction Type</label>
+          <label>Payment Source</label>
           <input
             type="text"
             className="Transactions"
+            onChange={(e) => setPaymentSource(e.target.value)}
           />
         </div>
         <div>
-          <label>Transaction Date</label>
+          <label>Total</label>
           <input
             type="text"
             className="Transactions"
+            onChange={(e) => setTotal(e.target.value)}
           />
         </div>
-        <div>
-          <label>Amount</label>
-          <input
-            type="text"
-            className="Transactions"
-          />
-        </div>
-        <button>Submit</button>
-      </form>
+        <button onClick={handleSubmitTransactions}>Submit</button>
+      </form> */}
     </div>
-  )
+  );
 }

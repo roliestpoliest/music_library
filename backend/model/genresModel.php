@@ -1,4 +1,7 @@
 <?php
+include_once 'db.php';
+
+
 class genresModel{
     // Constructor
     public function __construct(

@@ -13,34 +13,35 @@ export default function Accounts() {
   const [region, setRegion] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
-  const [complete, setComplete] = useState(false);
+  const [image_path, setImagePath] = useState();
 
   const handleSubmitAccounts = async (e) => {
     e.preventDefault();
     console.log(
       `${role}, ${fname}, ${lname}, ${username}, ${bio}, ${gender}, ${DOB}, ${region}, ${email}, ${password}`
     );
+    // const toNullIfEmpty = (value) => value.trim() === '' ? null : value.trim();
+    const toNullIfEmpty = (value) => (value === "" ? null : value);
 
     try {
       const response = await axios.post(
         "http://localhost:8888/api/accounts.php",
         {
           account_id: null,
-          user_role: role,
-          fname: fname,
-          lname: lname,
-          username: username,
-          bio: bio,
-          gender: gender,
-          DOB: DOB,
-          region: region,
-          email: email,
-          password: password,
+          user_role: toNullIfEmpty(role),
+          fname: toNullIfEmpty(fname),
+          lname: toNullIfEmpty(lname),
+          username: toNullIfEmpty(username),
+          bio: toNullIfEmpty(bio),
+          gender: toNullIfEmpty(gender),
+          DOB: toNullIfEmpty(DOB),
+          region: toNullIfEmpty(region),
+          email: toNullIfEmpty(email),
+          password: toNullIfEmpty(password),
           isAdmin: null,
+          image_path: toNullIfEmpty(image_path),
         }
       );
-
       console.log(response.data);
     } catch (error) {
       console.error(
@@ -51,7 +52,7 @@ export default function Accounts() {
   };
 
   return (
-    <div className="accounts-body">
+    <div className="insert-body">
       <form>
         <h1>Account</h1>
         <div>
@@ -152,6 +153,14 @@ export default function Accounts() {
             type="text"
             className="Accounts"
             onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <div>
+          <label>Avatar</label>
+          <input
+            type="text"
+            className="Accounts"
+            onChange={(e) => setImagePath(e.target.value)}
           />
         </div>
         <button type="submit" onClick={handleSubmitAccounts}>

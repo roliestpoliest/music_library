@@ -28,6 +28,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $model->subscription_id = $data->subscription_id;
     $model->start_date = $data->start_date;
     $model->end_date = $data->end_date;
+    $model->length = $data->length;
+    $model->price = $data->price;
     $model->account_id = $data->account_id;
     $model->description = $data->description;
     $result = $model->SaveOrUpdate();
@@ -42,6 +44,8 @@ if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $model->subscription_id = $data->subscription_id;
     $model->start_date = $data->start_date;
     $model->end_date = $data->end_date;
+    $model->length = $data->length;
+    $model->price = $data->price;
     $model->account_id = $data->account_id;
     $model->description = $data->description;
     $result = $model->Delete();
