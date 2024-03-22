@@ -1,7 +1,7 @@
-.accounts-body .albums-body{
+.insert-body{
   background-color: bisque;
 }
 
-.Accounts, .Albums{
+.Accounts, .Albums, .Events, .Genres, .Playlists, .Songs, .Subscriptions, .Transactions{
   margin: 0.5em;
 }

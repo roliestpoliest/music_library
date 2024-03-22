@@ -11,14 +11,14 @@ export default function Albums() {
   const [rating, setRating] = useState();
   const [image_path, setImagePath] = useState();
 
-  const [artists, setArtists] = useState([]);
+  const [data, setData] = useState([]);
   useEffect(() => {
     async function fetchArtistData() {
       try {
         const response = await axios.get(
           "http://localhost:8888/api/artists/names.php"
         );
-        setArtists(response.data);
+        setData(response.data);
       } catch (error) {
         console.error("Error fetching artist data:", error);
       }
@@ -55,7 +55,7 @@ export default function Albums() {
   };
 
   return (
-    <div className="albums-body">
+    <div className="insert-body">
       <form>
         <h1>Album</h1>
         <div>
@@ -75,7 +75,7 @@ export default function Albums() {
             <option value="none" selected disabled hidden>
               Select an Option
             </option>
-            {artists.map((artist) => (
+            {data.map((artist) => (
               <option key={artist.artist_id} value={artist.artist_id}>
                 {artist.fname} {artist.lname}
               </option>
@@ -114,14 +114,6 @@ export default function Albums() {
             onChange={(e) => setReleaseDate(e.target.value)}
           />
         </div>
-        {/* <div>
-          <label>Rating</label>
-          <input
-          type="number"
-          className="Albums"
-          onChange={(e) => setRating(e.target.value)}
-          />
-        </div> */}
         <div>
           <label>Image Path</label>
           <input

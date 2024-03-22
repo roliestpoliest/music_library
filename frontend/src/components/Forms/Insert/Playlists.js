@@ -29,13 +29,13 @@ export default function Playlists() {
       console.error("There was an error!", error.response);
     }
   };
-
+  
   return (
-    <div>
+    <div className="insert-body">
       <form>
         <h1>Playlist</h1>
         <div>
-          <label>account</label>
+          <label>Account</label>
           <input
             type="text"
             className="Playlists"
@@ -43,15 +43,25 @@ export default function Playlists() {
           />
         </div>
         <div>
-          <label>title</label>
+          <label>Title</label>
           <input
             type="text"
             className="Playlists"
             onChange={(e) =>setTitle(e.target.value)}
           />
         </div>
+        <div>
         <button onClick={handleSubmitPlaylists}>Submit</button>
+          <label>Image Path</label>
+          <input
+            type="text"
+            className="Playlists"
+            onChange={(e) => setImagePath(e.target.value)}
+          />
+        </div>
+        <div>TBA: songs in playlist</div>
+        <button>Submit</button>
       </form>
     </div>
-  )
+  );
 }

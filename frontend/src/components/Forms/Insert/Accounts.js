@@ -15,8 +15,6 @@ export default function Accounts() {
   const [password, setPassword] = useState();
   const [image_path, setImagePath] = useState();
 
-  const [complete, setComplete] = useState(false);
-
   const handleSubmitAccounts = async (e) => {
     e.preventDefault();
     console.log(
@@ -54,7 +52,7 @@ export default function Accounts() {
   };
 
   return (
-    <div className="accounts-body">
+    <div className="insert-body">
       <form>
         <h1>Account</h1>
         <div>

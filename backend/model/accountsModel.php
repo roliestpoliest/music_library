@@ -16,12 +16,15 @@ class accountsModel{
         public ? string $region = null,
         public ? string $email = null,
         public ? string $password = null,
-        public ? bool $isAdmin = false,
+        public ? bool $image_path = false,
     ) {}
     // Get by id
     function GetAccountById($id){
         $db = new db();
-        $query = $db->query('SELECT *, CASE  WHEN (SELECT admin_id FROM admins WHERE account_id = a.account_id IS NOT NULL) THEN 1 ELSE 0 END as isAdmin FROM `accounts` as a where a.account_id = ?', $id)->fetchSingle();
+        $query = $db->query('SELECT *
+        FROM `accounts` as a 
+        where a.account_id = ?'
+        , $id)->fetchSingle();
         $result = new accountsModel();
         $result->account_id = $query["account_id"];
         $result->user_role = $query["user_role"];
@@ -34,7 +37,7 @@ class accountsModel{
         $result->region = $query["region"];
         $result->email = $query["email"];
         $result->password = $query["password"];
-        $result->isAdmin = $query["isAdmin"];
+        // $result->isAdmin = $query["isAdmin"];
         $db->close();
         return $result;
     }
@@ -43,7 +46,8 @@ class accountsModel{
     function GetAccountByUsername($username){
         $result = null;
         $db = new db();
-        $query = $db->query('SELECT *, CASE  WHEN (SELECT admin_id FROM admins WHERE account_id = a.account_id IS NOT NULL) THEN 1 ELSE 0 END as isAdmin FROM `accounts` as a where a.username = ?', $username)->fetchSingle();
+        $query = $db->query('SELECT *, 
+        FROM `accounts` as a where a.username = ?', $username)->fetchSingle();
         if(isset($query) && sizeof($query)){
             $result = new accountsModel();
             $result->account_id = $query["account_id"];
@@ -67,10 +71,7 @@ class accountsModel{
         $db = new db();
         $result = Array();
         // $query = $db->query('SELECT *, CASE  WHEN (SELECT admin_id FROM admins WHERE account_id = a.account_id IS NOT NULL) THEN 1 ELSE 0 END as isAdmin FROM `accounts` as a')->fetchAll();
-        $query = $db->query("SELECT a.*, CASE  
-        WHEN EXISTS (SELECT 1 FROM admins WHERE account_id = a.account_id) THEN 1 
-        ELSE 0 
-        END as isAdmin 
+        $query = $db->query("SELECT a.*
         FROM `accounts` as a")->fetchAll();
         foreach($query as $row){
             $obj = new accountsModel();
@@ -85,7 +86,7 @@ class accountsModel{
             $obj->region = $row["region"];
             $obj->email = $row["email"];
             $obj->password = $row["password"];
-            $obj->isAdmin = $row["isAdmin"];
+            // $obj->isAdmin = $row["isAdmin"];
             array_push($result, $obj);
         }
         $db->close();

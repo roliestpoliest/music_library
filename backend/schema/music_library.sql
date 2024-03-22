@@ -154,8 +154,10 @@ DROP TABLE IF EXISTS `subscriptions`;
 CREATE TABLE
   `subscriptions` (
     `subscription_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    `start_date` TIMESTAMP NOT NULL,
-    `end_date` TIMESTAMP NOT NULL,
+    `start_date` DATETIME NOT NULL,
+    `end_date` DATETIME NOT NULL,
+    `length` ENUM ('1 Month','3 Months', '6 Months', '1 Year') NOT NULL,
+    `price` FLOAT NOT NULL,
     `account_id` INT UNSIGNED,
     `description` TEXT,
     CONSTRAINT `fk_subscriptions_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`)
@@ -167,7 +169,7 @@ CREATE TABLE
   `transactions` (
     `transaction_id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     `account_id` INT UNSIGNED,
-    `payment_date` TIMESTAMP NOT NULL,
+    `payment_date` DATETIME NOT NULL,
     `payment_source` VARCHAR(16) NOT NULL,
     `total` FLOAT NOT NULL,
     CONSTRAINT `fk_transactions_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`)

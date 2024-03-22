@@ -5,6 +5,9 @@ class subscriptionsModel{
         public ? int $subscription_id = null,
         public ? string $start_date = null,
         public ? string $end_date = null,
+        public ? string $type = null,
+        public ? float $price = null,
+        public ? string $length = null,
         public ? int $account_id = null,
         public ? string $description = null,
     ){}
@@ -19,6 +22,8 @@ class subscriptionsModel{
             $obj->subscription_id = $row["subscription_id"];
             $obj->start_date = $row["start_date"];
             $obj->end_date = $row["end_date"];
+            $obj->type = $row["type"];
+            $obj->price = $row["price"];
             $obj->account_id = $row["account_id"];
             $obj->description = $row["description"];
             array_push($result, $obj);
@@ -38,6 +43,8 @@ class subscriptionsModel{
             $result->subscription_id = $query["subscription_id"];
             $result->start_date = $query["start_date"];
             $result->end_date = $query["end_date"];
+            $result->type = $query["type"];
+            $result->price = $query["price"];
             $result->account_id = $query["account_id"];
             $result->description = $query["description"];
         }
@@ -50,9 +57,13 @@ class subscriptionsModel{
         $query = $db->query("INSERT INTO subscriptions(
             start_date,
             end_date,
+            length,
+            price,
             account_id,
             description
             )VALUES(
+            ?,
+            ?,
             ?,
             ?,
             ?,
@@ -60,6 +71,8 @@ class subscriptionsModel{
             )", 
             $this->start_date,
             $this->end_date,
+            $this->length,
+            $this->price,
             $this->account_id,
             $this->description
         );
@@ -73,11 +86,15 @@ class subscriptionsModel{
         $query = $db->query("UPDATE subscriptions SET
             start_date = ?,
             end_date = ?,
+            length = ?,
+            price = ?,
             account_id = ?,
             description = ?
             WHERE subscription_id = ?",
                 $this->start_date,
                 $this->end_date,
+                $this->length,
+                $this->price,
                 $this->account_id,
                 $this->description,
                 $this->subscription_id

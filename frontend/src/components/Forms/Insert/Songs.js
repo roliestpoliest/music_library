@@ -6,12 +6,7 @@ export default function Songs() {
   const [artist, setArtist] = useState();
   const [title, setTitle] = useState();
   const [duration, setDuration] = useState();
-  // const [listens, setListens] = useState();
-  // const [rating, setRating] = useState();
   const [genre, setGenre] = useState();
-
-  const [complete, setComplete] = useState(false);
-
 
   const [genres, setGenres]=useState([]);
   useEffect(() =>{
@@ -73,7 +68,7 @@ export default function Songs() {
   };
 
   return (
-    <div>
+    <div className="insert-body">
       <form>
         <h1>Song</h1>
         <div>

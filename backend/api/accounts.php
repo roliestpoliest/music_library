@@ -40,7 +40,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $model->region = $data->region;
     $model->email = $data->email;
     $model->password = $data->password;
-    $model->isAdmin = $data->isAdmin;
+    $model->image_path = $data->image_path;
+    // $model->isAdmin = $data->isAdmin;
 
     $result = $model->SaveOrUpdate();
     echo(json_encode($result));

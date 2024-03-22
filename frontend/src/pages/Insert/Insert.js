@@ -18,7 +18,7 @@ export default function Insert() {
 
   return (
     <div className="insert">
-      <label for="insert-select">Select a table to insert data:</label>
+      <label htmlFor="insert-select">Select a table to insert data:</label>
       <select
         name="insert-select"
         id="insert-select"
@@ -35,7 +35,7 @@ export default function Insert() {
         <option value="albums">Albums</option>
         <option value="playlists">Playlists</option>
         <option value="subscriptions">Subscriptions</option>
-        <option value="transactions">Transactions</option>
+        {/* <option value="transactions">Transactions</option> */}
       </select>
       <hr />
       {selectedTable === "accounts" && <Accounts />}
@@ -45,7 +45,7 @@ export default function Insert() {
       {selectedTable === "albums" && <Albums />}
       {selectedTable === "playlists" && <Playlists />}
       {selectedTable === "subscriptions" && <Subscriptions />}
-      {selectedTable === "transactions" && <Transactions />}
+      {/* {selectedTable === "transactions" && <Transactions />} */}
     </div>
   );
 }
