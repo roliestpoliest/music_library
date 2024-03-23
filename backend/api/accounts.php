@@ -3,6 +3,7 @@ include '../model/accountsModel.php';
 
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
+print_r($canGo);
 if(!$canGo){
     $errMsg = new errorMessage('Error', 'Please log in before using this application');
     echo(json_encode($errMsg));
@@ -14,7 +15,7 @@ if(!$canGo){
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $model = new accountsModel();
     if(isset($_GET['account_id'])){
-    $result = $model->GetAccountById($_GET['account_id']);
+    $result = $model->GetAccountById($canGo->account_id);
     }elseif (isset($_GET['username'])){
         $result = $model->GetAccountByUsername($_GET['username']);
     }else{

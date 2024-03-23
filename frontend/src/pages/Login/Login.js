@@ -21,6 +21,7 @@ export default function Login() {
         console.log(response.data);
         if( response.data.token != null){
           localStorage.setItem("token",response.data.token);
+          axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}` 
         }
       });
   };

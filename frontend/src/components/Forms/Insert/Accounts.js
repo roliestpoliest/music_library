@@ -20,6 +20,28 @@ export default function Accounts() {
 
   let file = null;
 
+  const getAccounts = () => {
+    console.log(localStorage.getItem("token"));
+    axios.get("http://localhost:8888/api/accounts.php?account_id=5",{
+      headers: {
+        "Authorization" : localStorage.getItem("token"),
+      },
+    }).then((response) =>{
+      console.log(response.data);
+      setRole(response.data.role);
+      setFname(response.data.fname);
+      setLname(response.data.lname);
+      setUsername(response.data.username);
+      setBio(response.data.bio);
+      setGender(response.data.gender);
+      setDOB(response.data.DOB);
+      setRegion(response.data.region);
+      setEmail(response.data.email);
+      setAcountId(response.data.accountId);
+    });
+  };
+  
+
   const handleSubmitAccounts = async (e) => {
     e.preventDefault();
     // console.log(
@@ -97,6 +119,18 @@ export default function Accounts() {
 
   return (
     <div className="insert-body">
+      <div>
+      <p>{role}</p>
+      <p>{fname}</p>
+      <p>{lname}</p>
+      <p>{username}</p>
+      <p>{bio}</p>
+      <p>{gender}</p>
+      <p>{DOB}</p>
+      <p>{region}</p>
+      <p>{email}</p>
+      <p>{accountId}</p>
+      </div>
       <form className="inputForm" encType="multipart/form-data">
         <h1>Account</h1>
         <div>
@@ -118,6 +152,7 @@ export default function Accounts() {
           <input
             type="text"
             className="Accounts"
+            value={fname}
             onChange={(e) => setFname(e.target.value)}
           />
         </div>
@@ -212,6 +247,8 @@ export default function Accounts() {
         </form>
       </div>
       }
+
+      <button onClick={getAccounts}>Get Your Data</button>
     </div>
       
   );
