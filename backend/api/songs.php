@@ -35,9 +35,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $model->song_id = $data->song_id;
     $model->artist_id = $data->artist_id;
     $model->title = $data->title;
-    $model->duration = $data->duration;
-    $model->listens = $data->listens;
-    $model->rating = $data->rating;
+    $model->duration = 0;
+    $model->listens = 0;
+    $model->rating = 0;
     $model->genre_id = $data->genre_id;
     $model->audio_path = $data->audio_path;
     $result = $model->SaveOrUpdate();
