@@ -3,17 +3,32 @@ import "./Insert.css";
 import axios from "axios";
 
 export default function Playlists() {
-  const [account, setAccount]= useState();
+  const [account, setAccount] = useState();
   const [title, setTitle] = useState();
-  const [image_path, setImagePath]= useState();
+  const [image_path, setImagePath] = useState();
+  const [songs, setSongs] = useState([]);
 
+  const [songData, setSongData] = useState([]);
+  useEffect(() => {
+    async function fetchSongData() {
+      try {
+        const response = await axios.get("http://localhost:8888/api/songs.php");
+        setSongData(response.data);
+      } catch (error) {
+        console.error("Error fetching song data:", error);
+      }
+    }
+    fetchSongData();
+  }, []);
+
+  const [numSongs, setNumSongs] = useState(0);
+  const handleSongCountChange = (e) => {
+    setNumSongs(Number(e.target.value));
+  };
 
   const handleSubmitPlaylists = async (e) => {
     e.preventDefault();
-    console.log(
-      `${account}, ${title}`
-    )
-
+    console.log(`${account}, ${title}`);
     try {
       const response = await axios.post(
         "http://localhost:8888/api/playlists.php",
@@ -21,15 +36,40 @@ export default function Playlists() {
           playlist_id: null,
           account_id: account,
           title: title,
-          image_path: null
+          image_path: null,
         }
       );
       console.log(response.data);
-    } catch(error){
+      //
+      const songList = document.getElementsByClassName("SongTitle");
+      for (let i = 0; i < songList.length; i++) {
+        console.log(songList[i].value);
+        if (songList[i].value !== "none") {
+          console.log("song_id: ", songList[i].value, "account:",response.data);
+          updateSong(songList[i].value, response.data);
+        }
+      }
+      // updateSong(song_id, playlist_id);
+    } catch (error) {
       console.error("There was an error!", error.response);
     }
   };
-  
+
+  const updateSong = (songId, playlistId) => {
+    console.log("song_id: ", songId, "playlist_id: ", playlistId);
+    try {
+      axios.post("http://localhost:8888/api/songs_in_playlist.php",
+        {
+          song_id: songId,
+          playlist_id: playlistId
+        }).then((res) => {
+          console.log(res.data);
+        });
+    } catch (error) {
+      console.error("There was an error!", error.res);
+    }
+  }
+
   return (
     <div className="insert-body">
       <form>
@@ -47,11 +87,10 @@ export default function Playlists() {
           <input
             type="text"
             className="Playlists"
-            onChange={(e) =>setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div>
-        <button onClick={handleSubmitPlaylists}>Submit</button>
           <label>Image Path</label>
           <input
             type="text"
@@ -59,8 +98,43 @@ export default function Playlists() {
             onChange={(e) => setImagePath(e.target.value)}
           />
         </div>
-        <div>TBA: songs in playlist</div>
-        <button>Submit</button>
+
+        <div className="Playlists">
+          <label htmlFor="song-count">
+            How many songs are in the playlist?
+          </label>
+          <select
+            id="song-count"
+            onChange={handleSongCountChange}
+            value={numSongs}
+          >
+            {[...Array(10).keys()].map((n) => (
+              <option key={n + 1} value={n + 1}>
+                {n + 1}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <h1>Songs</h1>
+        {[...Array(numSongs).keys()].map((n) => (
+          <div>
+            <label>Song in Playlist</label>
+            <select
+              className="SongTitle"
+            >
+              <option value="none" selected disabled hidden>
+                Select an Option
+              </option>
+              {songData.map((song) => (
+                <option key={song.song_id} value={song.song_id}>
+                  {song.title}
+                </option>
+              ))}
+            </select>{" "}
+          </div>
+        ))}
+        <button onClick={handleSubmitPlaylists}>Submit</button>
       </form>
     </div>
   );
