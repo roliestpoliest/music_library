@@ -3,3 +3,37 @@
   height: 100vh;
   overflow-y: hidden;
 }
+.inputForm{
+  margin: 2em;
+}
+.inputForm label{
+  font-size: 0.8em;
+  display: block;
+  line-height: 0.6em;
+}
+.inputForm input,
+.inputForm select{
+  border-radius: 5px;
+  border: 1px solid #cccccc;
+  color: #373737;
+  margin: 5px 0px 15px 0;
+  padding: 0 10px;
+}
+
+#uploadAvatarComponent{
+  background-color: rgba(0,0,0,0.7);
+  height: 100vh;
+  left: 0;
+  padding: 20px;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+}
+
+#uploadAvatarComponent form{
+  background-color: #cccccc;
+  height: 70px;
+  padding: 20px;
+  width: 400px;
+  margin: calc(50vh - 35px) calc(50% - 200px);
+}

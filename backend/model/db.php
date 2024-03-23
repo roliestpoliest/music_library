@@ -25,10 +25,17 @@ class db {
 
 	public function __construct() {
         $dbhost = 'localhost';
-        $dbuser = 'root';
-        $dbpass = 'root';
+        $dbuser = 'root';//libraryAdmin
+        $dbpass = 'root';//CarwootsAndPease88
         $dbname = 'music_library';
         $charset = 'utf8';
+
+	// public function __construct() {
+	// 	$dbhost = 'localhost';
+	// 	$dbuser = 'libraryAdmin';
+	// 	$dbpass = 'CarwootsAndPease88';
+	// 	$dbname = 'music_library';
+	// 	$charset = 'utf8';
 
 		$this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 		if ($this->connection->connect_error) {

@@ -33,7 +33,7 @@ class validationModel{
     }
     // Search Account Info By Token
     function ValidateToken($headers){
-        return true;
+        // return true;
         if(!isset($headers['HTTP_AUTHORIZATION'])){
             return false;
         }else{
@@ -117,7 +117,6 @@ class validationModel{
     function SaveOrUpdate($account_id, $token, $time){
         $result = null;
         $result = $this->GetTokenByAcountId($account_id);
-        // echo(json_encode($result));
         if($result == null){
             // echo("save");
             $result = $this->Save($account_id, $token, $time);

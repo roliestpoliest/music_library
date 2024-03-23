@@ -46,8 +46,8 @@ class accountsModel{
     function GetAccountByUsername($username){
         $result = null;
         $db = new db();
-        $query = $db->query('SELECT *, 
-        FROM `accounts` as a where a.username = ?', $username)->fetchSingle();
+        $query = $db->query("SELECT * 
+        FROM `accounts` as a where a.username = ?", $username)->fetchSingle();
         if(isset($query) && sizeof($query)){
             $result = new accountsModel();
             $result->account_id = $query["account_id"];
@@ -61,7 +61,6 @@ class accountsModel{
             $result->region = $query["region"];
             $result->email = $query["email"];
             $result->password = $query["password"];
-            $result->isAdmin = $query["isAdmin"];
         }
         $db->close();
         return $result;
@@ -159,6 +158,19 @@ class accountsModel{
                 $this->email,
                 $this->password,
                 $this->account_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
+
+    function SaveAvatarImagePath($accountId, $filepath){
+        $db = new db();
+        $query = $db->query("UPDATE accounts SET
+                image_path = ?
+            WHERE account_id = ?",
+                $filepath,
+                $accountId
         );
         $result = $query->affectedRows();
         $db->close();

@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp/SignUp";
 import Login from "./pages/Login/Login";
 import Insert from "./pages/Insert/Insert";
 import Modify from "./pages/Modify/Modify";
+import CreateUser from './components/CreateUser/CreateUser';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/Insert" element={<Insert />} />
         <Route path="/Modify" element={<Modify />} />
+        <Route path="/CreateUser" element={<CreateUser />} />
       </Routes>
       <nav>
         <ul>

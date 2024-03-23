@@ -24,8 +24,44 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     return;
   }
 
-  // POST
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  //POST
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $target_dir = "uploads/";
+    $file = $_FILES['files'];
+    $file_tmp = $file['tmp_name'][0];
+    $timestamp = time();
+    $timestamp = time();
+    $newfileName = $timestamp.$file['name'][0];
+    $file_ext = explode('.', $newfileName);
+    $file_ext = strtolower(end($file_ext));
+    $file_destination = '../uploads/'.$newfileName;
+
+    $json = file_get_contents('php://input');
+    $data = json_decode($json);
+
+    echo($_GET["accountId"]);
+    if(isset($_GET["accountId"])){
+      $allowed = ['jpg', 'jpeg', 'png', 'gif'];
+
+      if (!in_array($file_ext, $allowed)) {
+        echo('only files with extansion jpg, jpeg, png, or gif are allowed');
+      }
+
+      if (move_uploaded_file($file_tmp, $file_destination)) {
+        $model = new accountsModel();
+        $model->SaveAvatarImagePath($_GET["accountId"], $newfileName);
+        echo 'File uploaded successfully';
+      } else {
+          echo('Error moving the file.');
+      }
+    }else{
+      $errMsg = new errorMessage('Error', 'Account Id not found');
+    echo(json_encode($errMsg));
+    }
+    return;
+  }
+  // PUT
+if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
     $model = new accountsModel();
@@ -40,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $model->region = $data->region;
     $model->email = $data->email;
     $model->password = $data->password;
-    $model->image_path = $data->image_path;
+    // $model->image_path = $data->image_path;
     // $model->isAdmin = $data->isAdmin;
 
     $result = $model->SaveOrUpdate();

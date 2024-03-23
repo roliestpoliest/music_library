@@ -19,6 +19,9 @@ export default function Login() {
       })
       .then((response) => {
         console.log(response.data);
+        if( response.data.token != null){
+          localStorage.setItem("token",response.data.token);
+        }
       });
   };
 

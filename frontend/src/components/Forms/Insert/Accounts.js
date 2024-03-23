@@ -13,21 +13,28 @@ export default function Accounts() {
   const [region, setRegion] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  
+  const [accountId, setAcountId] = useState(null);
   const [image_path, setImagePath] = useState();
+  const [showImageForm, setShowImageForm] = useState(false);
+
+  let file = null;
 
   const handleSubmitAccounts = async (e) => {
     e.preventDefault();
-    console.log(
-      `${role}, ${fname}, ${lname}, ${username}, ${bio}, ${gender}, ${DOB}, ${region}, ${email}, ${password}`
-    );
+    // console.log(
+    //   `${role}, ${fname}, ${lname}, ${username}, ${bio}, ${gender}, ${DOB}, ${region}, ${email}, ${password}`
+    // );
     // const toNullIfEmpty = (value) => value.trim() === '' ? null : value.trim();
     const toNullIfEmpty = (value) => (value === "" ? null : value);
 
+    console.log(accountId);
+// return;
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         "http://localhost:8888/api/accounts.php",
         {
-          account_id: null,
+          account_id: accountId,
           user_role: toNullIfEmpty(role),
           fname: toNullIfEmpty(fname),
           lname: toNullIfEmpty(lname),
@@ -42,7 +49,12 @@ export default function Accounts() {
           image_path: toNullIfEmpty(image_path),
         }
       );
-      console.log(response.data);
+      if(accountId == null){
+        setAcountId(parseInt(response.data));
+      };
+      // console.log(accountId);
+      // console.log(response.data);
+      setShowImageForm(true);
     } catch (error) {
       console.error(
         "There was an error!",
@@ -51,9 +63,41 @@ export default function Accounts() {
     }
   };
 
+
+
+  const handleImageUpload = (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    // create a new FormData object and append the file to it
+    const formData = new FormData();
+    formData.append("file", file);
+    // console.log(accountId);
+    // make a POST request to the File Upload API with the FormData object and Rapid API headers
+    const url = "http://localhost:8888/api/accounts.php?accountId=" + accountId;
+    
+    axios
+      .post(url, {
+        'myObj{}': {x: 1, s: "foo"},
+        'files[]': file
+      }, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+    // handle the response
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // handle errors
+        console.log(error);
+      });
+  };
+  
+
   return (
     <div className="insert-body">
-      <form>
+      <form className="inputForm" encType="multipart/form-data">
         <h1>Account</h1>
         <div>
           <label>User Role</label>
@@ -155,18 +199,20 @@ export default function Accounts() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div>
-          <label>Avatar</label>
-          <input
-            type="text"
-            className="Accounts"
-            onChange={(e) => setImagePath(e.target.value)}
-          />
-        </div>
+        
         <button type="submit" onClick={handleSubmitAccounts}>
           Submit
         </button>
       </form>
+
+      {setShowImageForm > 0 &&
+      <div id="uploadAvatarComponent">
+        <form method="put" encType="multipart/form-data">
+          <input type="file" onChange={handleImageUpload} />
+        </form>
+      </div>
+      }
     </div>
+      
   );
 }
