@@ -5,8 +5,14 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
-window.$domain = "http://localhost:8888/api/";
-window.$imageFolder = "http://localhost:8888/uploads/";
+// for production
+window.$domain = "musiclibrary-production.up.railway.app/api"
+window.$imageFolder = "musiclibrary-production.up.railway.app/uploads/"
+
+// for development
+// window.$domain = "http://localhost:8888/api/";
+// window.$imageFolder = "http://localhost:8888/uploads/";
+
 // window.$domain = "./api/";
 // window.$imageFolder = "./uploads/";
 const root = ReactDOM.createRoot(document.getElementById("root"));
