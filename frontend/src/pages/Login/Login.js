@@ -13,7 +13,7 @@ export default function Login() {
     console.log(username);
     console.log(password);
     axios
-      .post("http://localhost:8888/api/login.php", {
+      .post(window.$domain + "login.php", {
         username: username,
         password: password,
       })

@@ -36,12 +36,9 @@ export default function Home() {
           <Navbar />
           <div className="display">
             <div className="cards">
-              {albumData.map((album) => (
-                  <AlbumCard albumData={album} />
-              ))}
-              {/*<AlbumCard />
+              <AlbumCard />
                <AlbumCard />
-              <AlbumCard />*/}
+              <AlbumCard />
               <ArtistCard />
               <ArtistCard /> 
             </div>
