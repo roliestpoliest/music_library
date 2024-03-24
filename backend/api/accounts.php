@@ -1,5 +1,6 @@
 <?php
 include '../model/accountsModel.php';
+header("Access-Control-Allow-Origin: *");
 
 // PUT
 if ($_SERVER["REQUEST_METHOD"] == "PUT") {

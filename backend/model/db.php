@@ -4,9 +4,9 @@ require_once '../vendor/autoload.php';
 
 class errorMessage{
 	public function __construct(
-        public string $title,
-        public string $description,
-    ){}
+		public string $title,
+		public string $description,
+	){}
 }
 
 class logInModel{
