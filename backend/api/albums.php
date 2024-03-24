@@ -14,7 +14,7 @@ if(!$canGo){
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $model = new albumsModel();
     if(isset($_GET['album_id'])){
-        $result = $model->GetAlbumById($_GET['album_id']);
+        $result = $model->GetSongsInAlbum($_GET['album_id']);
     }elseif (isset($_GET['artist_id'])){
         $result = $model->GetAlbumByArtist_id($_GET['artist_id']);
     }elseif (isset($_GET['title'])){

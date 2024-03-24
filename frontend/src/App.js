@@ -2,7 +2,6 @@ import "./App.css";
 import React from "react";
 import { Link,Route, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import About from "./pages/About/About";
 import ArtistAbout from "./pages/ArtistAbout/ArtistAbout";
 import ArtistHome from "./pages/ArtistHome/ArtistHome";
 import SignUp from "./pages/SignUp/SignUp";
@@ -15,7 +14,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/About" element={<About />} />
+        {/* <Route path="/About" element={<About />} /> */}
         <Route path="/ArtistAbout" element={<ArtistAbout />} />
         <Route path="/ArtistHome" element={<ArtistHome />} />
         <Route path="/SignUp" element={<SignUp />} />
@@ -28,17 +27,14 @@ function App() {
           <li>
             <Link to="/">Home</Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/About">About</Link>
-          </li>
+          </li> */}
           <li>
             <Link to="/ArtistAbout">Artist About</Link>
           </li>
           <li>
             <Link to="/ArtistHome">Artist Home</Link>
-          </li>
-          <li>
-            <Link to="/CreateUser">Create User</Link>
           </li>
           <li>
             <Link to="/Login">Login</Link>

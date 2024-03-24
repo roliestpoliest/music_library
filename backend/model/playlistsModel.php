@@ -80,6 +80,34 @@ class playlistModels{
         $db->close();
         return $result;
     }
+    // Get all songs in playlist
+    function GetSongsInPlaylist($playlist_id){
+        $result = [];
+        $db = new db();
+        $query = $db->query("
+        SELECT p.playlist_id, p.account_id, p.title as playlist_title, p.image_path, s.song_id, s.artist_id, s.title as song_title, s.duration, s.listens, s.rating, s.genre_id, s.audio_path 
+        FROM songs_in_playlist as sp, songs as s, playlists as p 
+        WHERE sp.song_id = s.song_id AND sp.playlist_id = p.playlist_id")->fetchAll();
+        foreach($query as $row){
+            $playlistInfo = array(
+                "playlist_id" => $row["playlist_id"],
+                "account_id" => $row["account_id"],
+                "playlist_title" => $row["playlist_title"],
+                "image_path" => $row["image_path"],
+                "song_id" => $row["song_id"],
+                "artist_id" => $row["artist_id"],
+                "song_title" => $row["song_title"],
+                "duration" => $row["duration"],
+                "listens" => $row["listens"],
+                "rating" => $row["rating"],
+                "genre_id" => $row["genre_id"],
+                "audio_path" => $row["audio_path"],
+            );
+            array_push($result, $playlistInfo);
+        }
+        $db->close();
+        return $result;
+    }
     // Save
     function Save(){
         $db = new db();

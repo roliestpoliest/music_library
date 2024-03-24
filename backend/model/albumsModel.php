@@ -1,5 +1,6 @@
 <?php
 include_once 'db.php';
+include 'songsModel.php';
 
 class albumsModel{
     //constructor
@@ -142,6 +143,38 @@ class albumsModel{
         $db->close();
         return $result;
     }
+    // Get all songs in album
+    function GetSongsInAlbum($album_id){
+        $result = [];
+        $db = new db();
+        $query = $db->query("
+        SELECT a.album_id, a.record_label, a.title, a.format, a.release_date, a.release_date, a.rating, a.image_path, s.song_id, s.title, s.duration, s.listens, s.rating, s.genre_id, s.audio_path
+        FROM albums as a, songs as s, songs_in_album as sa
+        WHERE a.album_id = sa.album_id AND s.song_id = sa.song_id;")->fetchAll();
+        foreach($query as $row){
+            $songList = [];
+            $albumInfo = array(
+                "album_id" => $row["album_id"],
+                "record_label" => $row["record_label"],
+                "title" => $row["title"],
+                "format" => $row["format"],
+                "release_date" => $row["release_date"],
+                "rating" => $row["rating"],
+                "image_path" => $row["image_path"],
+                "song_id" =>$row["song_id"],
+                "title" => $row["title"],
+                "duration" => $row["duration"],
+                "listens" => $row["listens"],
+                "rating" => $row["rating"],
+                "genre_id" => $row["genre_id"],
+                "audio_path" => $row["audio_path"],
+            );
+            array_push($result, $albumInfo);
+        }
+        $db->close();
+        return $result;
+    }
+
     // Save album
     function Save(){
         $db = new db();

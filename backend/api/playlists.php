@@ -14,6 +14,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $model = new playlistModels();
     if(isset($_GET['title'])){
         $result = $model->GetSongsByTitle($_GET['title']);
+    }elseif(isset($_GET['playlist_id'])){
+        $result = $model->GetSongsInPlaylist($_GET['playlist_id']);
     }elseif(isset($_GET['song_id'])){
         $result = $model->GetPlaylistByPlaylistId($_GET['song_id']);
     }elseif(isset($_GET['account_id'])){
