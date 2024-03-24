@@ -4,7 +4,6 @@ import axios from "axios";
 import "./Login.css";
 
 export default function Login() {
-  const domain = window.$domain;
 
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
@@ -13,7 +12,7 @@ export default function Login() {
     console.log(username);
     console.log(password);
     axios
-      .post(window.$domain + "login.php", {
+      .post(window.apiUrl + "login.php", {
         username: username,
         password: password,
       })

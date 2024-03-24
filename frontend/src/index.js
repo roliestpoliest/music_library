@@ -6,14 +6,15 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 
 // for production
-window.$domain = "musiclibrary-production.up.railway.app/api"
+window.apiUrl = "https://musiclibrary-production.up.railway.app/api/";
+console.log("window.apiUrl: ", window.apiUrl);
 window.$imageFolder = "musiclibrary-production.up.railway.app/uploads/"
 
 // for development
-// window.$domain = "http://localhost:8888/api/";
+// window.apiUrl = "http://localhost:8888/api/";
 // window.$imageFolder = "http://localhost:8888/uploads/";
 
-// window.$domain = "./api/";
+// window.apiUrl = "./api/";
 // window.$imageFolder = "./uploads/";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

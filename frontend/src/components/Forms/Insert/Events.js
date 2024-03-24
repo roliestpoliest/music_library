@@ -17,7 +17,7 @@ export default function Events() {
     async function fetchArtistData() {
       try {
         const response = await axios.get(
-          window.$domain + "artists/names.php"
+          window.apiUrl + "artists/names.php"
         );
         setData(response.data);
       } catch (error) {
@@ -37,7 +37,7 @@ export default function Events() {
 
     try {
       const response = await axios.post(
-        window.$domain + "events.php",
+        window.apiUrl + "events.php",
         {
           event_id: null,
           title: toNullIfEmpty(title),
@@ -65,7 +65,7 @@ export default function Events() {
     );
 
     axios
-    .post(window.$domain + "events.php", {
+    .post(window.apiUrl + "events.php", {
       event_id: null,
       title: title,
       description: description,

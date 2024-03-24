@@ -10,7 +10,7 @@ export default function CreateUser({userObj}) {
         const file = event.target.files[0];
         const formData = new FormData();
         formData.append("file", file);
-        const url = window.$domain + "accounts.php?accountId=" + userObj.accountId;
+        const url = window.apiUrl + "accounts.php?accountId=" + userObj.accountId;
         axios
           .post(url, {
             'myObj{}': {x: 1, s: "foo"},

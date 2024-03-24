@@ -83,7 +83,7 @@ export default function Subscriptions() {
 
     try {
       const response = await axios.post(
-        window.$domain + "subscriptions.php",
+        window.apiUrl + "subscriptions.php",
         {
           subscription_id: null,
           account_id: toNullIfEmpty(account),
@@ -108,7 +108,7 @@ export default function Subscriptions() {
 
     try {
       const response = await axios.post(
-        window.$domain + "transactions.php",
+        window.apiUrl + "transactions.php",
         {
           transaction_id: null,
           account_id: toNullIfEmpty(account),

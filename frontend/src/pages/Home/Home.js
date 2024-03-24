@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchSongData() {
-      const url = window.$domain + "albums.php";
+      const url = window.apiUrl + "albums.php";
       try {
         const response = await axios.get(url, {
           headers: {

@@ -18,7 +18,7 @@ export default function Albums() {
 
   useEffect(() => {
     async function fetchSongData() {
-      const url = window.$domain + "songs.php";
+      const url = window.apiUrl + "songs.php";
       try {
         const response = await axios.get(url, {
           headers: {
@@ -35,7 +35,7 @@ export default function Albums() {
   }, []);
 
   useEffect(() => {
-    const url = window.$domain + "genres/GenreNames.php";
+    const url = window.apiUrl + "genres/GenreNames.php";
     async function fetchGenreData() {
       try {
         const response = await axios.get(url,{
@@ -54,7 +54,7 @@ export default function Albums() {
 
   const [artistData, setArtistData] = useState([]);
   useEffect(() => {
-    const url = window.$domain + "artists/names.php";
+    const url = window.apiUrl + "artists/names.php";
     async function fetchArtistData() {
       try {
         const response = await axios.get(url,{
@@ -100,7 +100,7 @@ export default function Albums() {
       console.log(genereList[i].value);
     }
 
-    const url = window.$domain + "albums.php";
+    const url = window.apiUrl + "albums.php";
     try {
       axios.post(url,
         {
@@ -141,7 +141,7 @@ export default function Albums() {
   // const saveSong = (artistId, songTitle, genreId, albumId) => {
   //   console.log("artist_id: ", artistId, "song_title: ", songTitle, "genre_id: ", genreId);
   //   try {
-  //     axios.post(window.$domain + "songs.php", {
+  //     axios.post(window.apiUrl + "songs.php", {
   //       song_id: null,
   //       artist_id: artistId,
   //       title: songTitle,
@@ -160,7 +160,7 @@ export default function Albums() {
   const saveSongToAlbum = (songId, albumId) => {
     console.log("song_id: ", songId, "album_id: ", albumId);
     try {
-      const url = window.$domain + "songs_in_album.php";
+      const url = window.apiUrl + "songs_in_album.php";
       axios.post(url, {
         song_id: songId,
         album_id: albumId,

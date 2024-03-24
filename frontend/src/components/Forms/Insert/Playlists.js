@@ -12,7 +12,7 @@ export default function Playlists() {
   const [songData, setSongData] = useState([]);
   useEffect(() => {
     async function fetchSongData() {
-      const url = window.$domain + "songs.php";
+      const url = window.apiUrl + "songs.php";
       try {
         const response = await axios.get(url, {
           headers: {
@@ -42,7 +42,7 @@ export default function Playlists() {
   const handleSubmitPlaylists = async (e) => {
     e.preventDefault();
     console.log(`${account}, ${title}`);
-    const url = window.$domain + "playlists.php";
+    const url = window.apiUrl + "playlists.php";
     try {
       const response = await axios.post(url,
         {
@@ -77,7 +77,7 @@ export default function Playlists() {
 
   const updateSong = (songId, playlistId) => {
     console.log("song_id: ", songId, "playlist_id: ", playlistId);
-    const url = window.$domain + "songs_in_playlist.php";
+    const url = window.apiUrl + "songs_in_playlist.php";
     try {
       axios.post(url,
         {

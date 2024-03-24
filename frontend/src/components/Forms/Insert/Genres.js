@@ -12,7 +12,7 @@ export default function Genres() {
 
     try {
       const response = await axios.post(
-        window.$domain + "genres.php",
+        window.apiUrl + "genres.php",
         {
           genre_id: null,
           title: toNullIfEmpty(title),
@@ -36,7 +36,7 @@ export default function Genres() {
     );
 
     axios
-    .post(window.$domain + "genres.php", {
+    .post(window.apiUrl + "genres.php", {
       genre_id: null,
       title: title
     },
