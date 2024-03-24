@@ -35,10 +35,16 @@ class validationModel{
     function ValidateToken($headers){
         // return true;
         $g = getallheaders();
-        if(!isset($g['Authorization'])){
-            return false;
+        // print_r($headers);
+        // echo("----------");
+        // print_r($g);
+        if(isset($_COOKIE["Auth"])){
+            $token = $_COOKIE["Auth"];
         }else{
             $token = $g['Authorization'];
+        }
+        if(!isset($token)){
+            return false;
         }
         // return;
         $db = new db();

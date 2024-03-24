@@ -7,6 +7,8 @@ import { BrowserRouter } from "react-router-dom";
 
 window.$domain = "http://localhost:8888/api/";
 window.$imageFolder = "http://localhost:8888/uploads/";
+// window.$domain = "./api/";
+// window.$imageFolder = "./uploads/";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

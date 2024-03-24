@@ -38,7 +38,7 @@ accountId: "",
   },[]);
 
   const getAccounts = () => {
-    axios.get("http://localhost:8888/api/accounts.php?account_id=5",{
+    axios.get(window.$domain + "accounts.php?account_id=5",{
       headers: {
         "Authorization" : localStorage.getItem("token"),
       },
@@ -70,7 +70,7 @@ accountId: "",
 // return;
     try {
       const response = await axios.put(
-        "http://localhost:8888/api/accounts.php",
+        window.$domain + "accounts.php",
         {
           account_id: accountId,
           user_role: toNullIfEmpty(role),
