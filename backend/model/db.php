@@ -26,18 +26,19 @@ class db {
 	public function __construct() {
 		// Initialize Dotenv library
 		// $dotenv = Dotenv\Dotenv::createImmutable('../'); // if dev use this line
+		// $dotenv->load();
 
-		// Make sure this line below is uncommented and the line above is commented out
-		// before you deploy to production. If you do not the whole app will die.
-		$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-		$dotenv->load();
+		// $dbHost = $_ENV['DB_HOST'];
+		// $dbName = $_ENV['DB_NAME'];
+		// $dbUser = $_ENV['DB_USER'];
+		// $dbPass = $_ENV['DB_PASS'];
+		// $dbPort = $_ENV['DB_PORT'];
 
-		// Now you can access your variables
-		$dbHost = $_ENV['DB_HOST'];
-		$dbName = $_ENV['DB_NAME'];
-		$dbUser = $_ENV['DB_USER'];
-		$dbPass = $_ENV['DB_PASS'];
-		$dbPort = $_ENV['DB_PORT'];
+		$dbHost = getenv('DB_HOST');
+		$dbName = getenv('DB_NAME');
+		$dbUser = getenv('DB_USER');
+		$dbPass = getenv('DB_PASS');
+		$dbPort = getenv('DB_PORT');
 
 		$dbhost = $dbHost;
 		$dbport = $dbPort;
