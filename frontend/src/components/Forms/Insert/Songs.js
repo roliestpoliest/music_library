@@ -14,7 +14,7 @@ export default function Songs() {
     async function fetchGenreData(){
       try {
         const response = await axios.get(
-          "http://localhost:8888/api/genres/GenreNames.php"
+          window.$domain + "genres/GenreNames.php"
         );
         setGenres(response.data);
       } catch(error) {
@@ -29,7 +29,7 @@ export default function Songs() {
     async function fetchArtistData() {
       try {
         const response = await axios.get(
-          "http://localhost:8888/api/artists/names.php",
+          window.$domain + "artists/names.php",
           {
             headers: {
               "Authorization" : localStorage.getItem("token"),

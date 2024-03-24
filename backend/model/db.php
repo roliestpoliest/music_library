@@ -37,6 +37,11 @@ class db {
 	// 	$dbname = 'music_library';
 	// 	$charset = 'utf8';
 
+		// $dbhost = 'localhost';
+        // $dbuser = 'gheron5_public';//libraryAdmin
+        // $dbpass = ']Public&88<';//'Pub!!80';//CarwootsAndPease88
+        // $dbname = 'gheron5_music_library';
+        // $charset = 'utf8';
 
 		$this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 		if ($this->connection->connect_error) {

@@ -141,7 +141,7 @@ export default function Albums() {
   // const saveSong = (artistId, songTitle, genreId, albumId) => {
   //   console.log("artist_id: ", artistId, "song_title: ", songTitle, "genre_id: ", genreId);
   //   try {
-  //     axios.post("http://localhost:8888/api/songs.php", {
+  //     axios.post(window.$domain + "songs.php", {
   //       song_id: null,
   //       artist_id: artistId,
   //       title: songTitle,
