@@ -1,5 +1,6 @@
 <?php
 // header("Access-Control-Allow-Origin: *");
+require_once '../vendor/autoload.php';
 
 class errorMessage{
 	public function __construct(
@@ -16,7 +17,6 @@ class logInModel{
 }
 
 class db {
-
 	protected $connection;
 	protected $query;
 	protected $show_errors = TRUE;
@@ -24,11 +24,23 @@ class db {
 	public $query_count = 0;
 
 	public function __construct() {
-        $dbhost = 'localhost';
-        $dbuser = 'root';//libraryAdmin
-        $dbpass = 'root';//CarwootsAndPease88
-        $dbname = 'music_library';
-        $charset = 'utf8';
+		// Initialize Dotenv library
+		$dotenv = Dotenv\Dotenv::createImmutable('../');
+		$dotenv->load();
+
+		// Now you can access your variables
+		$dbHost = $_ENV['DB_HOST'];
+		$dbName = $_ENV['DB_NAME'];
+		$dbUser = $_ENV['DB_USER'];
+		$dbPass = $_ENV['DB_PASS'];
+		$dbPort = $_ENV['DB_PORT'];
+
+		$dbhost = $dbHost;
+		$dbport = $dbPort;
+		$dbuser = $dbUser;
+		$dbpass = $dbPass;
+		$dbname = $dbName;
+		$charset = 'utf8';
 
 	// public function __construct() {
 	// 	$dbhost = 'localhost';
@@ -38,7 +50,7 @@ class db {
 	// 	$charset = 'utf8';
 
 
-		$this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
+		$this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname, $dbport);
 		if ($this->connection->connect_error) {
 			$this->error('Failed to connect to MySQL - ' . $this->connection->connect_error);
 		}

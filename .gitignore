@@ -2,5 +2,6 @@
 .project
 .sass-cache/
 ._*
-
+/backend/vendor
+.env
 /backend/uploads/*

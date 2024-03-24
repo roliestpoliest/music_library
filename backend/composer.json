@@ -1,0 +1,14 @@
+{
+    "name": "carolyn/backend",
+    "description": "this is a backend",
+    "type": "project",
+    "authors": [
+        {
+            "name": "carolyn",
+            "email": "41408998+roliestpoliest@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "vlucas/phpdotenv": "^5.6"
+    }
+}
