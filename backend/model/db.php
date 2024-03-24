@@ -37,6 +37,7 @@ class db {
 	// 	$dbname = 'music_library';
 	// 	$charset = 'utf8';
 
+
 		$this->connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
 		if ($this->connection->connect_error) {
 			$this->error('Failed to connect to MySQL - ' . $this->connection->connect_error);

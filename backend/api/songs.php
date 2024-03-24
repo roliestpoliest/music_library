@@ -28,7 +28,57 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     return;
 }
 // POST
-if($_SERVER["REQUEST_METHOD"] == "POST") {
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $target_dir = "uploads/";
+
+    if(isset($canGo->account_id)){
+        $allowed = ['mp3']; 
+        $model = new songsModel();
+        $model->song_id = null;
+        $model->artist_id = $_POST["artist_id"];
+        $model->title = $_POST["title"];
+        $model->duration = 0;
+        $model->listens = 0;
+        $model->rating = 0;
+        $model->genre_id = $_POST["genre_id"];
+        $model->audio_path = null;
+
+        $songId = $model->Save();
+        if(isset($songId)){
+            if(isset($_FILES['files'])){
+                $file = $_FILES['files'];
+                $file_tmp = $file['tmp_name'][0];
+                $timestamp = time();
+                $newfileName = $timestamp.$file['name'][0];
+                $file_ext = explode('.', $newfileName);
+                $file_ext = strtolower(end($file_ext));
+                $file_destination = '../uploads/audio'.$newfileName;
+
+                if (!in_array($file_ext, $allowed)) {
+                    echo('only files with extension .mp3');
+                    return;
+                }
+                
+                if (move_uploaded_file($file_tmp, $file_destination)) {
+                    $model = new songsModel();
+                    $model->SaveAudioPath($songId, $newfileName);
+                    echo 'File uploaded successfully';
+                } else {
+                    echo('Error moving the file.');
+                    return;
+                }
+            }else{
+                $errMsg = new errorMessage('Error', 'Song was saved without a file reference');
+                echo(json_encode($errMsg));
+                return;
+            }
+        }
+    }
+    return;
+  }
+//PUT
+if($_SERVER["REQUEST_METHOD"] == "PUT") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
     $model = new songsModel();

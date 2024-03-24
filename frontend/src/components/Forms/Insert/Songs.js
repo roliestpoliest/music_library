@@ -7,6 +7,7 @@ export default function Songs() {
   const [title, setTitle] = useState();
   const [duration, setDuration] = useState();
   const [genre, setGenre] = useState();
+  const [fileInfo, setFileInfo] = useState();
 
   const [genres, setGenres]=useState([]);
   useEffect(() =>{
@@ -28,7 +29,12 @@ export default function Songs() {
     async function fetchArtistData() {
       try {
         const response = await axios.get(
-          "http://localhost:8888/api/artists/names.php"
+          "http://localhost:8888/api/artists/names.php",
+          {
+            headers: {
+              "Authorization" : localStorage.getItem("token"),
+            },
+          }
         );
         setArtists(response.data);
       } catch (error) {
@@ -42,13 +48,10 @@ export default function Songs() {
 
   const handleSumbitSongs = async (e) => {
     e.preventDefault();
-    console.log(
-      `${artist}, ${title}, ${genre}`
-    );
-
+    const url = window.$domain + "songs.php";
+    // console.log(url);
     try {
-      const response = axios.post(
-      "http://localhost:8888/api/songs.php", 
+      axios.post(url, 
       {
         song_id: null,
         artist_id: artist,
@@ -57,19 +60,32 @@ export default function Songs() {
         listens: null,
         rating: null,
         genre_id: genre,
-        audio_path: null
+        audio_path: null,
+        'files[]': fileInfo
+      }, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Authorization" : localStorage.getItem("token"),
+        }
       }
-    );
-    console.log(response.data);
+    ).then((response) => {
+      console.log(response.data);
+    });
+    
     }
     catch (error) {
       console.error("There was an error!", error.response);
     }
   };
+  const handleSongUpload = (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    setFileInfo(event.target.files[0]);
+  };
 
   return (
     <div className="insert-body">
-      <form>
+      <form className="inputForm">
         <h1>Song</h1>
         <div>
         <label>Artist</label>
@@ -111,9 +127,20 @@ export default function Songs() {
             ))}
           </select>{" "}
         </div>
+        <div>
+          <input type="file" onChange={handleSongUpload} />
+        </div>
+
         <button onClick={handleSumbitSongs}>
           Submit</button>
       </form>
+
+      {/* <div>
+        <form method="put" encType="multipart/form-data">
+          <input type="file" onChange={handleSongUpload} />
+          <button className="cancelButton">Cancel</button>
+        </form>
+      </div> */}
     </div>
   )
 }

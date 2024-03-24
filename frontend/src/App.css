@@ -37,3 +37,22 @@
   width: 400px;
   margin: calc(50vh - 35px) calc(50% - 200px);
 }
+.userCard{
+  float: right;
+}
+.appButton,
+.cancelButton{
+  border-radius: 5px;
+  border: 1px solid #ffffff;
+  cursor: pointer;
+  margin: 10px 0;
+  padding: 5px 10px;
+}
+.appButton{
+  background-color: #1678ef;
+  color: #eeeeee;
+}
+.cancelButton{
+  background-color: #dc1111;
+  color: #eeeeee;
+}

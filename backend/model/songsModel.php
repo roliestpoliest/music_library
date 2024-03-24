@@ -191,8 +191,21 @@ class songsModel{
                 $this->listens,
                 $this->rating,
                 $this->genre_id,
-                $this->song_id,
-                $this->audio_path
+                $this->audio_path,
+                $this->song_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
+    // SaveAudioPath
+    function SaveAudioPath($songId, $filePath){
+        $db = new db();
+        $query = $db->query("UPDATE songs SET
+                audio_path = ?
+            WHERE song_id = ?",
+                $filePath,
+                $songId
         );
         $result = $query->affectedRows();
         $db->close();

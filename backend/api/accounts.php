@@ -1,9 +1,35 @@
 <?php
 include '../model/accountsModel.php';
 
+// PUT
+if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+  $json = file_get_contents('php://input');
+  $data = json_decode($json);
+  $model = new accountsModel();
+  if(isset($data->account_id)){
+    $model->account_id = $data->account_id;
+  }
+  $model->user_role = $data->user_role;
+  $model->fname = $data->fname;
+  $model->lname = $data->lname;
+  $model->username = $data->username;
+  $model->bio = $data->bio;
+  $model->gender = $data->gender;
+  $model->DOB = $data->DOB;
+  $model->region = $data->region;
+  $model->email = $data->email;
+  $model->password = $data->password;
+  // $model->image_path = $data->image_path;
+  // $model->isAdmin = $data->isAdmin;
+
+  $result = $model->SaveOrUpdate();
+  echo(json_encode($result));
+  return;
+}
+
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
-print_r($canGo);
+// print_r($canGo);
 if(!$canGo){
     $errMsg = new errorMessage('Error', 'Please log in before using this application');
     echo(json_encode($errMsg));
@@ -40,8 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
 
-    echo($_GET["accountId"]);
-    if(isset($_GET["accountId"])){
+    if(isset($canGo->account_id)){
       $allowed = ['jpg', 'jpeg', 'png', 'gif'];
 
       if (!in_array($file_ext, $allowed)) {
@@ -50,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
       if (move_uploaded_file($file_tmp, $file_destination)) {
         $model = new accountsModel();
-        $model->SaveAvatarImagePath($_GET["accountId"], $newfileName);
+        $model->SaveAvatarImagePath($canGo->account_id, $newfileName);
         echo 'File uploaded successfully';
       } else {
           echo('Error moving the file.');
@@ -61,27 +86,5 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }
     return;
   }
-  // PUT
-if ($_SERVER["REQUEST_METHOD"] == "PUT") {
-    $json = file_get_contents('php://input');
-    $data = json_decode($json);
-    $model = new accountsModel();
-    $model->account_id = $data->account_id;
-    $model->user_role = $data->user_role;
-    $model->fname = $data->fname;
-    $model->lname = $data->lname;
-    $model->username = $data->username;
-    $model->bio = $data->bio;
-    $model->gender = $data->gender;
-    $model->DOB = $data->DOB;
-    $model->region = $data->region;
-    $model->email = $data->email;
-    $model->password = $data->password;
-    // $model->image_path = $data->image_path;
-    // $model->isAdmin = $data->isAdmin;
-
-    $result = $model->SaveOrUpdate();
-    echo(json_encode($result));
-    return;
-  }
+  
 ?>

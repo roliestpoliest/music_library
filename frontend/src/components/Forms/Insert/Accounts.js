@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import "./Insert.css";
 import axios from "axios";
+import CreateUser from '../../CreateUser/CreateUser'
 
 export default function Accounts() {
   const [role, setRole] = useState();
@@ -16,12 +17,27 @@ export default function Accounts() {
   
   const [accountId, setAcountId] = useState(null);
   const [image_path, setImagePath] = useState();
-  const [showImageForm, setShowImageForm] = useState(false);
+  const [userObj, setUserObj] = useState({
+    role: "",
+fname: "",
+lname: "",
+username: "",
+bio: "",
+gender: "",
+DOB: "",
+region: "",
+email: "",
+accountId: "",
+  });
 
-  let file = null;
+  const tetsFunc = ()=>{
+    console.log("Test Fired!");
+  };
+  useEffect(()=>{
+    getAccounts();
+  },[]);
 
   const getAccounts = () => {
-    console.log(localStorage.getItem("token"));
     axios.get("http://localhost:8888/api/accounts.php?account_id=5",{
       headers: {
         "Authorization" : localStorage.getItem("token"),
@@ -38,6 +54,8 @@ export default function Accounts() {
       setRegion(response.data.region);
       setEmail(response.data.email);
       setAcountId(response.data.accountId);
+      setUserObj(response.data);
+
     });
   };
   
@@ -49,8 +67,6 @@ export default function Accounts() {
     // );
     // const toNullIfEmpty = (value) => value.trim() === '' ? null : value.trim();
     const toNullIfEmpty = (value) => (value === "" ? null : value);
-
-    console.log(accountId);
 // return;
     try {
       const response = await axios.put(
@@ -71,12 +87,9 @@ export default function Accounts() {
           image_path: toNullIfEmpty(image_path),
         }
       );
-      if(accountId == null){
-        setAcountId(parseInt(response.data));
+      if(response.data != null && response.data > 0){
+        alert("New user has been created");
       };
-      // console.log(accountId);
-      // console.log(response.data);
-      setShowImageForm(true);
     } catch (error) {
       console.error(
         "There was an error!",
@@ -85,54 +98,17 @@ export default function Accounts() {
     }
   };
 
-
-
-  const handleImageUpload = (event) => {
-    event.preventDefault();
-    const file = event.target.files[0];
-    // create a new FormData object and append the file to it
-    const formData = new FormData();
-    formData.append("file", file);
-    // console.log(accountId);
-    // make a POST request to the File Upload API with the FormData object and Rapid API headers
-    const url = "http://localhost:8888/api/accounts.php?accountId=" + accountId;
-    
-    axios
-      .post(url, {
-        'myObj{}': {x: 1, s: "foo"},
-        'files[]': file
-      }, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-    // handle the response
-        console.log(response.data);
-      })
-      .catch((error) => {
-        // handle errors
-        console.log(error);
-      });
-  };
   
 
   return (
     <div className="insert-body">
-      <div>
-      <p>{role}</p>
-      <p>{fname}</p>
-      <p>{lname}</p>
-      <p>{username}</p>
-      <p>{bio}</p>
-      <p>{gender}</p>
-      <p>{DOB}</p>
-      <p>{region}</p>
-      <p>{email}</p>
-      <p>{accountId}</p>
+      <div className="userCard">
+        {userObj &&
+          <CreateUser userObj={userObj}/>
+        }
       </div>
       <form className="inputForm" encType="multipart/form-data">
-        <h1>Account</h1>
+        <h1>New Account</h1>
         <div>
           <label>User Role</label>
           <select
@@ -152,7 +128,6 @@ export default function Accounts() {
           <input
             type="text"
             className="Accounts"
-            value={fname}
             onChange={(e) => setFname(e.target.value)}
           />
         </div>
@@ -240,15 +215,6 @@ export default function Accounts() {
         </button>
       </form>
 
-      {setShowImageForm > 0 &&
-      <div id="uploadAvatarComponent">
-        <form method="put" encType="multipart/form-data">
-          <input type="file" onChange={handleImageUpload} />
-        </form>
-      </div>
-      }
-
-      <button onClick={getAccounts}>Get Your Data</button>
     </div>
       
   );

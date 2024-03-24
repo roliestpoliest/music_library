@@ -1,19 +1,26 @@
-import React from "react";
+import { React, useState, useEffect } from "react";
+import axios from "axios";
 import "./AlbumCard.css";
 
-export default function AlbumCard() {
+export default function AlbumCard({albumData}) {
+
+  
   return (
     <div className="al-card">
-      <div className="al-card-image">
-        <img className="album-image"
-          src="https://storage.googleapis.com/inbox-zero/2880x/saad-chaudhry-G25LeMV7fAw-unsplash.jpg"
-          alt="album cover"
-        />
+      {albumData &&
+      <div>
+        <div className="al-card-image">
+          <img className="album-image"
+          src={window.$imageFolder + albumData.image_path}
+            alt="album cover"
+          />
+        </div>
+        <div className="al-card-content">
+          <div className="al-album-title">{albumData.title}</div>
+          <div className="al-album-title">{albumData.artist_name}</div>
+        </div>
       </div>
-      <div className="al-card-content">
-        <div className="al-album-title">Album Title</div>
-        <div className="al-artist-name">Artist Name</div>
-      </div>
+}
     </div>
   );
 }
