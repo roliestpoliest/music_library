@@ -8,6 +8,7 @@ class albumsModel{
         public ? int $album_id = null,
         public ? string $record_label = null,
         public ? int $artist_id = null,
+        public ? string $artist_name = "",
         public ? string $title = null,
         public ? string $format = null,
         public ? string $release_date = null,
@@ -19,13 +20,17 @@ class albumsModel{
     function GetAllAlbums(){
         $db = new db();
         $result = Array();
-        $query = $db->query("SELECT *
-        FROM `albums`")->fetchAll();
+        $query = $db->query("SELECT al.*,
+		CONCAT(ac.fname, ' ', ac.lname) AS artist_name
+        FROM albums AS al
+        LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
+        LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id")->fetchAll();
         foreach($query as $row){
             $obj = new albumsModel();
             $obj->album_id = $row["album_id"];
             $obj->record_label = $row["record_label"];
             $obj->artist_id = $row["artist_id"];
+            $obj->artist_name = $row["artist_name"];
             $obj->title = $row["title"];
             $obj->format = $row["format"];
             $obj->release_date = $row["release_date"];
@@ -230,6 +235,19 @@ class albumsModel{
                 $this->rating,
                 $this->album_id,
                 $this->image_path
+        );
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
+
+    function SaveAlbumCoverImage($albumId, $imagePath){
+        $db = new db();
+        $query = $db->query("UPDATE albums SET
+                image_path = ?
+            WHERE album_id = ?",
+                $imagePath,
+                $albumId
         );
         $result = $query->affectedRows();
         $db->close();

@@ -1,3 +1,5 @@
+import { React, useState, useEffect } from "react";
+import axios from "axios";
 import "./Home.css";
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
@@ -6,6 +8,26 @@ import AlbumCard from "../../components/AlbumCard/AlbumCard";
 import ArtistCard from "../../components/ArtistCard/ArtistCard";
 
 export default function Home() {
+  const [albumData, setAlbumData] = useState([]);
+
+  useEffect(() => {
+    async function fetchSongData() {
+      const url = window.$domain + "albums.php";
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            "Authorization" : localStorage.getItem("token"),
+          }
+        });
+        console.log(response.data);
+        setAlbumData(response.data);
+        // console.log(albumData);
+      } catch (error) {
+        console.error("Error fetching song data:", error);
+      }
+    }
+    fetchSongData();
+  }, []);
   return (
     <div className="Home">
       <div className="body">
@@ -13,37 +35,15 @@ export default function Home() {
         <div className="content">
           <Navbar />
           <div className="display">
-
-            {/* <ScrollArea.Root>
-              <ScrollArea.Viewport>
-                <div>
-                  Your content here
-                  <div className="cards">
-                    <AlbumCard />
-                    <AlbumCard />
-                    <AlbumCard />
-                    <AlbumCard />
-                    <AlbumCard />
-                    <AlbumCard />
-                    <ArtistCard />
-                  </div>
-                </div>
-              </ScrollArea.Viewport>
-              <ScrollArea.Scrollbar orientation="vertical">
-                <ScrollArea.Thumb />
-              </ScrollArea.Scrollbar>
-              <ScrollArea.Scrollbar>
-                <ScrollArea.Thumb />
-              </ScrollArea.Scrollbar>
-              <ScrollArea.Corner />
-            </ScrollArea.Root> */}
-
             <div className="cards">
-              <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
+              {albumData.map((album) => (
+                  <AlbumCard albumData={album} />
+              ))}
+              {/*<AlbumCard />
+               <AlbumCard />
+              <AlbumCard />*/}
               <ArtistCard />
-              <ArtistCard />
+              <ArtistCard /> 
             </div>
           </div>
         </div>

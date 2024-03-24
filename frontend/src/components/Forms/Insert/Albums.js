@@ -11,17 +11,38 @@ export default function Albums() {
   const [release_date, setReleaseDate] = useState();
   const [rating, setRating] = useState();
   const [image_path, setImagePath] = useState();
-
-  const [songs, setSongs] = useState([]); // To store song details
-
+  const [fileInfo, setFileInfo] = useState();
+  const [songData, setSongData] = useState([]);
   const [genre, setGenre] = useState();
   const [genres, setGenres] = useState([]);
 
   useEffect(() => {
+    async function fetchSongData() {
+      const url = window.$domain + "songs.php";
+      try {
+        const response = await axios.get(url, {
+          headers: {
+            "Authorization" : localStorage.getItem("token"),
+          }
+        });
+        console.log(response.data);
+        setSongData(response.data);
+      } catch (error) {
+        console.error("Error fetching song data:", error);
+      }
+    }
+    fetchSongData();
+  }, []);
+
+  useEffect(() => {
+    const url = window.$domain + "genres/GenreNames.php";
     async function fetchGenreData() {
       try {
-        const response = await axios.get(
-          "http://localhost:8888/api/genres/GenreNames.php"
+        const response = await axios.get(url,{
+          headers: {
+            "Authorization" : localStorage.getItem("token"),
+          }
+        }
         );
         setGenres(response.data);
       } catch (error) {
@@ -33,10 +54,14 @@ export default function Albums() {
 
   const [artistData, setArtistData] = useState([]);
   useEffect(() => {
+    const url = window.$domain + "artists/names.php";
     async function fetchArtistData() {
       try {
-        const response = await axios.get(
-          "http://localhost:8888/api/artists/names.php"
+        const response = await axios.get(url,{
+          headers: {
+            "Authorization" : localStorage.getItem("token"),
+          }
+        }
         );
         setArtistData(response.data);
       } catch (error) {
@@ -75,9 +100,9 @@ export default function Albums() {
       console.log(genereList[i].value);
     }
 
+    const url = window.$domain + "albums.php";
     try {
-      const response = await axios.post(
-        "http://localhost:8888/api/albums.php",
+      axios.post(url,
         {
           album_id: null,
           record_label: toNullIfEmpty(recordLabel),
@@ -87,64 +112,62 @@ export default function Albums() {
           release_date: toNullIfEmpty(release_date),
           rating: 0,
           image_path: null,
-        }
-      );
-      console.log(response.data);
-
-      if(titles.length === genereList.length){
-        for (let i = 0; i < titles.length; i++) {
-          console.log(titles[i].value);
-          if (titles[i].value !== "none") {
-            console.log("song_id: ", titles[i].value, "album:", response.data);
-            saveSong(toNullIfEmpty(artist), titles[i].value, genereList[i].value, response.data);
+          'files[]': fileInfo
+        }, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            "Authorization" : localStorage.getItem("token"),
           }
         }
-      }
+      ).then((response) => {
+        console.log(response.data);
 
-      // for (let song of songs) {
-      //   try {
-      //     const songResponse = await axios.post(
-      //       "http://localhost:8888/api/songs.php",
-      //       song
-      //     );
-      //     console.log(songResponse.data);
-      //   } catch (error) {
-      //     console.error(
-      //       "There was an error submitting a song: ",
-      //       error.response
-      //     );
-      //   }
-      // }
+        if(titles.length === genereList.length){
+          for (let i = 0; i < titles.length; i++) {
+            console.log(titles[i].value);
+            if (titles[i].value !== "none") {
+              console.log("song_id: ", titles[i].value, "album:", response.data);
+              saveSongToAlbum("songId", response.data);
+              // saveSong(toNullIfEmpty(artist), titles[i].value, genereList[i].value, response.data);
+            }
+          }
+        }
+      });
     } catch (error) {
       console.error("There was an error!", error.response);
     }
   };
 
-  const saveSong = (artistId, songTitle, genreId, albumId) => {
-    console.log("artist_id: ", artistId, "song_title: ", songTitle, "genre_id: ", genreId);
-    try {
-      axios.post("http://localhost:8888/api/songs.php", {
-        song_id: null,
-        artist_id: artistId,
-        title: songTitle,
-        genre_id: genreId,
-        audio_path: null,
-      }).then((res) => {
-        console.log(res.data);
-        saveSongToAlbum(res.data, albumId);
-      }
-      );
-    } catch (error) {
-      console.error("There was an error!", error.response);
-    }
-  };
+  // const saveSong = (artistId, songTitle, genreId, albumId) => {
+  //   console.log("artist_id: ", artistId, "song_title: ", songTitle, "genre_id: ", genreId);
+  //   try {
+  //     axios.post("http://localhost:8888/api/songs.php", {
+  //       song_id: null,
+  //       artist_id: artistId,
+  //       title: songTitle,
+  //       genre_id: genreId,
+  //       audio_path: null,
+  //     }).then((res) => {
+  //       console.log(res.data);
+  //       saveSongToAlbum(res.data, albumId);
+  //     }
+  //     );
+  //   } catch (error) {
+  //     console.error("There was an error!", error.response);
+  //   }
+  // };
 
   const saveSongToAlbum = (songId, albumId) => {
     console.log("song_id: ", songId, "album_id: ", albumId);
     try {
-      axios.post("http://localhost:8888/api/songs_in_album.php", {
+      const url = window.$domain + "songs_in_album.php";
+      axios.post(url, {
         song_id: songId,
         album_id: albumId,
+      }, {
+        headers: {
+          "Authorization" : localStorage.getItem("token"),
+        }
       }).then((res) => {
         console.log(res.data);
       }
@@ -165,10 +188,15 @@ export default function Albums() {
   const handleSongCountChange = (e) => {
     setNumSongs(Number(e.target.value));
   };
-
+  const handlePlaylistImageUpload = (event) => {
+    event.preventDefault();
+    const file = event.target.files[0];
+    setFileInfo(event.target.files[0]);
+  }
+  
   return (
     <div className="insert-body">
-      <form>
+      <form className="inputForm">
         <h1>Album</h1>
         <div>
           <label>Record Label</label>
@@ -227,12 +255,13 @@ export default function Albums() {
           />
         </div>
         <div>
-          <label>Image Path</label>
-          <input
+          <label>Album Cover Image</label>
+          <input type="file" onChange={handlePlaylistImageUpload} />
+          {/* <input
             type="text"
             className="Albums"
             onChange={(e) => setImagePath(e.target.value)}
-          />
+          /> */}
         </div>
 
         <div className="Albums">
@@ -248,41 +277,26 @@ export default function Albums() {
               </option>
             ))}
           </select>
-
-          {/* {[...Array(numSongs).keys()].map((n) => (
-            <Songs key={n} artist={artist} onSongSubmit={onSongSubmit} />
-          ))} */}
-          {/* <Songs artist={artist} onSongSubmit={onSongSubmit} /> */}
+          
         </div>
         <hr />
         <h1>Songs</h1>
         {[...Array(numSongs).keys()].map((n) => (
           <div>
-            <div id="songList">
-              <label>Title</label>
-              <input
-                type="text"
-                className="SongsName"
-                onChange={(e) => setTitle(e.target.value)}
-              />
-            </div>
-            <div>
-              <label>Genre</label>
-              <select
-                className="SongGenere"
-                onChange={(e) => setGenre(e.target.value)}
-              >
-                <option value="none" selected disabled hidden>
-                  Select an Option
-                </option>
-                {genres.map((genre) => (
-                  <option key={genre.genre_id} value={genre.genre_id}>
-                    {genre.title}
-                  </option>
-                ))}
-              </select>{" "}
-            </div>
-          </div>
+          <label>Song in Playlist</label>
+          <select
+            className="SongTitle"
+          >
+            <option value="none" selected disabled hidden>
+              Select an Option
+            </option>
+            {songData.map((song) => (
+              <option key={song.song_id} value={song.song_id}>
+                {song.title}
+              </option>
+            ))}
+          </select>{" "}
+        </div>
         ))}
         <button onClick={handleSubmitAlbums}>Submit</button>
       </form>

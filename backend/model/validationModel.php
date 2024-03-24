@@ -33,11 +33,12 @@ class validationModel{
     }
     // Search Account Info By Token
     function ValidateToken($headers){
-        return true;
-        if(!isset($headers['HTTP_AUTHORIZATION'])){
+        // return true;
+        $g = getallheaders();
+        if(!isset($g['Authorization'])){
             return false;
         }else{
-            $token = $headers['HTTP_AUTHORIZATION'];
+            $token = $g['Authorization'];
         }
         // return;
         $db = new db();

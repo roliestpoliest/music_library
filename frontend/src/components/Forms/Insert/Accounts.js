@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
 import "./Insert.css";
 import axios from "axios";
+import CreateUser from '../../CreateUser/CreateUser'
 
 export default function Accounts() {
   const [role, setRole] = useState();
@@ -13,21 +14,65 @@ export default function Accounts() {
   const [region, setRegion] = useState();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+  
+  const [accountId, setAcountId] = useState(null);
   const [image_path, setImagePath] = useState();
+  const [userObj, setUserObj] = useState({
+    role: "",
+fname: "",
+lname: "",
+username: "",
+bio: "",
+gender: "",
+DOB: "",
+region: "",
+email: "",
+accountId: "",
+  });
+
+  const tetsFunc = ()=>{
+    console.log("Test Fired!");
+  };
+  useEffect(()=>{
+    getAccounts();
+  },[]);
+
+  const getAccounts = () => {
+    axios.get("http://localhost:8888/api/accounts.php?account_id=5",{
+      headers: {
+        "Authorization" : localStorage.getItem("token"),
+      },
+    }).then((response) =>{
+      console.log(response.data);
+      setRole(response.data.role);
+      setFname(response.data.fname);
+      setLname(response.data.lname);
+      setUsername(response.data.username);
+      setBio(response.data.bio);
+      setGender(response.data.gender);
+      setDOB(response.data.DOB);
+      setRegion(response.data.region);
+      setEmail(response.data.email);
+      setAcountId(response.data.accountId);
+      setUserObj(response.data);
+
+    });
+  };
+  
 
   const handleSubmitAccounts = async (e) => {
     e.preventDefault();
-    console.log(
-      `${role}, ${fname}, ${lname}, ${username}, ${bio}, ${gender}, ${DOB}, ${region}, ${email}, ${password}`
-    );
+    // console.log(
+    //   `${role}, ${fname}, ${lname}, ${username}, ${bio}, ${gender}, ${DOB}, ${region}, ${email}, ${password}`
+    // );
     // const toNullIfEmpty = (value) => value.trim() === '' ? null : value.trim();
     const toNullIfEmpty = (value) => (value === "" ? null : value);
-
+// return;
     try {
-      const response = await axios.post(
+      const response = await axios.put(
         "http://localhost:8888/api/accounts.php",
         {
-          account_id: null,
+          account_id: accountId,
           user_role: toNullIfEmpty(role),
           fname: toNullIfEmpty(fname),
           lname: toNullIfEmpty(lname),
@@ -42,7 +87,9 @@ export default function Accounts() {
           image_path: toNullIfEmpty(image_path),
         }
       );
-      console.log(response.data);
+      if(response.data != null && response.data > 0){
+        alert("New user has been created");
+      };
     } catch (error) {
       console.error(
         "There was an error!",
@@ -51,10 +98,17 @@ export default function Accounts() {
     }
   };
 
+  
+
   return (
     <div className="insert-body">
-      <form>
-        <h1>Account</h1>
+      <div className="userCard">
+        {userObj &&
+          <CreateUser userObj={userObj}/>
+        }
+      </div>
+      <form className="inputForm" encType="multipart/form-data">
+        <h1>New Account</h1>
         <div>
           <label>User Role</label>
           <select
@@ -155,18 +209,13 @@ export default function Accounts() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <div>
-          <label>Avatar</label>
-          <input
-            type="text"
-            className="Accounts"
-            onChange={(e) => setImagePath(e.target.value)}
-          />
-        </div>
+        
         <button type="submit" onClick={handleSubmitAccounts}>
           Submit
         </button>
       </form>
+
     </div>
+      
   );
 }

@@ -16,15 +16,14 @@ class accountsModel{
         public ? string $region = null,
         public ? string $email = null,
         public ? string $password = null,
-        public ? bool $image_path = false,
+        public ? string $image_path = null,
     ) {}
     // Get by id
     function GetAccountById($id){
         $db = new db();
-        $query = $db->query('SELECT *
-        FROM `accounts` as a 
-        where a.account_id = ?'
-        , $id)->fetchSingle();
+        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
+        CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path 
+        FROM accounts as a WHERE account_id = ?", $id)->fetchSingle();
         $result = new accountsModel();
         $result->account_id = $query["account_id"];
         $result->user_role = $query["user_role"];
@@ -37,7 +36,7 @@ class accountsModel{
         $result->region = $query["region"];
         $result->email = $query["email"];
         $result->password = $query["password"];
-        // $result->isAdmin = $query["isAdmin"];
+        $result->image_path = $query["image_path"];
         $db->close();
         return $result;
     }
@@ -46,8 +45,9 @@ class accountsModel{
     function GetAccountByUsername($username){
         $result = null;
         $db = new db();
-        $query = $db->query('SELECT *, 
-        FROM `accounts` as a where a.username = ?', $username)->fetchSingle();
+        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
+        CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path
+        FROM `accounts` as a WHERE a.username = ?", $username)->fetchSingle();
         if(isset($query) && sizeof($query)){
             $result = new accountsModel();
             $result->account_id = $query["account_id"];
@@ -61,7 +61,7 @@ class accountsModel{
             $result->region = $query["region"];
             $result->email = $query["email"];
             $result->password = $query["password"];
-            $result->isAdmin = $query["isAdmin"];
+            $result->image_path = $query["image_path"];
         }
         $db->close();
         return $result;
@@ -70,8 +70,8 @@ class accountsModel{
     function GetAllAccounts(){
         $db = new db();
         $result = Array();
-        // $query = $db->query('SELECT *, CASE  WHEN (SELECT admin_id FROM admins WHERE account_id = a.account_id IS NOT NULL) THEN 1 ELSE 0 END as isAdmin FROM `accounts` as a')->fetchAll();
-        $query = $db->query("SELECT a.*
+        $query = $db->query("SELECT SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
+        CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path
         FROM `accounts` as a")->fetchAll();
         foreach($query as $row){
             $obj = new accountsModel();
@@ -86,7 +86,7 @@ class accountsModel{
             $obj->region = $row["region"];
             $obj->email = $row["email"];
             $obj->password = $row["password"];
-            // $obj->isAdmin = $row["isAdmin"];
+            $obj->image_path = $row["image_path"];
             array_push($result, $obj);
         }
         $db->close();
@@ -159,6 +159,19 @@ class accountsModel{
                 $this->email,
                 $this->password,
                 $this->account_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
+
+    function SaveAvatarImagePath($accountId, $filepath){
+        $db = new db();
+        $query = $db->query("UPDATE accounts SET
+                image_path = ?
+            WHERE account_id = ?",
+                $filepath,
+                $accountId
         );
         $result = $query->affectedRows();
         $db->close();

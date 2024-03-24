@@ -16,6 +16,11 @@ export default function Genres() {
         {
           genre_id: null,
           title: toNullIfEmpty(title),
+        },
+        {
+          headers: {
+            "Authorization" : localStorage.getItem("token"),
+          },
         }
       );
       console.log(response.data);
@@ -34,6 +39,11 @@ export default function Genres() {
     .post("http://localhost:8888/api/genres.php", {
       genre_id: null,
       title: title
+    },
+    {
+      headers: {
+        "Authorization" : localStorage.getItem("token"),
+      },
     })
     .then((response) => {
       console.log(response.data)

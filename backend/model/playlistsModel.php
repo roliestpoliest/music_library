@@ -145,6 +145,19 @@ class playlistModels{
         $db->close();
         return $result;
     }
+    // Save Playlist Image
+    function SavePlaylistImage($imagePath, $playlistId){
+        $db = new db();
+        $query = $db->query("UPDATE playlists SET
+                image_path = ?
+            WHERE playlist_id = ?",
+                $imagePath,
+                $playlistId
+        );
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
     // Save or Delete
     function SaveOrUpdate(){
         $result = null;
