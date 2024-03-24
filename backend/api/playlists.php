@@ -1,7 +1,7 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 include '../model/accountsModel.php';
 include '../model/playlistsModel.php';
-header("Access-Control-Allow-Origin: *");
 
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
