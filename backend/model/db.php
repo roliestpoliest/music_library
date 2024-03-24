@@ -25,12 +25,11 @@ class db {
 
 	public function __construct() {
 		// Initialize Dotenv library
-		$dotenv = Dotenv\Dotenv::createImmutable('../');
-		
-		// Assuming you set an APP_ENV variable in Railway to indicate the environment
-		if (getenv('APP_ENV') === 'development') {
-			$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-		}
+		// $dotenv = Dotenv\Dotenv::createImmutable('../'); if dev use this line
+
+		// Make sure this line below is uncommented and the line above is commented out
+		// before you deploy to production. If you do not the whole app will die.
+		$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 		$dotenv->load();
 
 		// Now you can access your variables
