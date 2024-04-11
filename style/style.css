@@ -1,0 +1,58 @@
+body{
+    background-color: #000000;
+    color:#e3e3e3;
+    font-family: "Noto Sans", sans-serif;
+    font-size: 12pt;
+    height: 100vh;
+}
+
+form input{
+    color:#e3e3e3;
+}
+
+h3{
+    color:#e3e3e3;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+.logo_min{
+    width: 80px;
+    border-radius: 50px;
+    border: 3px solid #333;
+}
+.imageUploadPreview{
+    height: 80px;
+
+}
+
+.sidebar{
+    border-right: 1px solid #aaa;
+    height: 100vh;
+    overflow: auto;
+}
+.sidebarButton{
+    cursor: pointer;
+    margin: 10px 5px;
+}
+.sidebarButton:hover{
+    text-decoration: underline;
+}
+.sidebar a{
+    color: #e3e3e3;
+}
+.sidebar .playlist li{
+    list-style: none;padding: 10px 5px;
+}
+.sidebar .playlist li img{
+    border-radius: 40px;
+    height: 40px;
+    width: 40px;
+    vertical-align: middle;
+}
+
+.inputForm input{
+    height: 25px !important;
+}
