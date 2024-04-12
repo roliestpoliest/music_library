@@ -51,6 +51,42 @@
                     
                 </div>
             </div>
+            <div class="row">
+                <div class="col s12">
+                <form ng-submit="filterSongData()">
+                    <label>Filter by:</label>
+                    <!--input type="text" ng-model="filters.account_id" placeholder="Account Id"-->
+                    <input type="text" ng-model="filterCriteria.artist_id" placeholder="ArtistID">
+                    <input type="text" ng-model="filterCriteria.title" placeholder="Title">
+                    <input type="text" ng-model="filterCriteria.genre_id" placeholder="GenreID">
+                    <input type="text" ng-model="filterCriteria.listens" placeholder="listens">
+                    <input type="text" ng-model="filterCriteria.rating" placeholder="rating">
+                    <!-- Add more input fields for other properties -->
+                    <button type="submit">Apply Filter</button>
+                </form>
+
+                <table class="table-border">
+                        <tr>
+                            <th ng-click="sortByNumericProperty('song_id')">Song Id</th>
+                            <th ng-click="sortByNumericProperty('artist_id')">Artist Id</th>
+                            <th ng-click="sortByProperty('title')">Title</th>
+                            <th ng-click="sortByNumericProperty('duration')">Duration</th>
+                            <th ng-click="sortByNumericProperty('listens')">Listens</th>
+                            <th ng-click="sortByNumericProperty('rating')">Rating</th>
+                            <th ng-click="sortByNumericProperty('genre_id')">GenreID</th>
+                        </tr>
+                        <tr ng-repeat="user in filteredList">
+                            <td>{{user.song_id}}</td>
+                            <td>{{user.artist_id}}</td>
+                            <td>{{user.title}}</td>
+                            <td>{{user.duration}}</td>
+                            <td>{{user.listens}}</td>
+                            <td>{{user.rating}}</td>
+                            <td>{{user.genre_id}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
     <script type="text/javascript" src="./app/admin.js"></script>
