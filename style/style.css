@@ -43,15 +43,6 @@ h3{
 .sidebar a{
     color: #e3e3e3;
 }
-.sidebar .playlist li{
-    list-style: none;padding: 10px 5px;
-}
-.sidebar .playlist li img{
-    border-radius: 40px;
-    height: 40px;
-    width: 40px;
-    vertical-align: middle;
-}
 
 .inputForm input{
     height: 25px !important;

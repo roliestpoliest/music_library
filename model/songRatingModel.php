@@ -1,11 +1,5 @@
 
 <?php
-// CREATE TABLE song_ratings(
-//     account_id INT NOT NULL,
-//     song_id INT NOT NULL,
-//     user_rating INT NOT NULL
-// );
-
 class songRatingModel{
     // Get song rating by user
     function GetSongRatingByUser($accountId, $songId){
@@ -18,17 +12,6 @@ class songRatingModel{
         if(isset($query) && sizeof($query) > 0){
             $result = $query;
         }
-        // if(isset($query) && sizeof($query) > 0){
-        //     $result = new songsModel();
-        //     $result->song_id = $query["song_id"];
-        //     $result->artist_id = $query["artist_id"];
-        //     $result->title = $query["title"];
-        //     $result->duration = $query["duration"];
-        //     $result->listens = $query["listens"];
-        //     $result->rating = $query["rating"];
-        //     $result->genre_id = $query["genre_id"];
-        //     $result->audio_path = $query["audio_path"];
-        // }
         $db->close();
         return $result;
     }

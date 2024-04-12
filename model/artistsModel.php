@@ -8,13 +8,16 @@ class artistsModel{
     function GetAllArtist(){
         $db = new db();
         $result = Array();
-        $query = $db->query("SELECT *
-        FROM `artists` ORDER BY account_id")->fetchAll();
+        $query = $db->query("SELECT ar.artist_id,
+		CONCAT(ac.fname, ' ', ac.lname) AS artist_name
+        FROM `artists` AS ar
+        LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
+        ORDER BY ar.account_id")->fetchAll();
         foreach($query as $row){
-            $obj = new artistsModel();
-            $obj->artist_id = $row["artist_id"];
-            $obj->account_id = $row["account_id"];
-            array_push($result, $obj);
+            // $obj = new artistsModel();
+            // $obj->artist_id = $row["artist_id"];
+            // $obj->account_id = $row["account_id"];
+            array_push($result, $row);
         }
         $db->close();
         return $result;

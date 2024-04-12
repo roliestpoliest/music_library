@@ -34,7 +34,7 @@ $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
 // print_r($canGo);
 if(!$canGo){
-    $errMsg = new errorMessage('Error', 'Please log in before using this application');
+    $errMsg = new errorMessage('LogInError', 'Please log in before using this application');
     echo(json_encode($errMsg));
     return;
 }
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
           echo('Error moving the file.');
       }
     }else{
-      $errMsg = new errorMessage('Error', 'Account Id not found');
+      $errMsg = new errorMessage('LogInError', 'Account Id not found');
     echo(json_encode($errMsg));
     }
     return;

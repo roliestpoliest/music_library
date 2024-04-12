@@ -1,4 +1,4 @@
-var app = angular.module('AccountModel', ['ngFileUpload']);
+var app = angular.module('AccountModel', ['SidebarModel','ngFileUpload']);
 
 app.config(['$compileProvider',
     function ($compileProvider) {
@@ -7,7 +7,6 @@ app.config(['$compileProvider',
 ]);
 
 app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
-
   $scope.genders = [
       {
           name:"Male",
@@ -78,26 +77,26 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
       $scope.userInfo.DOB = moment($scope.userInfo.DOB, "MMM DD, YYYY").format('YYYY-MM-DD');
     }
     $http({
-      url: "/api/accounts.php?account_id=true",
-      method: "PUT",
-      data: $scope.userInfo,
-      headers: {
-          "Content-Type": "application/json",
-          "Authorization": localStorage.getItem("token")
-      }
-  }).then(function (response) {
-      var data = response.data;
-      console.log(data);
-      if(!validateResponse(data)){
-          displayErrorMessage(data.description);
-      }else{
-          $scope.getAccountInfo();
-      }
-  },
-  function errorCallback(response) {
-      validateStatusCode(response, true);
-      $scope.loading = false;
-  });
+        url: "/api/accounts.php?account_id=true",
+        method: "PUT",
+        data: $scope.userInfo,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": localStorage.getItem("token")
+        }
+    }).then(function (response) {
+        var data = response.data;
+        console.log(data);
+        if(!validateResponse(data)){
+            displayErrorMessage(data.description);
+        }else{
+            $scope.getAccountInfo();
+        }
+    },
+    function errorCallback(response) {
+        validateStatusCode(response, true);
+        $scope.loading = false;
+    });
   };
 
     $scope.uploadPic = function(file) {
@@ -125,7 +124,7 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
           // Math.min is to fix IE which reports 200% sometimes
           file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
         });
-      }
+    }
 
     $scope.getAccountInfo();
 }]);

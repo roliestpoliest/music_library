@@ -1,4 +1,4 @@
-var app = angular.module('HomeModel', ['ngFileUpload']);
+var app = angular.module('HomeModel', ['SidebarModel','ngFileUpload']);
 
 app.config(['$compileProvider',
     function ($compileProvider) {
@@ -7,6 +7,7 @@ app.config(['$compileProvider',
 ]);
 // app.controller('HomeController', function ($scope, $http) {
 app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
+    $scope.playlistView = true;
     $scope.getPlaylist = function(){
         $http({
             url: "/api/playlists.php?account_id=true",
@@ -18,33 +19,12 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
             }
         }).then(function (response) {
             var data = response.data;
+            console.log(data);
             if(!validateResponse(data)){
                 displayErrorMessage(data.description);
             }else{
                 $scope.playlists = data;
-            }
-        },
-        function errorCallback(response) {
-            validateStatusCode(response, true);
-            $scope.loading = false;
-        });
-    };
-
-    $scope.getRole = function(){
-        $http({
-            url: "/api/accounts.php?role=true",
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
-            }
-        }).then(function (response) {
-            var data = response.data;
-            $scope.role = data.description;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                $scope.user_role = data;
+                console.log($scope.playlists);
             }
         },
         function errorCallback(response) {
@@ -80,37 +60,7 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
         });
     };
 
-    $scope.showSearchView = function(){
-        $scope.SearchView = true;
-        $scope.playlistView = false;
-        setTimeout(() => {
-            $("#searchBar").select();
-        }, 500);
-    }
-
-    $scope.searchSong = function(playlist){
-        $scope.selectedPlaylist = angular.copy(playlist);
-        $http({
-            url: "/api/songs.php?search=" + $scope.searchTerm,
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
-            }
-        }).then(function (response) {
-            var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-                $scope.songsList = []
-            }else{
-                $scope.songsList = data;
-            }
-        },
-        function errorCallback(response) {
-            validateStatusCode(response, true);
-            $scope.loading = false;
-        });
-    };
+    
 
     $scope.loadPlaylist = function(playlist){
         $scope.selectedPlaylist = angular.copy(playlist);
@@ -226,18 +176,7 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
             // Math.min is to fix IE which reports 200% sometimes
             file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
           });
-        
-            // var data = response.data;
-            // console.log(data);
-            // if(!validateResponse(data)){
-            //     displayErrorMessage(data.description);
-            // }else{
-            //     $scope.cancelNewPlaylist();
-            //     $scope.getPlaylist();
-            // }
     };
 
-
     $scope.getPlaylist();
-    $scope.getRole();
 }]);

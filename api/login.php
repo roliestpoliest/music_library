@@ -16,4 +16,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/");
     echo(json_encode($result));
 }
+
+
+// PUT
+if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+    
+    $val = new validationModel();
+    $canGo = $val->ValidateToken($_SERVER);
+    if(!$canGo){
+        $errMsg = new errorMessage('LogInError', 'Please log in before using this application');
+        echo(json_encode($errMsg));
+        return;
+    }
+
+    if(isset($canGo->account_id)){
+        $res = $val->RemoveToken($canGo->account_id);
+        if($res > 0){
+            $logout = new errorMessage('LogInError', 'Please log in before using this application');
+            echo(json_encode($logout));
+        }
+    }
+}
+
 ?>

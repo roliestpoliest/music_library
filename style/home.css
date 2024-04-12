@@ -1,3 +1,17 @@
+.playlist{
+    height: 100vh;
+    overflow: auto;
+}
+.playlist li{
+    list-style: none;padding: 10px 5px;
+}
+.playlist li img{
+    border-radius: 40px;
+    height: 40px;
+    width: 40px;
+    vertical-align: middle;
+}
+
 .playlistHeader .playlistCover{
     border-radius: 300px;
     background-position: center center;

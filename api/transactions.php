@@ -5,7 +5,7 @@ include '../model/transactionsModel.php';
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
 if(!$canGo){
-    $errMsg = new errorMessage('Error', 'Please log in before using this application');
+    $errMsg = new errorMessage('LogInError', 'Please log in before using this application');
     echo(json_encode($errMsg));
     return;
 }

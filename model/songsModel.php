@@ -34,24 +34,41 @@ class songsModel{
         return $result;
     }
     // Get songs by artist Id
-    function GetSongsByArtistId($artist_id){
+    function GetSongsByArtistId($accountId){
+        $result = [];
         $db = new db();
-        $result = Array();
-        $query = $db->query("SELECT *
-        FROM `songs`
-        WHERE artist_id = ? ORDER BY title", $artist_id)->fetchAll();
-        foreach($query as $row){
-            $obj = new songsModel();
-            $obj->song_id = $row["song_id"];
-            $obj->artist_id = $row["artist_id"];
-            $obj->title = $row["title"];
-            $obj->duration = $row["duration"];
-            $obj->listens = $row["listens"];
-            $obj->rating = $row["rating"];
-            $obj->genre_id = $row["genre_id"];
-            $obj->audio_path = $row["audio_path"];
-            array_push($result, $obj);
+        $query = $db->query("SELECT 
+        DISTINCT 
+        s.song_id, 
+        s.artist_id, 
+        CONCAT(ac.fname, ' ', ac.lname) AS ArtistName,
+        s.title, 
+        s.duration, 
+        s.listens, 
+        (SELECT 
+            CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
+            ELSE 0 END
+            FROM song_ratings AS sr
+            WHERE sr.song_id = s.song_id) AS general_rating,
+        (SELECT sr2.user_rating
+        FROM song_ratings AS sr2
+        WHERE sr2.song_id = s.song_id AND sr2.account_id = ?) AS user_rating,
+        s.genre_id, 
+        g.title AS genreName,
+        s.audio_path 
+        FROM songs AS s 
+        LEFT JOIN artists AS a ON s.artist_id = a.artist_id
+        LEFT JOIN accounts as ac ON a.account_id = ac.account_id
+        LEFT JOIN genres AS g ON s.genre_id = g.genre_id
+        WHERE ac.account_id = ?", $accountId, $accountId)->fetchAll();
+        
+        $result = $query;
+        foreach($result as $row){
+            if(!file_exists("../uploads/".$row["audio_path"])){
+                $row["audio_path"] = "foo.mp3";
+            }
         }
+        // print_r($result);
         $db->close();
         return $result;
     }
@@ -236,10 +253,8 @@ class songsModel{
             duration,
             listens,
             rating,
-            genre_id,
-            audio_path
+            genre_id
             )VALUES(
-            ?,
             ?,
             ?,
             ?,
@@ -252,8 +267,7 @@ class songsModel{
             $this->duration,
             $this->listens,
             $this->rating,
-            $this->genre_id,
-            $this->audio_path
+            $this->genre_id
         );
         $result = $query->lastInsertID();
         $db->close();
@@ -268,8 +282,7 @@ class songsModel{
                 duration = ?,
                 listens = ?,
                 rating = ?,
-                genre_id = ?,
-                audio_path = ?
+                genre_id = ?
             WHERE song_id = ?",
                 $this->artist_id,
                 $this->title,
@@ -277,12 +290,11 @@ class songsModel{
                 $this->listens,
                 $this->rating,
                 $this->genre_id,
-                $this->audio_path,
                 $this->song_id
         );
         $result = $query->affectedRows();
         $db->close();
-        return $result;
+        return $this->song_id;
     }
     // SaveAudioPath
     function SaveAudioPath($songId, $filePath){
@@ -300,9 +312,12 @@ class songsModel{
     // Save or Delete
     function SaveOrUpdate(){
         $result = null;
+        echo($this->song_id);
         if(isset($this->song_id) && $this->song_id != null){
+            print_r("update");
             $result = $this->Update();
         }else{
+            print_r("save");
             $result = $this->Save();
         }
         return $result;

@@ -70,7 +70,7 @@ class accountsModel{
     function GetAllAccounts(){
         $db = new db();
         $result = Array();
-        $query = $db->query("SELECT SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
+        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
         CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path
         FROM `accounts` as a")->fetchAll();
         foreach($query as $row){
