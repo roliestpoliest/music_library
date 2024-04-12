@@ -28,8 +28,8 @@ var validateResponse = function (responseData, showToast = false) {
                 });
             }
             return false;
-        } else if (data.LogInError != null) { // The token isn't valid and the user will be required to log in.
-            location.assign('/index.html');
+        } else if (data.title == "LogInError") { // The token isn't valid and the user will be required to log in.
+            location.assign('/index.php');
             return false;
         } else {
             if (data.Success != null && showToast == true) { // There is a success message 

@@ -5,7 +5,7 @@ include '../model/songsModel.php';
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
 if(!$canGo){
-    $errMsg = new errorMessage('Error', 'Please log in before using this application');
+    $errMsg = new errorMessage('LogInError', 'Please log in before using this application');
     echo(json_encode($errMsg));
     return;
 }
@@ -14,7 +14,7 @@ if(!$canGo){
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $model = new songsModel();
     if(isset($_GET['artist_id'])){
-        $result = $model->GetSongsByArtistId($_GET['artist_id']);
+        $result = $model->GetSongsByArtistId($canGo->account_id);
     }elseif (isset($_GET['title'])){
         $result = $model->GetSongsByTitle($_GET['title']);
     }elseif (isset($_GET['rating'])){
@@ -38,44 +38,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if(isset($canGo->account_id)){
         $allowed = ['mp3']; 
-        $model = new songsModel();
-        $model->song_id = null;
-        $model->artist_id = $_POST["artist_id"];
-        $model->title = $_POST["title"];
-        $model->duration = 0;
-        $model->listens = 0;
-        $model->rating = 0;
-        $model->genre_id = $_POST["genre_id"];
-        $model->audio_path = null;
+        if(isset($_POST["title"])){
+            $model = new songsModel();
+            $model->song_id = $_POST["song_id"];
+            $model->artist_id = $_POST["artist_id"];
+            $model->title = $_POST["title"];
+            $model->duration = 0;
+            $model->listens = 0;
+            $model->rating = 0;
+            $model->genre_id = $_POST["genre_id"];
+            $model->audio_path = null;
 
-        $songId = $model->Save();
-        if(isset($songId)){
-            if(isset($_FILES['files'])){
-                $file = $_FILES['files'];
-                $file_tmp = $file['tmp_name'][0];
-                $timestamp = time();
-                $newfileName = $timestamp.$file['name'][0];
-                $file_ext = explode('.', $newfileName);
-                $file_ext = strtolower(end($file_ext));
-                $file_destination = '../uploads/audio'.$newfileName;
+            $songId = $model->SaveOrUpdate();
 
-                if (!in_array($file_ext, $allowed)) {
-                    echo('only files with extension .mp3');
+            if(isset($songId)){
+                if(isset($_FILES['audioFile'])){
+                    $file = $_FILES['audioFile'];
+                    $file_tmp = $file['tmp_name'][0];
+                    $timestamp = time();
+                    $newfileName = $timestamp.$file['name'][0];
+                    $file_ext = explode('.', $newfileName);
+                    $file_ext = strtolower(end($file_ext));
+                    $file_destination = '../uploads/audio'.$newfileName;
+
+                    if (!in_array($file_ext, $allowed)) {
+                        echo('only files with extension .mp3');
+                        return;
+                    }
+                    
+                    if (move_uploaded_file($file_tmp, $file_destination)) {
+                        $model = new songsModel();
+                        $model->SaveAudioPath($songId, $newfileName);
+                        echo 'File uploaded successfully';
+                    } else {
+                        echo('Error moving the file.');
+                        return;
+                    }
+                }else{
+                    $errMsg = new errorMessage('LogInError', 'Song was saved without a file reference');
+                    echo(json_encode($errMsg));
                     return;
                 }
-                
-                if (move_uploaded_file($file_tmp, $file_destination)) {
-                    $model = new songsModel();
-                    $model->SaveAudioPath($songId, $newfileName);
-                    echo 'File uploaded successfully';
-                } else {
-                    echo('Error moving the file.');
-                    return;
-                }
-            }else{
-                $errMsg = new errorMessage('Error', 'Song was saved without a file reference');
-                echo(json_encode($errMsg));
-                return;
             }
         }
     }

@@ -7,12 +7,7 @@
 </head>
 <body ng-app="AccountModel" ng-controller="AccountController" ng-cloak>
     <div class="row">
-        <div class="col s3 sidebar">
-            <div class="sidebarButton"><a href="home.php"><i class="tiny material-icons">home</i> Home</a></div>
-            <div class="sidebarButton"><i class="tiny material-icons">account_circle</i> Account</div>
-            <div class="sidebarButton" ng-if="userInfo.user_role == 'Artist' || userInfo.user_role == 'Admin'"><a href="artistHub.php"><i class="tiny material-icons">music_video</i> Artist Hub</a></div>
-            <div class="sidebarButton" ng-click="showSearchView();"><i class="tiny material-icons">search</i> Search</div>
-        </div>
+        <?php include('./sidebar.php');?>
         <div class="col s9">
             <div class="row">
                 <div class="col s1"></div>

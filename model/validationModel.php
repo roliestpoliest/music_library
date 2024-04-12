@@ -134,15 +134,17 @@ class validationModel{
         }
         return $result;
     }
-    // Validate Token
-    // function ValidateToken($externalToken){
-    //     $result = false;
-    //     $val = new validationModel();
-    //     echo($externalToken);
-    //     return $result;
-    // }
-    // function ValidateToken($userId, $token){}
 
     // Remove Token
+    function RemoveToken($accountId){
+        $db = new db();
+        $query = $db->query("DELETE FROM token_storage
+            WHERE account_id = ?",
+            $accountId
+        );
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
 }
 ?>

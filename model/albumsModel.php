@@ -52,8 +52,20 @@ class albumsModel{
         al.title,
         al.format,
         al.release_date,
-        al.rating,
-        al.image_path,
+        
+        (SELECT 
+            CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
+            ELSE 0 END
+            FROM album_ratings AS sr
+            WHERE sr.album_id = al.album_id) AS general_rating,
+
+            (SELECT sr2.user_rating
+            FROM album_ratings AS sr2
+            WHERE sr2.album_id = al.album_id AND sr2.account_id = 1) AS user_rating,
+
+
+        CASE WHEN al.image_path IS NULL THEN 'defaultAlbumCover.jpg'
+        ELSE al.image_path END AS image_path,
                 CONCAT(ac.fname, ' ', ac.lname) AS artist_name
                 FROM albums AS al
                 LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
@@ -187,17 +199,11 @@ class albumsModel{
         $db = new db();
         $query = $db->query("INSERT INTO albums(
             album_id,
-            record_label,
             artist_id,
             title,
             format,
-            release_date,
-            rating,
-            image_path
+            release_date
             )VALUES(
-            ?,
-            ?,
-            ?,
             ?,
             ?,
             ?,
@@ -205,13 +211,10 @@ class albumsModel{
             ?
             )", 
             $this->album_id,
-            $this->record_label,
             $this->artist_id,
             $this->title,
             $this->format,
-            $this->release_date,
-            $this->rating,
-            $this->image_path
+            $this->release_date
         );
         $result = $query->lastInsertID();
         $db->close();
@@ -221,26 +224,20 @@ class albumsModel{
     function Update(){
         $db = new db();
         $query = $db->query("UPDATE albums SET
-                record_label = ?,
                 artist_id = ?,
-                title_album = ?,
+                title = ?,
                 format = ?,
-                release_date = ?,
-                rating = ?,
-                image_path = ?
+                release_date = ?
             WHERE album_id = ?",
-                $this->record_label,
                 $this->artist_id,
                 $this->title,
                 $this->format,
                 $this->release_date,
-                $this->rating,
-                $this->album_id,
-                $this->image_path
+                $this->album_id
         );
         $result = $query->affectedRows();
         $db->close();
-        return $result;
+        return $this->album_id;
     }
 
     function SaveAlbumCoverImage($albumId, $imagePath){

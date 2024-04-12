@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 08, 2024 at 02:37 AM
+-- Generation Time: Apr 11, 2024 at 01:41 AM
 -- Server version: 5.7.39
 -- PHP Version: 8.2.0
 
@@ -84,7 +84,6 @@ CREATE TABLE `albums` (
   `title` varchar(255) DEFAULT 'Untitled Album',
   `format` enum('Album','Single','EP','LP','SP') NOT NULL,
   `release_date` date DEFAULT NULL,
-  `rating` int(11) DEFAULT NULL,
   `image_path` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -92,14 +91,33 @@ CREATE TABLE `albums` (
 -- Dumping data for table `albums`
 --
 
-INSERT INTO `albums` (`album_id`, `record_label`, `artist_id`, `title`, `format`, `release_date`, `rating`, `image_path`) VALUES
-(1, 'Pocoloco', 1, 'El Mero Mero', 'Album', '2024-03-01', 0, NULL),
-(2, 'Pocoloco', 8, 'El Mero Jefe', 'Album', '2024-03-01', 0, '1711228782A-Passing-View-Nicholas-Moegly-Cropped.jpg'),
-(3, 'Pocoloco', 8, 'El Mero Jefe 2', 'Album', '2024-03-01', 0, '1711228835An-Escape-Plan-Nicholas-Moegly.jpg'),
-(4, 'Pocoloco', 4, 'WP', 'Album', '2024-03-01', 0, '1711228884datsun-240z-rb26-by-wheelsbywovka-15-1200x800.jpg'),
-(5, 'Last Try', 3, 'Ok Ok', 'Album', '2024-03-01', 0, '1711232406datsun-240z-rb26-by-wheelsbywovka-4-1200x800.jpg'),
-(6, 'Last Try', 1, 'Ok Ok', 'Album', '2024-03-01', 0, NULL),
-(7, 'Last Try', 3, 'Ok Ok', 'Album', '2024-03-01', 0, '1711232712datsun-240z-rb26-by-wheelsbywovka-4-1200x800.jpg');
+INSERT INTO `albums` (`album_id`, `record_label`, `artist_id`, `title`, `format`, `release_date`, `image_path`) VALUES
+(1, 'Pocoloco', 1, 'El Mero Mero Remix 2', 'SP', '2024-03-01', '1712713257Cy-Twombly-at-the-Tate-Modern-by-Michelle-Aldredge.jpg'),
+(2, 'Pocoloco', 8, 'El Mero Jefe', 'Album', '2024-03-01', '1711228782A-Passing-View-Nicholas-Moegly-Cropped.jpg'),
+(3, 'Pocoloco', 8, 'El Mero Jefe 2', 'Album', '2024-03-01', '1711228835An-Escape-Plan-Nicholas-Moegly.jpg'),
+(4, 'Pocoloco', 4, 'WP', 'Album', '2024-03-01', '1711228884datsun-240z-rb26-by-wheelsbywovka-15-1200x800.jpg'),
+(5, 'Last Try', 3, 'Ok Ok', 'Album', '2024-03-01', '1711232406datsun-240z-rb26-by-wheelsbywovka-4-1200x800.jpg'),
+(8, NULL, 1, 'Mira La', 'LP', '2024-04-26', '1712632652RideJournal2.jpg'),
+(9, NULL, 1, 'Da GOAT', 'Single', '2024-04-05', '1712799499images.jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `album_ratings`
+--
+
+CREATE TABLE `album_ratings` (
+  `account_id` int(11) NOT NULL,
+  `album_id` int(11) NOT NULL,
+  `user_rating` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `album_ratings`
+--
+
+INSERT INTO `album_ratings` (`account_id`, `album_id`, `user_rating`) VALUES
+(1, 6, 3);
 
 -- --------------------------------------------------------
 
@@ -243,7 +261,14 @@ INSERT INTO `songs` (`song_id`, `artist_id`, `title`, `duration`, `listens`, `ra
 (12, 4, 'Song 5', 0, 0, 0, 4, '171121986204 - Sonatine en trio_ III. Animé.mp3'),
 (16, 6, 'My favorite dream', 0, 0, 0, 1, NULL),
 (17, 1, 'Mr Song', 0, 0, 0, 4, '171122309701-03- Trumpet Concerto in E-flat major (Hob VIIe 1) iii Allegro.mp3'),
-(18, 8, 'Pic pic', 0, 0, 0, 4, '171122616906 - Piano Trio_ II. Pantoum. Assez vif.mp3');
+(18, 8, 'Pic pic', 0, 0, 0, 4, '171122616906 - Piano Trio_ II. Pantoum. Assez vif.mp3'),
+(38, 1, '123 abc', 0, 0, 0, 3, '1712798842100 - Andante Spianato et Grand Polonaise Brillante, Op. 22_ II. Grande Polonaise Br.mp3'),
+(39, 1, 'Cumbia Loca', 0, 0, 0, 4, '171279890697 - Piano Sonata No. 2 in B-Flat Minor, Op. 35_ III. Marche Funébre - Lento.mp3'),
+(40, 1, 'Cumbia Locochona', 0, 0, 0, 3, NULL),
+(41, 1, 'Cambiada', 0, 0, 0, 3, NULL),
+(42, 1, 'jjuudjCambiada', 0, 0, 0, 3, NULL),
+(43, 1, 'Cambiada 123', 0, 0, 0, 3, NULL),
+(44, 1, 'da GOAT single', 0, 0, 0, 1, '171279955927 - The Well-Tempered Clavier, Book 2_ Prelude and Fugue No. 3 in C-Sharp Major, BWV 872.mp3');
 
 -- --------------------------------------------------------
 
@@ -383,8 +408,7 @@ ALTER TABLE `admins`
 -- Indexes for table `albums`
 --
 ALTER TABLE `albums`
-  ADD PRIMARY KEY (`album_id`),
-  ADD KEY `fk_albums_artists` (`artist_id`);
+  ADD PRIMARY KEY (`album_id`);
 
 --
 -- Indexes for table `artists`
@@ -482,7 +506,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `albums`
 --
 ALTER TABLE `albums`
-  MODIFY `album_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `album_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `artists`
@@ -512,7 +536,7 @@ ALTER TABLE `playlists`
 -- AUTO_INCREMENT for table `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `song_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `song_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`
@@ -535,12 +559,6 @@ ALTER TABLE `transactions`
 --
 ALTER TABLE `admins`
   ADD CONSTRAINT `fk_admins_accounts` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`account_id`);
-
---
--- Constraints for table `albums`
---
-ALTER TABLE `albums`
-  ADD CONSTRAINT `fk_albums_artists` FOREIGN KEY (`artist_id`) REFERENCES `artists` (`artist_id`);
 
 --
 -- Constraints for table `artists`

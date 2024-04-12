@@ -5,7 +5,7 @@ include_once '../model/albumsModel.php';
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
 if(!$canGo){
-    $errMsg = new errorMessage('Error', 'Please log in before using this application');
+    $errMsg = new errorMessage('LogInError', 'Please log in before using this application');
     echo(json_encode($errMsg));
     return;
 }
@@ -36,21 +36,21 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     if(isset($_POST["album_id"])){
         $model->album_id = $_POST["album_id"];
     }
-    $model->record_label = $_POST["record_label"];
+    // $model->record_label = $_POST["record_label"];
     $model->artist_id = $_POST["artist_id"];
     $model->title = $_POST["title"];
     $model->format = $_POST["format"];
     $model->release_date = $_POST["release_date"];
-    $model->rating = $_POST["rating"];
+    $model->rating = null;
     $model->image_path = null;
     $result = $model->SaveOrUpdate();
 
     if(isset($result)){
         if(isset($_FILES['files'])){
             $file = $_FILES['files'];
-            $file_tmp = $file['tmp_name'][0];
+            $file_tmp = $file['tmp_name'];
             $timestamp = time();
-            $newfileName = $timestamp.$file['name'][0];
+            $newfileName = $timestamp.$file['name'];
             $file_ext = explode('.', $newfileName);
             $file_ext = strtolower(end($file_ext));
             $file_destination = '../uploads/'.$newfileName;
