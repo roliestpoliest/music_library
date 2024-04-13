@@ -1,8 +1,6 @@
 <?php
-include '../../model/songReportsModel.php';
-include '../../model/songsModel.php';
+include '../../model/albumReportsModel.php';
 include '../../model/accountsModel.php';
-
 $val = new validationModel();
 $canGo = $val->ValidateToken($_SERVER);
 if(!$canGo){
@@ -16,6 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $json = file_get_contents('php://input');
     $data = json_decode($json);
     $formData = array();
+    if (!empty($data -> album_id) && trim($data -> album_id) !== '')
+    {
+        $formData['album_id'] = $data->album_id;
+    } 
+    if (!empty($data -> record_label) && trim($data -> record_label) !== '')
+    {
+        $formData['record_label'] = $data->record_label;
+    } 
     if (!empty($data -> artist_id) && trim($data -> artist_id) !== '')
     {
         $formData['artist_id'] = $data->artist_id;
@@ -24,13 +30,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         $formData['title'] = $data->title;
     } 
-    if (!empty($data -> genre_id) && trim($data -> genre_id) !== '')
+    if (!empty($data -> format) && trim($data -> format) !== '')
     {
-        $formData['genre_id'] = $data->genre_id;
-    } 
-    if (!empty($data -> listens) && trim($data -> listens) !== '')
-    {
-        $formData['listens'] = $data->listens;
+        $formData['format'] = $data->format;
     } 
     if (!empty($data -> rating) && trim($data -> rating) !== '')
     {
@@ -40,15 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     //$model = new reportsModel();
     if(!empty($formData))
     {  
-        $model = new songReportsModel();
-        $result = $model->GetSongsByFormData($formData);   
+        $model = new albumReportsModel();
+        $result = $model->GetAlbumsByFormData($formData);   
     }
     else
     {
         //$model = new songsModel();
         //$result = $model->GetAllSongs();  
-        $model = new songReportsModel();
-        $result = $model->GetAllSongsInfo();  
+        $model = new albumReportsModel();
+        $result = $model->GetAllAlbumsInfo();  
     } 
     echo(json_encode($result));
     return;

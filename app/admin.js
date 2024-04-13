@@ -96,6 +96,34 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         }) 
 
     };
+
+    $scope.filterAlbumData = function()
+    {
+        var formData = {
+            album_id: $scope.filterCriteria.album_id,
+            record_label: $scope.filterCriteria.record_label,
+            artist_id: $scope.filterCriteria.artist_id,
+            title: $scope.filterCriteria.title,
+            format: $scope.filterCriteria.format,
+            rating: $scope.filterCriteria.rating
+            // Add more properties as needed
+        };
+        $http({
+        url: "/api/reports/albumReports.php",
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            },
+            data: formData
+        }).then(function (response) {
+            $scope.filteredList = response.data;
+            console.log($scope.filteredList);
+        }) 
+
+    };
+
+
     $scope.directions = {
         account_id: 0,
         user_role: 0,

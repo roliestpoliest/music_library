@@ -91,6 +91,46 @@
                     </table>
                 </div>
             </div>
+            <div class="row">
+                <div class="col s12">
+                <form ng-submit="filterAlbumData()">
+                    <label>Filter by:</label>
+                    <!--input type="text" ng-model="filters.account_id" placeholder="Account Id"-->
+                    <input type="text" ng-model="filterCriteria.album_id" placeholder="AlbumID">
+                    <input type="text" ng-model="filterCriteria.record_label" placeholder="Record Label">
+                    <input type="text" ng-model="filterCriteria.artist_id" placeholder="ArtistID">
+                    <input type="text" ng-model="filterCriteria.title" placeholder="Album Title">
+                    <input type="text" ng-model="filterCriteria.format" placeholder="Format">
+                    <input type="text" ng-model="filterCriteria.rating" placeholder="rating">
+                    <!-- Add more input fields for other properties -->
+                    <button type="submit">Apply Filter</button>
+                </form>
+
+                <table class="table-border">
+                        <tr>
+                            <th ng-click="sortByNumericProperty('album_id')">Album ID</th>
+                            <th ng-click="sortByProperty('record_label')">Record Label</th>
+                            <th ng-click="sortByNumericProperty('artist_id')">Artist ID</th>
+                            <th ng-click="sortByProperty('ArtistName')">ArtistName</th>
+                            <th ng-click="sortByProperty('title')">Album Title</th>
+                            <th ng-click="sortByNumericProperty('rating')">Rating</th>
+                            <th ng-click="sortByProperty('format')">Format</th>
+                            <th ng-click="sortByProperty('release_date')">Release Date</th>
+                        </tr>
+                        <tr ng-repeat="user in filteredList track by user.album_id">
+                            <td>{{user.album_id}}</td>
+                            <td>{{user.record_label}}</td>
+                            <td>{{user.artist_id}}</td>
+                            <td>{{user.ArtistName}}</td>
+                            <td>{{user.title}}</td>
+                            <td>{{user.rating}}</td>
+                            <td>{{user.format}}</td>
+                            <td>{{user.release_date}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
         </div>
     </div>
     <script type="text/javascript" src="./app/admin.js"></script>
