@@ -37,8 +37,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else
     {
-        $model = new songsModel();
-        $result = $model->GetAllSongs();  
+        //$model = new songsModel();
+        //$result = $model->GetAllSongs();  
+        $model = new songReportsModel();
+        $result = $model->GetAllSongsInfo();  
     } 
     echo(json_encode($result));
     return;

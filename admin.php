@@ -35,7 +35,7 @@
                             <th ng-click="sortByProperty('region')">Region</th>
                             <th ng-click="sortByProperty('email')">email</th>
                         </tr>
-                        <tr ng-repeat="user in filteredList">
+                        <tr ng-repeat="user in filteredList track by user.account_id">
                             <td>{{user.account_id}}</td>
                             <td>{{user.user_role}}</td>
                             <td>{{user.fname}}</td>
@@ -69,20 +69,24 @@
                         <tr>
                             <th ng-click="sortByNumericProperty('song_id')">Song Id</th>
                             <th ng-click="sortByNumericProperty('artist_id')">Artist Id</th>
-                            <th ng-click="sortByProperty('title')">Title</th>
+                            <th ng-click="sortByProperty('ArtistName')">ArtistName</th>
+                            <th ng-click="sortByProperty('title')">Song Title</th>
                             <th ng-click="sortByNumericProperty('duration')">Duration</th>
                             <th ng-click="sortByNumericProperty('listens')">Listens</th>
                             <th ng-click="sortByNumericProperty('rating')">Rating</th>
                             <th ng-click="sortByNumericProperty('genre_id')">GenreID</th>
+                            <th ng-click="sortByProperty('genreTitle')">Genre Title</th>
                         </tr>
-                        <tr ng-repeat="user in filteredList">
+                        <tr ng-repeat="user in filteredList track by user.song_id">
                             <td>{{user.song_id}}</td>
                             <td>{{user.artist_id}}</td>
+                            <td>{{user.ArtistName}}</td>
                             <td>{{user.title}}</td>
                             <td>{{user.duration}}</td>
                             <td>{{user.listens}}</td>
                             <td>{{user.rating}}</td>
                             <td>{{user.genre_id}}</td>
+                            <td>{{user.genreTitle}}</td>
                         </tr>
                     </table>
                 </div>
