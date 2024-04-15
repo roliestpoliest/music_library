@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     if(isset($_GET['song_id'])){
         $result = $model->GetSongsInAlbumBySongId($_GET['song_id']);
     }else if(isset($_GET['album_id'])){
-        $result = $model->GetSongsInAlbumByAlbumId($_GET['album_id']);
+        $result = $model->GetSongsByAlbumId($_GET['album_id']);
     }else{
         $result = $model->GetAllSongsInAlbum();
     }
@@ -25,7 +25,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
 // POST
 if($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo("save Song");
     $json = file_get_contents('php://input');
     $data = json_decode($json);
     $model = new songs_in_albumModel();

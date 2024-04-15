@@ -64,7 +64,7 @@ class songs_in_playlistModel{
             $this->song_id,
             $this->playlist_id
         );
-        $result = $query->rowCount();
+        $result = $query->affectedRows();
         $db->close();
         return $result;
     }

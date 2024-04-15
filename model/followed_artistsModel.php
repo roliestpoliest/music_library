@@ -21,6 +21,20 @@ class followed_artistsModels{
         $db->close();
         return $result;
     }
+
+    // Is following
+    function IsFollowing($artistId, $accountId){
+        $db = new db();
+        $result = Array();
+        $query = $db->query("SELECT 
+        CASE WHEN count(1) = 0 THEN FALSE ELSE TRUE END as following
+        FROM followed_artists
+        WHERE artist_id = ?
+        AND account_id = ?;", $artistId, $accountId)->fetchSingle();
+        
+        $db->close();
+        return $query["following"];
+    }
     // Get Artists Followed by Account Id
     function GetArtistFollowedByAccountId($account_id){
         $db = new db();
@@ -73,11 +87,11 @@ class followed_artistsModels{
         return $result;
     }
     // Delete
-    function Delete(){
+    function Delete($artistId, $accountId){
         $db = new  db();
         $query = $db->query("DELETE FROM followed_artists 
         WHERE artist_id = ? AND account_id = ?", 
-        $this->artist_id, $this->account_id);
+        $artistId, $accountId);
         $result = $query->affectedRows();
         $db->close();
         return $result;

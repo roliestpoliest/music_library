@@ -62,7 +62,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $file = $_FILES['file'];
             $file_tmp = $file['tmp_name'];
             $timestamp = time();
-            $newfileName = $timestamp.$file['name'];
+            $newfileName = str_replace(' ','',$timestamp.$file['name']);
             $file_ext = explode('.', $newfileName);
             $file_ext = strtolower(end($file_ext));
             $file_destination = '../uploads/'.$newfileName;
@@ -82,6 +82,22 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     return;
 }
+
+// PUT
+if($_SERVER["REQUEST_METHOD"] == "PUT") {
+    $json = file_get_contents('php://input');
+    $data = json_decode($json);
+    $model = new playlistModels();
+    if(isset($data->playlist_id)){
+        $model->playlist_id = $data->playlist_id;
+    }
+    $model->account_id = $canGo->account_id;
+    $model->title = $data->title;
+    $model->image_path = null;
+    $result = $model->SaveOrUpdate();
+}
+
+
 // DELETE
 if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $json = file_get_contents('php://input');

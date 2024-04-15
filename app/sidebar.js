@@ -15,7 +15,6 @@ SidebarModel.controller('SidebarController', function ($scope, $http) {
                 displayErrorMessage(data.description);
             }else{
                 $scope.user_role = data;
-                console.log($scope.user_role);
             }
         },
         function errorCallback(response) {
@@ -34,8 +33,6 @@ SidebarModel.controller('SidebarController', function ($scope, $http) {
             }
         }).then(function (response) {
             var data = response.data;
-            console.log(data);
-            console.log(data.LogInError);
             if(!validateResponse(data)){
                 displayErrorMessage(data.description);
             }

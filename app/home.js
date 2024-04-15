@@ -8,6 +8,51 @@ app.config(['$compileProvider',
 // app.controller('HomeController', function ($scope, $http) {
 app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
     $scope.playlistView = true;
+    $scope.recentlyAddedSongsView = true;
+    $scope.getRecentSongs = function(){
+        $http({
+            url: "/api/songs.php?recentSongs=true",
+            method: "GET",
+            data: $scope.login,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+            $scope.suggestedSongs = data;
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+    //newReleases
+    $scope.getNewAlbumReleases = function(){
+        $http({
+            url: "/api/albums.php?newReleases=true",
+            method: "GET",
+            data: $scope.login,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+            $scope.albumReleases = data;
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+
+    $scope.goToAlbumPage = function(artistId, albumId){
+        location.assign('/artist_page.php?albumId=' + albumId + "&artistId=" + artistId);
+    };
+
     $scope.getPlaylist = function(){
         $http({
             url: "/api/playlists.php?account_id=true",
@@ -19,13 +64,8 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
             }
         }).then(function (response) {
             var data = response.data;
-            console.log(data);
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                $scope.playlists = data;
-                console.log($scope.playlists);
-            }
+            validateResponse(data);
+            $scope.playlists = data;
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
@@ -48,19 +88,32 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
             }
         }).then(function (response) {
             var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                song.user_rating = rating;
-            }
+            validateResponse(data);
+            song.user_rating = rating;
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
             $scope.loading = false;
         });
     };
-
     
+    $scope.increasePlayCount = function(songId){
+        $http({
+            url: "/api/songs.php?playCount=" + songId,
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
 
     $scope.loadPlaylist = function(playlist){
         $scope.selectedPlaylist = angular.copy(playlist);
@@ -75,8 +128,10 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
         }).then(function (response) {
             var data = response.data;
             $scope.songsList = data;
+            $scope.cancelSongMenuOption();
+            $scope.cancelNewPlaylist();
             $scope.playlistView = true;
-            $scope.SearchView = false;
+            $scope.recentlyAddedSongsView = false;
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
@@ -91,6 +146,7 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
         }else{
             $('.selected').removeClass('selected');
             $('audio').trigger("pause");
+            $scope.increasePlayCount(songId);
             $scope.currentlyPlaying = songId;
             $('#player_'+$scope.currentlyPlaying).trigger("play");
             $('#row_' + $scope.currentlyPlaying).addClass('selected');
@@ -119,12 +175,34 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
             }
         }).then(function (response) {
             var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                $scope.cancelSongMenuOption();
-                $scope.getPlaylist();
+            validateResponse(data);
+            $scope.cancelSongMenuOption();
+            $scope.getPlaylist();
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+    $scope.removeFromPlaylist = function(){
+        var params = {
+            "song_id": $scope.selectedMenuSong.song_id,
+            "playlist_id":$scope.selectedPlaylist.playlist_id
+        };
+        $http({
+            url: "/api/songs_in_playlist.php",
+            method: "DELETE",
+            data: params,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
             }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+            $scope.addToPlaylist = {};
+            $scope.cancelSongMenuOption();
+            $scope.getPlaylist();
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
@@ -134,7 +212,7 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
     $scope.cancelSongMenuOption = function(){
         $scope.showSongMenuOption = false;
         $scope.selectedMenuSong.song_id = null;
-        $scope.addToPlaylist.playlist_id = null;
+        $scope.addToPlaylist = {};
     };
 
     $scope.showNewPlaylist = function($event, playlist){
@@ -149,25 +227,59 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
     };
     $scope.cancelNewPlaylist = function(){
         $scope.showNewPlaylisMenu = false;
-        $scope.newPlaylist = null;
+        $scope.newPlaylist = {};
     };
-    $scope.saveNewPlaylist = function(file){
-        console.log(file);
+    $scope.saveNewPlaylist = function(){
+        $http({
+            url: "/api/playlists.php",
+            method: "PUT",
+            data: $scope.newPlaylist,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+            $scope.cancelNewPlaylist();
+            $scope.getPlaylist();
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+    $scope.showUpdatePlaylistImageView = function(){
+        $scope.updatePlaylistImage = true;
+    };
+    $scope.hideUpdatePlaylistImageView = function(){
+        $scope.updatePlaylistImage = false;
+    };
+    $scope.savePlaylistImage = function(file){
         if(file){
-            $scope.newPlaylist.file = file;
+            $scope.selectedPlaylist.file = file;
         }
         // return;
         file.upload = Upload.upload({
             url: '/api/playlists.php',
-            data: $scope.newPlaylist,
+            data: $scope.selectedPlaylist,
           });
       
           file.upload.then(function (response) {
             $timeout(function () {
-              console.log(response.data);
-              $scope.cancelNewPlaylist();
+              $scope.hideUpdatePlaylistImageView();
               file = null;
               $scope.getPlaylist();
+              setTimeout(() => {
+                for(this.i = 0; this.i < $scope.playlists.length; this.i++){
+                    if($scope.playlists[this.i].playlist_id == $scope.selectedPlaylist.playlist_id){
+                        $scope.selectedPlaylist = $scope.playlists[this.i];
+                        $scope.loadPlaylist($scope.selectedPlaylist);
+                        break;
+                    }
+                  }  
+              }, 300);
+              
             });
           }, function (response) {
             if (response.status > 0)
@@ -178,5 +290,28 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
           });
     };
 
+    $scope.deletePlaylistButton = function(){
+        $http({
+            url: "/api/playlists.php",
+            method: "DELETE",
+            data: $scope.selectedPlaylist,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+            $scope.selectedPlaylist = null;
+            $scope.getPlaylist();
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+
     $scope.getPlaylist();
+    $scope.getRecentSongs();
+    $scope.getNewAlbumReleases();
 }]);

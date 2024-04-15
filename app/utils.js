@@ -86,3 +86,18 @@ var isEmptyOrNull = function(variable) {
         return false;
     }
 };
+var getURLParameterValue = function(param){
+    var url = window.location.href.split("?");
+    if (url.length > 1){
+        if(url[1].indexOf("&") > 0){
+            url = url[1].split("&");
+        }
+        for(var i = 0; i < url.length; i++){
+            var urlParams = url[i].split("=");
+            if(urlParams[0]  == param){
+                return urlParams[1];
+            }
+        }
+    }
+    return null;
+};

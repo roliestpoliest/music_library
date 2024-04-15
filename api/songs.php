@@ -23,6 +23,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $result = $model->GetSongsBySongId($_GET['song_id']);
     }elseif (isset($_GET['playlist_id'])){
         $result = $model->GetSongsInPlaylist($_GET['playlist_id'], $canGo->account_id);
+    }elseif (isset($_GET['songReport'])){
+        $result = $model->GetSongsReport();
+    }elseif (isset($_GET['playCount'])){
+        $result = $model->IncreasePlayCount($_GET['playCount'], $canGo->account_id);
+    }elseif (isset($_GET['recentSongs'])){
+        $result = $model->GetRecentSongs();
     }elseif (isset($_GET['search'])){
         $result = $model->searchSong($_GET['search'], $canGo->account_id);
     }else{
@@ -56,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $file = $_FILES['audioFile'];
                     $file_tmp = $file['tmp_name'][0];
                     $timestamp = time();
-                    $newfileName = $timestamp.$file['name'][0];
+                    $newfileName = str_replace(' ', '', $timestamp.$file['name'][0]);
                     $file_ext = explode('.', $newfileName);
                     $file_ext = strtolower(end($file_ext));
                     $file_destination = '../uploads/audio'.$newfileName;

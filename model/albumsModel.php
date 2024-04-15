@@ -52,6 +52,79 @@ class albumsModel{
         al.title,
         al.format,
         al.release_date,
+        (SELECT 
+            CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
+            ELSE 0 END
+            FROM album_ratings AS sr
+            WHERE sr.album_id = al.album_id) AS general_rating,
+
+            (SELECT sr2.user_rating
+            FROM album_ratings AS sr2
+            WHERE sr2.album_id = al.album_id AND sr2.account_id = ac.account_id) AS user_rating,
+
+
+        CASE WHEN al.image_path IS NULL THEN 'defaultAlbumCover.jpg'
+        ELSE al.image_path END AS image_path,
+                CONCAT(ac.fname, ' ', ac.lname) AS artist_name
+                FROM albums AS al
+                LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
+                LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
+                WHERE ac.account_id = ?
+                ORDER BY al.title", $userId)->fetchAll();
+        foreach($query as $row){
+            array_push($result, $row);
+        }
+        $db->close();
+        return $result;
+    }
+
+    // new releases
+    function GetNewReleasedAlbums(){
+        $db = new db();
+        $result = Array();
+        $query = $db->query("SELECT 
+        al.album_id,
+        ac.account_id,
+        al.record_label,
+        al.artist_id,
+        al.title,
+        al.format,
+        al.release_date,
+        (SELECT 
+            CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
+            ELSE 0 END
+            FROM album_ratings AS sr
+            WHERE sr.album_id = al.album_id) AS general_rating,
+            (SELECT sr2.user_rating
+            FROM album_ratings AS sr2
+            WHERE sr2.album_id = al.album_id AND sr2.account_id = ac.account_id) AS user_rating,
+        CASE WHEN al.image_path IS NULL THEN 'defaultAlbumCover.jpg'
+        ELSE al.image_path END AS image_path,
+                CONCAT(ac.fname, ' ', ac.lname) AS artist_name
+                FROM albums AS al
+                LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
+                LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
+                ORDER BY al.release_date
+                LIMIT 6")->fetchAll();
+        foreach($query as $row){
+            array_push($result, $row);
+        }
+        $db->close();
+        return $result;
+    }
+    // Albums Report
+    function GetAlbumsReport(){
+        $db = new db();
+        $result = Array();
+        $query = $db->query("SELECT 
+        al.album_id,
+        ac.account_id,
+        al.record_label,
+        al.artist_id,
+        al.title,
+        al.format,
+        al.release_date,
+        (SELECT COUNT(1) FROM songs_in_album as so WHERE so.album_id = al.album_id) AS songs_in_album,
         
         (SELECT 
             CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
@@ -61,7 +134,7 @@ class albumsModel{
 
             (SELECT sr2.user_rating
             FROM album_ratings AS sr2
-            WHERE sr2.album_id = al.album_id AND sr2.account_id = 1) AS user_rating,
+            WHERE sr2.album_id = al.album_id AND sr2.account_id = ac.account_id) AS user_rating,
 
 
         CASE WHEN al.image_path IS NULL THEN 'defaultAlbumCover.jpg'
@@ -70,18 +143,8 @@ class albumsModel{
                 FROM albums AS al
                 LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
                 LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
-                WHERE ac.account_id = ?", $userId)->fetchAll();
+                ORDER BY al.title")->fetchAll();
         foreach($query as $row){
-            // $obj = new albumsModel();
-            // $obj->album_id = $row["album_id"];
-            // $obj->record_label = $row["record_label"];
-            // $obj->artist_id = $row["artist_id"];
-            // $obj->artist_name = $row["artist_name"];
-            // $obj->title = $row["title"];
-            // $obj->format = $row["format"];
-            // $obj->release_date = $row["release_date"];
-            // $obj->rating = $row["rating"];
-            // $obj->image_path = $row["image_path"];
             array_push($result, $row);
         }
         $db->close();
@@ -109,21 +172,38 @@ class albumsModel{
     }
     // Get Albums By Artist
     function GetAlbumByArtist_id($artist_id){
-        $result = null;
         $db = new db();
-        $query = $db->query("SELECT *
-        FROM `albums` as a 
-        where a.artist_id = ?", $artist_id)->fetchSingle();
-        if(isset($query) && sizeof($query) > 0){
-            $result = new albumsModel();
-            $result->album_id = $query["album_id"];
-            $result->record_label = $query["record_label"];
-            $result->artist_id = $query["artist_id"];
-            $result->title = $query["title"];
-            $result->format = $query["format"];
-            $result->release_date = $query["release_date"];
-            $result->rating = $query["rating"];
-            $result->image_path = $query["image_path"];
+        $result = Array();
+        $query = $db->query("SELECT 
+        al.album_id,
+        ac.account_id,
+        al.record_label,
+        al.artist_id,
+        al.title,
+        al.format,
+        al.release_date,
+        
+        (SELECT 
+            CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
+            ELSE 0 END
+            FROM album_ratings AS sr
+            WHERE sr.album_id = al.album_id) AS general_rating,
+
+            (SELECT sr2.user_rating
+            FROM album_ratings AS sr2
+            WHERE sr2.album_id = al.album_id AND sr2.account_id = ac.account_id) AS user_rating,
+
+
+        CASE WHEN al.image_path IS NULL THEN 'defaultAlbumCover.jpg'
+        ELSE al.image_path END AS image_path,
+                CONCAT(ac.fname, ' ', ac.lname) AS artist_name
+                FROM albums AS al
+                LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
+                LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
+                WHERE al.artist_id = ?
+                ORDER BY al.title", $artist_id)->fetchAll();
+        foreach($query as $row){
+            array_push($result, $row);
         }
         $db->close();
         return $result;

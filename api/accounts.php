@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $file_tmp = $file['tmp_name'];
     $timestamp = time();
     $timestamp = time();
-    $newfileName = $timestamp.$file['name'];
+    $newfileName = str_replace(' ','', $timestamp.$file['name']);
     $file_ext = explode('.', $newfileName);
     $file_ext = strtolower(end($file_ext));
     $file_destination = '../uploads/'.$newfileName;

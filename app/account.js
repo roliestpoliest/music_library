@@ -63,7 +63,6 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
         }else{
           $scope.userInfo = data;
           $scope.userInfo.DOB = moment($scope.userInfo.DOB, "YYYY-MM-DD").format('MMM DD, YYYY');
-          console.log($scope.userInfo);
         }
     },
     function errorCallback(response) {
@@ -86,7 +85,6 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
         }
     }).then(function (response) {
         var data = response.data;
-        console.log(data);
         if(!validateResponse(data)){
             displayErrorMessage(data.description);
         }else{
@@ -111,13 +109,11 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
     
         file.upload.then(function (response) {
           $timeout(function () {
-            console.log(response.data);
             file.result = response.data;
             $scope.updateAvatarWindor = false;
             $scope.getAccountInfo();
           });
         }, function (response) {
-            console.log(response.data);
           if (response.status > 0)
             $scope.errorMsg = response.status + ': ' + response.data;
         }, function (evt) {

@@ -8,11 +8,20 @@ class artistsModel{
     function GetAllArtist(){
         $db = new db();
         $result = Array();
-        $query = $db->query("SELECT ar.artist_id,
-		CONCAT(ac.fname, ' ', ac.lname) AS artist_name
-        FROM `artists` AS ar
-        LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
-        ORDER BY ar.account_id")->fetchAll();
+        $query = $db->query("SELECT `artist_id`,
+        ac.account_id,
+        ac.bio,
+        ar.followers,
+        CASE WHEN ac.image_path IS NULL THEN 'defaultImage.jpg'
+        ELSE ac.image_path END AS image_path,
+        CONCAT(ac.fname, ' ', ac.lname) AS artist_name,
+        (SELECT COUNT(1) FROM songs AS so WHERE so.artist_id = ar.artist_id) AS number_of_songs,
+        (SELECT COUNT(1) FROM albums AS al WHERE al.artist_id = ar.artist_id) AS number_of_albums,
+        (SELECT al2.release_date FROM albums AS al2 WHERE al2.artist_id = ar.artist_id ORDER BY al2.release_date DESC LIMIT 1 ) AS latest_album_release,
+        (SELECT al3.title FROM albums AS al3 WHERE al3.artist_id = ar.artist_id ORDER BY al3.release_date DESC LIMIT 1 ) AS latest_album_title
+                FROM `artists` AS ar
+                LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
+                ORDER BY artist_name;")->fetchAll();
         foreach($query as $row){
             // $obj = new artistsModel();
             // $obj->artist_id = $row["artist_id"];
