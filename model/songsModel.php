@@ -73,6 +73,33 @@ class songsModel{
         return $result;
     }
 
+    // Songs Report
+    function GetSongsReport(){
+        $result = [];
+        $db = new db();
+        $query = $db->query("SELECT 
+        s.song_id,
+        s.artist_id,
+        CONCAT(ac.fname, ' ', ac.lname) AS artist_name,
+        s.title,
+        s.listens,
+        (SELECT 
+                    CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
+                    ELSE 0 END
+                    FROM song_ratings AS sr
+                    WHERE sr.song_id = s.song_id) AS general_rating,
+        s.genre_id,
+        (SELECT COUNT(1) FROM songs_in_album as sia WHERE sia.song_id = s.song_id ) AS number_of_albums,
+        (SELECT COUNT(1) FROM songs_in_playlist AS sip WHERE sip.song_id = s.song_id ) AS number_of_playlist,
+        g.title AS genre
+        FROM `songs` AS s
+        LEFT JOIN genres AS g ON s.genre_id = g.genre_id
+        LEFT JOIN artists AS ar ON s.artist_id = ar.artist_id
+        LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id;")->fetchAll();
+        $db->close();
+        return $query;
+    }
+
     // Get All Songs ID and titles
     function GetAllSongTitles() {
         $db = new db();
@@ -244,6 +271,36 @@ class songsModel{
         $db->close();
         return $result;
     }
+    // 
+    function GetRecentSongs(){
+        $result = [];
+        $db = new db();
+        $query = $db->query("SELECT 
+        s.song_id, 
+        s.artist_id, 
+        CONCAT(ac.fname, ' ', ac.lname) AS ArtistName,
+        s.title, 
+        s.duration, 
+        s.listens, 
+        (SELECT 
+            CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
+            ELSE 0 END
+            FROM song_ratings AS sr
+            WHERE sr.song_id = s.song_id) AS general_rating,
+        s.genre_id, 
+        g.title AS genreName,
+        s.audio_path 
+        FROM songs AS s
+        LEFT JOIN artists AS a ON s.artist_id = a.artist_id
+        LEFT JOIN accounts as ac ON a.account_id = ac.account_id
+        LEFT JOIN genres AS g ON s.genre_id = g.genre_id
+        ORDER BY s.release_date DESC
+        LIMIT 5")->fetchAll();
+        $result = $query;
+        $db->close();
+        return $result;
+    }
+
     // Save
     function Save(){
         $db = new db();
@@ -304,6 +361,20 @@ class songsModel{
             WHERE song_id = ?",
                 $filePath,
                 $songId
+        );
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
+    // Increase play count
+    function IncreasePlayCount($songId, $accountId){
+        $db = new db();
+        $query = $db->query("INSERT INTO song_play_count(
+                song_id,
+                account_id)
+                VALUES(?,?);",
+                $songId,
+                $accountId
         );
         $result = $query->affectedRows();
         $db->close();

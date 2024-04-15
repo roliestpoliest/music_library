@@ -18,3 +18,14 @@
 .table-border td:last-child{
     border-right: none;
 }
+.genresList{
+    border: 1px solid #9a9a9a;
+    margin: 10px 10%;
+    padding: 10px 20px;
+    text-align: center;
+}
+select.browser-default.reportfilterDropdown{
+    display: inline;
+    margin: 0 10px;
+    width: 20%;
+}

@@ -55,11 +55,12 @@ app.controller('LogInController', function ($scope, $http) {
         }
     ];
 
+    $scope.newAccount = {};
     $scope.newAccount_submit = function(){
         if($scope.newAccount.DOB != null){
             $scope.newAccount.DOB = moment($scope.newAccount.DOB, "MMM DD, YYYY").format('YYYY-MM-DD');
         }
-        console.log($scope.newAccount);1
+        // console.log($scope.newAccount);1
         $http({
             url: "/api/accounts.php",
             method: "PUT",
@@ -77,7 +78,7 @@ app.controller('LogInController', function ($scope, $http) {
                 $scope.loginWindow = true;
                 $('#login.username').focus();
             }
-            console.log(data);
+            // console.log(data);
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
@@ -85,7 +86,9 @@ app.controller('LogInController', function ($scope, $http) {
         });
     };
 
+    $scope.login ={};
     $scope.loginFunction = function(){
+        // console.log($scope.login);
         $http({
             url: "/api/login.php",
             method: "POST",
@@ -96,7 +99,7 @@ app.controller('LogInController', function ($scope, $http) {
             }
         }).then(function (response) {
             var data = response.data;
-            console.log(data);
+            // console.log(data);
             if(!validateResponse(data)){
                 displayErrorMessage(data.description);
             }else{
@@ -108,6 +111,12 @@ app.controller('LogInController', function ($scope, $http) {
             $scope.loading = false;
         });
     };
-
+    
+    $scope.showLogInWindow = function(){
+        $scope.loginWindow = true;
+    };
+    $scope.hideLogInWindow = function(){
+        $scope.loginWindow = false;
+    };
+    $scope.loginWindow = true;
 });
-console.log("foo");

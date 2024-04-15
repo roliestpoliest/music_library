@@ -21,6 +21,10 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $result = $model->GetAlbumsByTitle($_GET['title']);
     }elseif (isset($_GET['myAlbums'])){
         $result = $model->GetMyAlbums($canGo->account_id);
+    }elseif (isset($_GET['newReleases'])){
+        $result = $model->GetNewReleasedAlbums();
+    }elseif (isset($_GET['albumReport'])){
+        $result = $model->GetAlbumsReport();
     }else{
         $result = $model->GetAllAlbums();
     }
@@ -50,7 +54,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
             $file = $_FILES['files'];
             $file_tmp = $file['tmp_name'];
             $timestamp = time();
-            $newfileName = $timestamp.$file['name'];
+            $newfileName = str_replace(' ','',$timestamp.$file['name']);
             $file_ext = explode('.', $newfileName);
             $file_ext = strtolower(end($file_ext));
             $file_destination = '../uploads/'.$newfileName;

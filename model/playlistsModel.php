@@ -90,16 +90,13 @@ class playlistModels{
         $db = new db();
         $query = $db->query("INSERT INTO playlists(
             account_id,
-            title,
-            image_path
+            title
             )VALUES(
-            ?,
             ?,
             ?
             )", 
             $this->account_id,
-            $this->title,
-            $this->image_path
+            $this->title
         );
         $result = $query->lastInsertID();
         $db->close();
@@ -146,8 +143,20 @@ class playlistModels{
     }
     // Delete
     function Delete(){
+        $this->DeleteAllSongsInPlaylist($this->playlist_id);
         $db = new  db();
         $query = $db->query("DELETE FROM playlists WHERE playlist_id = ?", $this->playlist_id);
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
+
+    function DeleteAllSongsInPlaylist(){
+        $db = new db();
+        $query = $db->query("DELETE FROM songs_in_playlist
+            WHERE playlist_id = ?",
+            $this->playlist_id
+        );
         $result = $query->affectedRows();
         $db->close();
         return $result;

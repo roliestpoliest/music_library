@@ -1,0 +1,56 @@
+.avatar_mini{
+    background-position: center;
+    border-radius: 20px;
+    background-size: 40px;
+    float: left;
+    height: 25px;
+    margin: 0 5px;
+    width: 25px;
+}
+
+.avatar_jumbo{
+    background-position: center;
+    border-radius: 20px;
+    background-size: 250px;
+    height: 200px;
+    margin: 10px auto;
+    width: 200px;
+}
+.albumCover{
+    background-position: center;
+    border-radius: 5px;
+    background-size: 25vh;
+    height: 20vh;
+    margin: 10px auto;
+    width: 20vh;
+    position: relative;
+}
+.albumCover h5{
+    color: #ffffff;
+    text-shadow: 1px 1px 2px #000;
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 10px 0;
+}
+.albumCover  div{
+    color: #ffffff;
+    text-shadow: 1px 1px 2px #000;
+    padding: 0;
+}
+.albumCover .albumTitle{
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
+.albumCover .albumRating{
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+}
+.followButton{
+    margin: auto;
+    padding: 5px 30px;
+    border-radius: 15px;
+    border: 1px solid #ffffff;
+    cursor: pointer;
+}

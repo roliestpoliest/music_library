@@ -1,17 +1,18 @@
 body{
-    background-color: #000000;
-    color:#e3e3e3;
+    background: linear-gradient(to bottom, #0b131b 10%, #000000 35%, #0b131b);
+    color:#cdcdcd;
     font-family: "Noto Sans", sans-serif;
     font-size: 12pt;
     height: 100vh;
+    background: #000000;
 }
 
 form input{
-    color:#e3e3e3;
+    color:#cdcdcd;
 }
 
 h3{
-    color:#e3e3e3;
+    color:#cdcdcd;
 }
 
 .clickable{
@@ -29,7 +30,7 @@ h3{
 }
 
 .sidebar{
-    border-right: 1px solid #aaa;
+    border-right: 1px solid #2e2e2e;
     height: 100vh;
     overflow: auto;
 }
@@ -41,9 +42,48 @@ h3{
     text-decoration: underline;
 }
 .sidebar a{
-    color: #e3e3e3;
+    color: #cdcdcd;
+}
+
+.sidebar ul li{
+    list-style-type: circle;
+    margin:  0 15px;
+    padding: 5px 0;
+}
+
+.sidebar li:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.sidebarGroup{
+    background-color: #121212;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 14px 5px;
 }
 
 .inputForm input{
     height: 25px !important;
+}
+.contentWrapper{
+    background-color: #121212;
+    border-radius: 10px;
+    max-height: 100vh;
+    margin: 10px 0;
+    overflow: auto;
+    padding: 14px 5px;
+}
+
+.text_left{
+    text-align: left;
+}
+.text_right{
+    text-align: right;
+}
+.text_center{
+    text-align: center;
+}
+.text_justified{
+    text-align: justify;
 }

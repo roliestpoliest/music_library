@@ -24,7 +24,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             }
         }).then(function (response) {
             var data = response.data;
-            console.log(data);
+            // console.log(data);
             validateResponse(data)
             $scope.myAlbums = data;
             for(this.i = 0; this.i < $scope.myAlbums.length; this.i++){
@@ -98,9 +98,31 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
         $scope.getArtistSongs();
     };
 
+    $scope.getSongsInAlbum = (albumId)=>{
+        // console.log(albumId);
+        $http({
+            url: "/api/songs_in_album.php?album_id=" + albumId,
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            // console.log(data);
+            validateResponse(data);
+            $scope.songsInAlbum = data;
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+
     $scope.openAlbumDetail = (album)=>{
         if(album != null){
             $scope.selectedAlbum = album;
+            $scope.getSongsInAlbum(album.album_id);
         }else{
             $scope.selectedAlbum = null;
         }
@@ -184,6 +206,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
     };
     
     $scope.deleteAlbumButton = ()=>{
+        // console.log($scope.selectedAlbum);
         $http({
             url: "/api/albums.php",
             method: "DELETE",
@@ -194,11 +217,31 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             }
         }).then(function (response) {
             var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                $scope.albumCardView = false;
+            // console.log(data);
+            validateResponse(data);
+            $scope.albumCardView = false;
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+
+    $scope.deleteSongButton = ()=>{
+        // console.log($scope.selectedAlbum);
+        $http({
+            url: "/api/songs.php",
+            method: "DELETE",
+            data: $scope.selectedSong,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
             }
+        }).then(function (response) {
+            var data = response.data;
+            // console.log(data);
+            validateResponse(data);
+            $scope.albumCardView = false;
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
@@ -233,6 +276,44 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
         $scope.songCardView = true;
     };
 
+    $scope.songMenuOption = function($event, song){
+        $scope.getAlbums();
+        $scope.selectedMenuSong = song;
+        $scope.showSongMenuOption = true;
+        $('#songMenu').css({'top':$event.clientY + 10, 'left':$event.clientX - 300});
+    };
+    $scope.cancelSongMenuOption = ()=>{
+        $scope.showSongMenuOption = false;
+        $scope.selectedMenuSong.song_id = null;
+        $scope.addToAlbum.album_id = null;
+    };
+
+    $scope.saveSongToAlbum = ()=>{
+        var params = {
+            "song_id": $scope.selectedMenuSong.song_id,
+            "album_id":$scope.addToAlbum.album_id
+        };
+        $http({
+            url: "/api/songs_in_album.php",
+            method: "POST",
+            data: params,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            // console.log(response.data);
+            validateResponse(data);
+            $scope.cancelSongMenuOption();
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
+
     $scope.getArtists();
     $scope.getGeres();
+    $scope.getArtistSongs();
 }]);

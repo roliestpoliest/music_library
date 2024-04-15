@@ -17,6 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $result = $model->GetArtistFollowedByAccountId($_GET['account_id']);
     }elseif (isset($_GET['artist_id'])){
         $result = $model->GetAccountstFollowingArtistId($_GET['artist_id']);
+    }elseif (isset($_GET['isFollowing'])){
+        $result = $model->IsFollowing($_GET['isFollowing'], $canGo->account_id);
     }else{
         $result = $model->GetAllFollowed();
     }
@@ -28,7 +30,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
     $model = new followed_artistsModels();
-    $model->account_id = $data->account_id;
+    $model->account_id = $canGo->account_id;
     $model->artist_id = $data->artist_id;
     $result = $model->Save();
     echo(json_encode($result));
@@ -39,9 +41,9 @@ if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
     $model = new followed_artistsModels();
-    $model->account_id = $data->account_id;
+    $model->account_id = $canGo->account_id;
     $model->artist_id = $data->artist_id;
-    $result = $model->Delete();
+    $result = $model->Delete($model->artist_id, $canGo->account_id);
     echo(json_encode($result));
     return;
 }

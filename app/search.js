@@ -34,6 +34,23 @@ app.controller('SearchController', ['$scope', '$http', 'Upload', '$timeout', fun
             $scope.loading = false;
         });
     };
+    $scope.increasePlayCount = function(songId){
+        $http({
+            url: "/api/songs.php?playCount=" + songId,
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    };
 
     $scope.playSong = function(songId){
         if($scope.currentlyPlaying == songId && $scope.isPaused != true){
@@ -42,6 +59,7 @@ app.controller('SearchController', ['$scope', '$http', 'Upload', '$timeout', fun
         }else{
             $('.selected').removeClass('selected');
             $('audio').trigger("pause");
+            $scope.increasePlayCount(songId);
             $scope.currentlyPlaying = songId;
             $('#player_'+$scope.currentlyPlaying).trigger("play");
             $('#row_' + $scope.currentlyPlaying).addClass('selected');
@@ -88,6 +106,9 @@ app.controller('SearchController', ['$scope', '$http', 'Upload', '$timeout', fun
         $scope.selectedMenuSong.song_id = null;
         $scope.addToPlaylist.playlist_id = null;
     };
+    setTimeout(() => {
+        $('#searchBar').focus();
+    }, 500);
     $scope.getPlaylist = function(){
         $http({
             url: "/api/playlists.php?account_id=true",
@@ -99,12 +120,10 @@ app.controller('SearchController', ['$scope', '$http', 'Upload', '$timeout', fun
             }
         }).then(function (response) {
             var data = response.data;
-            console.log(data);
             if(!validateResponse(data)){
                 displayErrorMessage(data.description);
             }else{
                 $scope.playlists = data;
-                console.log($scope.playlists);
             }
         },
         function errorCallback(response) {

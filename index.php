@@ -14,7 +14,7 @@
                     <img src="./img/Designer.png" class="logo_min">
                 </div>
                 
-                <form name="LoginForm" id="loginForm" ng-show="loginWindow">
+                <form name="LoginForm" id="loginForm" ng-if="loginWindow">
                     <h3>Log in</h3>
                     <div>
                         <label for="login_username">Usermame</label>
@@ -27,12 +27,12 @@
                     <div>
                         <button class="btn blue" ng-click="loginFunction();">Log in</button>
                     </div>
-                    <p class="clickable" ng-click="loginWindow = false;">Not enrolled yet? Create an account</p>
+                    <p class="clickable" ng-click="hideLogInWindow()">Not enrolled yet? <br> Create an account</p>
                 </form>
 
-                <form name="CreateNewAccount" id="newAccountForm" ng-hide="loginWindow">
+                <form name="CreateNewAccount" id="newAccountForm" ng-if="!loginWindow">
                     <h3>Create an Account</h3>
-                    <p class="clickable" ng-click="loginWindow=true;">Already have an account? Log in</p>
+                    <p class="clickable" ng-click="showLogInWindow();;">Already have an account? Log in</p>
                     <div>
                         <div>
                             <label for="newAccount_fname">First Name</label>
