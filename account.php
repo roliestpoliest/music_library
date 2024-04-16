@@ -62,8 +62,8 @@
                             <select id="userInfo_user_role" 
                                 class="browser-default"
                                 ng-model="userInfo.user_role"
-                                ng-options='g.role as g.role for g in roles'
-                                ng-init="userInfo.user_role = g.value">
+                                ng-options="role.role as role.role for role in filteredRoles()"
+                                ng-init="userInfo.user_role = role.value">
                                 <option value="">Select Role</option>
                             </select>
                             <input type="text" ng-model="userInfo.user_role" id="userInfo_user_role">

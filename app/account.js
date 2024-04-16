@@ -53,7 +53,7 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
   $scope.filteredRoles = function() {
     // Assuming you have a variable currentUserRole that stores the role of the current user
     // Adjust this logic based on how you obtain the current user's role
-    if (currentUserRole === 'Admin') {
+    if ($scope.currentUserRole === 'Admin') {
         // If the current user is an admin, return all roles
         return $scope.roles;
     } else {
@@ -77,6 +77,10 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
             displayErrorMessage(data.description);
         }else{
           $scope.userInfo = data;
+          //$scope.currentUserRole = data.user_role;
+          console.log(data);
+          $scope.currentUserRole = data.user_role;
+          console.log($scope.currentUserRole);
           $scope.userInfo.DOB = moment($scope.userInfo.DOB, "YYYY-MM-DD").format('MMM DD, YYYY');
         }
     },
