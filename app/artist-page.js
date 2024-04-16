@@ -54,10 +54,10 @@ app.controller('ArtistPageController', function ($scope, $http) {
     $scope.getSongsInAlbum = (albumId)=>{
         for(this.i = 0; this.i < $scope.artistAlbums.length; this.i++){
             if($scope.artistAlbums[this.i].album_id == albumId){
-                $scope.selectedAlbum = $scope.artistAlbums[this.i];
+                $scope.selectedAlbum = angular.copy($scope.artistAlbums[this.i]);
+                $scope.selectedAlbum.release_date = moment($scope.selectedAlbum.release_date, 'YYYY-MM-DD').format('MMM DD, YYYY');
                 break;
             }
-            $scope.artistAlbums[this.i].release_date = moment($scope.artistAlbums[this.i].release_date, 'YYYY-MM-DD').format('MMM DD, YYYY');
         }
         
         $http({
@@ -149,6 +149,8 @@ app.controller('ArtistPageController', function ($scope, $http) {
     $scope.selectArtist = (artist)=>{
         $scope.selectedArtist = artist;
         $scope.isFollowingArtist();
+        $scope.selectedAlbum = null;
+        $scope.songsInAlbum = null;
         $scope.getAlbums();
     };
 
@@ -166,6 +168,28 @@ app.controller('ArtistPageController', function ($scope, $http) {
             
             $scope.getAlbums();
         }
+    };
+
+    $scope.deletePlaylistButton = ()=>{
+        $http({
+            url: "/api/albums.php",
+            method: "DELETE",
+            data: $scope.selectedAlbum,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            console.log(data);
+            validateResponse(data);
+            $scope.getAlbums();
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.selectedAlbum = null;
+            $scope.songsInAlbum = null;
+        });
     };
 
     $scope.getArtists();

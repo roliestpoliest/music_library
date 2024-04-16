@@ -69,19 +69,20 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     echo(json_encode($result));
     return;
   }
+
 // DELETE
 if($_SERVER["REQUEST_METHOD"] == "DELETE") {
     $json = file_get_contents('php://input');
     $data = json_decode($json);
     $model = new albumsModel();
     $model->album_id = $data->album_id;
-    $model->record_label = $data->record_label;
-    $model->artist_id = $data->artist_id;
-    $model->title = $data->title;
-    $model->format = $data->format;
-    $model->release_date = $data->release_date;
-    $model->rating = $data->rating;
-    $model->image_path = $data->image_path;
+    // $model->record_label = $data->record_label;
+    // $model->artist_id = $data->artist_id;
+    // $model->title = $data->title;
+    // $model->format = $data->format;
+    // $model->release_date = $data->release_date;
+    // $model->rating = $data->rating;
+    // $model->image_path = $data->image_path;
     $result = $model->Delete();
     echo(json_encode($result));
     return;
