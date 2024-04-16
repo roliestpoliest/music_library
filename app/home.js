@@ -117,6 +117,7 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
 
     $scope.loadPlaylist = function(playlist){
         $scope.selectedPlaylist = angular.copy(playlist);
+        $scope.recentlyAddedSongsView = false;
         $http({
             url: "/api/songs.php?playlist_id=" + playlist.playlist_id,
             method: "GET",
