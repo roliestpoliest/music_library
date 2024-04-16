@@ -48,6 +48,21 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
       }
   ];
 
+
+
+  $scope.filteredRoles = function() {
+    // Assuming you have a variable currentUserRole that stores the role of the current user
+    // Adjust this logic based on how you obtain the current user's role
+    if (currentUserRole === 'Admin') {
+        // If the current user is an admin, return all roles
+        return $scope.roles;
+    } else {
+        // If the current user is not an admin, filter out the 'admin' role
+        return $scope.roles.filter(function(role) {
+            return role.role !== 'Admin';
+        });
+    }
+    };
   $scope.getAccountInfo = function(){
     $http({
         url: "/api/accounts.php?account_id=true",

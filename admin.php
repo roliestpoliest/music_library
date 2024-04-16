@@ -78,6 +78,8 @@
                                     <th ng-click="sortByProperty('username','userList')">Username</th>
                                     <th ng-click="sortByProperty('bio','userList')">Bio</th>
                                     <th ng-click="sortByProperty('gender','userList')">Gender</th>
+                                    <th ng-click="sortByNumericProperty('number_of_artistsFollowed','userList')"># of artists followed</th>
+                                    <th ng-click="sortByNumericProperty('number_of_playlist','userList')"># of playlist</th>
                                     <th ng-click="sortByProperty('DOB','userList')">DOB</th>
                                     <th ng-click="sortByProperty('region','userList')">Region</th>
                                     <th ng-click="sortByProperty('email','userList')">email</th>
@@ -90,6 +92,8 @@
                                     <td>{{user.username}}</td>
                                     <td>{{user.bio}}</td>
                                     <td>{{user.gender}}</td>
+                                    <td>{{user.number_of_artistsFollowed}}</td>
+                                    <td>{{user.number_of_playlist}}</td>
                                     <td>{{user.DOB}}</td>
                                     <td>{{user.region}}</td>
                                     <td>{{user.email}}</td>
@@ -118,8 +122,8 @@
                                     <td class="text_center">{{artist.number_of_albums}}</td>
                                     <td class="text_center">{{artist.number_of_songs}}</td>
                                     <td class="text_center">{{artist.followers}}</td>
-                                    <td class="text_center">{{artist.number_of_albums/artist.number_of_songs | number:0}}</td>
-                                    <td class="text_center">{{artist.latest_album_title}} ({{artist.latest_album_release | date:'MMM dd, yyyy'}})</td>
+                                    <td class="text_center">{{(artist.number_of_songs !== 0) ? (artist.number_of_albums/artist.number_of_songs | number:0) : 0}}</td>
+                                    <td class="text_center">{{artist.latest_album_title}} ({{artist.latest_album_release ? (artist.latest_album_release | date:'MMM dd, yyyy') : 'MMM dd, yyyy'}})</td>
                                 </tr>
                             </table>
                         </div>
@@ -196,14 +200,14 @@
                                 ng-change="filterAlbumReport();">
                                 <option value="">Select Artist</option>
                             </select>
-                            <label for="albumFilter_format">Genre</label>
+                            <label for="albumFilter_format">Format</label>
                             <select id="albumFilter_format" 
                                 class="browser-default reportfilterDropdown"
                                 ng-model="albumFilter.format"
                                 ng-options='a as a for a in ambumFormats'
                                 ng-init="a = albumFilter.format"
                                 ng-change="filterAlbumReport();">
-                                <option value="">Select Genre</option>
+                                <option value="">Select Format</option>
                             </select>
                             <labe for="albumFilter_rating">Rating</labe>
                             <select id="albumFilter_rating" 
@@ -226,6 +230,7 @@
                                     <th ng-click="sortByNumericProperty('songs_in_album', 'albumReport')">Songs in Album</th>
                                     <th ng-click="sortByProperty('release_date', 'albumReport')">Release Date</th>
                                     <th ng-click="sortByNumericProperty('general_rating', 'albumReport')">Ratings</th>
+                                    <th ng-click="sortByNumericProperty('total_listens', 'albumReport')">Total Listens</th>
                                 </tr>
                                 <tr ng-repeat="album in albumReport">
                                     <td class="text_left">{{album.title}}</td>
@@ -234,6 +239,7 @@
                                     <td class="text_right">{{album.songs_in_album}}</td>
                                     <td class="text_left">{{album.release_date}}</td>
                                     <td class="text_right">{{album.general_rating}}</td>
+                                    <td class="text_right">{{album.total_listens}}</td>
                                 </tr>
                             </table>
                         </div>
