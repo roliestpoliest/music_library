@@ -330,7 +330,37 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                     break;
             }
         }
-    }
+    };
+
+    $scope.showDeleteUserWarning = (user) => {
+        $scope.selectedUser = angular.copy(user);
+        $scope.deleteUserWarning = true;
+    };
+    $scope.hideDeleteUserWarning = () => {
+        $scope.deleteUserWarning = false;
+    };
+
+    $scope.deleteUser = ()=>{
+        console.log($scope.selectedUser);
+        $http({
+            url: "/api/accounts.php",
+            method: "DELETE",
+            data: $scope.selectedUser,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            console.log(data);
+            validateResponse(data);
+            $scope.hideDeleteUserWarning();
+            $scope.getAccounts();
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+        });
+    };
 
     $scope.getAccountInfo();
     $scope.getAccounts();

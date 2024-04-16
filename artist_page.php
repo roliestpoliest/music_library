@@ -60,7 +60,14 @@
                         </div>
                         <div class="col s9">
                             <hr>
-                            <h5 class="text_center"><i>{{selectedAlbum.title}}</i></h5>
+                            <h5 class="text_center">
+                                <i>{{selectedAlbum.title}}</i>
+                                <!-- <div class="deleteAlbumButton" 
+                                    ng-if="selectedAlbum"
+                                    ng-click="deletePlaylistButton();">
+                                    Delete
+                                </div> -->
+                            </h5>
                             <table ng-if="songsInAlbum.length > 0">
                                 <tr>
                                     <th>Title</th>

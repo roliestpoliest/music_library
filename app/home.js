@@ -211,7 +211,9 @@ app.controller('HomeController', ['$scope', '$http', 'Upload', '$timeout', funct
     };
     $scope.cancelSongMenuOption = function(){
         $scope.showSongMenuOption = false;
-        $scope.selectedMenuSong.song_id = null;
+        if($scope.selectedMenuSong != null){
+            $scope.selectedMenuSong.song_id = null;
+        }
         $scope.addToPlaylist = {};
     };
 

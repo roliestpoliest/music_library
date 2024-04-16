@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 14, 2024 at 09:17 PM
+-- Generation Time: Apr 16, 2024 at 07:10 AM
 -- Server version: 5.7.39
 -- PHP Version: 8.2.0
 
@@ -59,7 +59,16 @@ INSERT INTO `accounts` (`account_id`, `user_role`, `fname`, `lname`, `username`,
 (13, 'Artist', 'U', 'Kuddulmee', 'uk', 'Just Do It!', 'F', '2024-03-01', 'W', 'nana@lala.com', '123456', '17127988421001qearggo1_500.png', '2024-04-13 12:39:21'),
 (14, 'Artist', 'Ura', 'Snotball', 'ura', 'Just be like that', 'F', '2024-03-02', 'SE', 'pepe@lala.com', '123456', '17125275068104531-am5.jpg', '2024-04-13 12:39:21'),
 (15, 'Artist', 'Drew P', 'Wiener', 'drew', 'Everyone has their own problems', 'M', '2024-03-09', 'SW', 'asdasdasd', '123456', '171279884210001b6051a7bf7.jpg', '2024-04-13 12:39:21'),
-(16, 'User', 'Moe', 'Ron', 'moe', 'lollllo', 'M', '2024-04-25', 'Southeast', 'matko@lolo.com', '123456', '171280805320150307banksy-robot.jpg', '2024-04-13 12:39:21');
+(16, 'User', 'Moe', 'Ron', 'moe', 'lollllo', 'M', '2024-04-25', 'Southeast', 'matko@lolo.com', '123456', '171280805320150307banksy-robot.jpg', '2024-04-13 12:39:21'),
+(17, 'Artist', 'Marcus', 'P.', 'marcusp', 'Back to the future!', 'M', '1993-11-04', 'Northeast', 'marcus@email.com', '123456', '1713251138A2CRO.webp', '2024-04-15 23:06:30'),
+(18, 'Artist', 'Benjamin', 'Tissot', 'benjamintissot', 'Benedict eggs on Sunday morning', 'M', '1994-09-20', 'Midwest', 'tissot@email.com', '123456', '1713251260JELC3M.jpg', '2024-04-15 23:16:48'),
+(19, 'Artist', 'Lunar', 'Years', 'lunaryears', 'Year of the Dragon', 'F', '1976-01-01', 'Midwest', 'lunaryears@email.com', '123456', '1713251199BARM3BR.jpg', '2024-04-15 23:19:04'),
+(21, 'Artist', 'Diffie', 'Bosman', 'diffie', 'What\'s shakin, bacon?', 'F', '2024-04-01', 'West', 'diffie@email.com', '123456', '1713251237BB3LOVE.webp', '2024-04-15 23:21:24'),
+(22, 'Artist', 'Vital', 'Vitals', 'vital', 'Lavender Haze Latte, please', 'F', '2018-06-05', 'West', 'vital@email.com', '123456', '1713251173A2TP.jpg', '2024-04-15 23:22:20'),
+(23, 'Artist', 'Evert', 'Zeevalkink', 'evert', 'Solar Eclipse', 'F', '2024-02-18', 'Midwest', 'evert@email.com', '123456', '1713251214BAS3B.jpg', '2024-04-15 23:24:36'),
+(24, 'Artist', 'Andriy', 'Mashtalir', 'andriy', 'Pure imagination', 'M', '2024-04-01', 'Midwest', 'andriy@email.com', '123456', '1713251280SMG2F.webp', '2024-04-15 23:25:41'),
+(25, 'Artist', 'Andy', 'Bird', 'andybird', 'Two birds on a wire', 'M', '2024-04-01', 'Southwest', 'andybird@email.com', '123456', '1713251312SWM4S.webp', '2024-04-15 23:26:20'),
+(26, 'Artist', 'Veace', 'D', 'veaced', 'missing the point', 'M', '2024-01-20', 'Southeast', 'veaced@email.com', '123456', '1713251157A2DIR.jpg', '2024-04-15 23:31:04');
 
 --
 -- Triggers `accounts`
@@ -89,6 +98,12 @@ CREATE TABLE `admins` (
   `admin_id` int(10) UNSIGNED NOT NULL,
   `account_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+--
+-- Dumping data for table `admins`
+--
+
+INSERT INTO `admins` (`admin_id`, `account_id`) VALUES
+(1, 2);
 
 -- --------------------------------------------------------
 
@@ -162,8 +177,24 @@ INSERT INTO `albums` (`album_id`, `record_label`, `artist_id`, `title`, `format`
 (51, NULL, 10, 'Sonic Serenity', 'Album', '2020-10-25', NULL),
 (52, NULL, 10, 'Ambient Atmospheres', 'Album', '2021-08-02', NULL),
 (53, NULL, 2, 'Textural Tapestries', 'Album', '2022-06-15', NULL),
-(54, NULL, 2, 'Dreamscape Drifts', 'Album', '2023-07-04', NULL),
-(55, NULL, 3, 'Campfire Chronicles', 'Album', '2024-04-01', NULL);
+(55, NULL, 3, 'Campfire Chronicles', 'Album', '2024-04-01', NULL),
+
+(56, NULL, 18, 'Aural Illusion', 'Album', '2024-04-01', '1713242507flight.png'),
+(57, NULL, 18, 'Flight', 'SP', '2024-03-05', '1713242929diggingupsecrets.png'),
+(58, NULL, 18, 'Night Rider', 'Single', '2024-03-02', '1713242838nightrider.png'),
+(59, NULL, 19, 'Gravity', 'Album', '2024-04-08', '1713243769gravity.png'),
+(60, NULL, 13, 'Dreams', 'Single', '2024-01-15', '1713244078dreams.png'),
+(61, NULL, 15, 'Winterbeams', 'Album', '2019-04-10', '1713244137winterbeams.png'),
+(62, NULL, 17, 'Sad', 'Album', '2024-04-04', '1713244531sad.png'),
+(63, NULL, 17, 'Dreaming of Tomorrow', 'SP', '2024-04-01', '1713244515dreamingoftomorrow.png'),
+(64, NULL, 17, 'Zeevalkink', 'Album', '2024-03-12', '1713244570zeevalkink.png'),
+(65, NULL, 14, 'Digging Up Secrets', 'Album', '2024-04-08', '1713249261diggingupsecrets.png'),
+(66, NULL, 12, 'Warm Memory', 'SP', '2024-04-02', '1713249515warmmemory.png'),
+(67, NULL, 12, 'Marcus', 'Album', '2023-09-12', '1713249674marcus.png'),
+(68, NULL, 20, 'Cinema', 'SP', '2023-12-05', '1713249944cinema.png'),
+(69, NULL, 20, 'Breath', 'Single', '2019-04-02', '1713250043breath.png'),
+(70, NULL, 16, 'Vital', 'Album', '2023-06-19', '1713250776vital.png'),
+(71, NULL, 16, 'Morning Coffee', 'Single', '2023-04-29', '1713250813morningcoffee.png');
 
 -- --------------------------------------------------------
 
@@ -182,7 +213,10 @@ CREATE TABLE `album_ratings` (
 --
 
 INSERT INTO `album_ratings` (`account_id`, `album_id`, `user_rating`) VALUES
-(1, 6, 3);
+(1, 6, 3),
+(24, 57, 2),
+(24, 56, 5),
+(24, 58, 5);
 
 -- --------------------------------------------------------
 
@@ -211,7 +245,17 @@ INSERT INTO `artists` (`artist_id`, `account_id`, `followers`) VALUES
 (8, 12, 0),
 (9, 13, 0),
 (10, 14, 0),
-(11, 15, 0);
+(11, 15, 0),
+(12, 18, 1);
+(12, 17, 0),
+(13, 18, 0),
+(14, 19, 0),
+(15, 21, 0),
+(16, 22, 0),
+(17, 23, 0),
+(18, 24, 0),
+(19, 25, 0),
+(20, 26, 0);
 
 -- --------------------------------------------------------
 
@@ -247,7 +291,8 @@ CREATE TABLE `followed_artists` (
 --
 
 INSERT INTO `followed_artists` (`account_id`, `artist_id`) VALUES
-(2, 4);
+(2, 4),
+(2, 12);
 
 --
 -- Triggers `followed_artists`
@@ -309,6 +354,19 @@ INSERT INTO `genres` (`genre_id`, `title`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `notifications`
+--
+
+CREATE TABLE `notifications` (
+  `notification_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `date_created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `has_been_seen` tinyint(4) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `playlists`
 --
 
@@ -326,7 +384,7 @@ CREATE TABLE `playlists` (
 INSERT INTO `playlists` (`playlist_id`, `account_id`, `title`, `image_path`) VALUES
 (1, 1, 'YO YO YO', '17125297354121271-QYGBPMWA-6.jpg'),
 (2, 1, '23 and Me!', 'Buzz.jpg'),
-(15, 1, 'Play OK', NULL),
+(15, 1, 'Play OK', '1713131283kirbyIMG1783.JPG'),
 (16, 1, 'Play Bonito', '1711210738Road-Trip.jpeg'),
 (17, 1, 'Play More', '17112250178lslm.jpg'),
 (18, 1, 'Play it Again', '17112251508lslm.jpg'),
@@ -337,9 +395,10 @@ INSERT INTO `playlists` (`playlist_id`, `account_id`, `title`, `image_path`) VAL
 (48, 1, 'Cats and More', '17125271863013331-HSC00001-6.jpg'),
 (49, 1, 'More Cats', '17125275068104531-IGXITIHP-6.jpg'),
 (50, 1, '4 cat owners', '1712961832Nicholas-Moegly-A-Sudden-Rustle.jpg'),
-(51, 1, '1 cat and 2 hearts', '1712541901Cy-Twombly-at-the-Tate-Modern-by-Michelle-Aldredge.jpg'),
+(51, 1, '1 cat and 2 hearts', '1713130669DemasRusli_05.jpg'),
 (52, 1, 'Anyone can Gato', '17125281027056556-HSC00001-6.jpg'),
-(53, 2, 'My first playlist', '171280805320150307-SP6A7738.jpg');
+(59, 2, 'play play play', '17131423246517458935_1b9bf2249e_o.jpg'),
+(60, 18, 'Para Pedro', '17132379896a00d8341ca70953ef01761667849c970c-800wi.jpeg');
 
 -- --------------------------------------------------------
 
@@ -364,12 +423,12 @@ CREATE TABLE `songs` (
 --
 
 INSERT INTO `songs` (`song_id`, `artist_id`, `title`, `duration`, `listens`, `rating`, `genre_id`, `audio_path`, `release_date`) VALUES
-(7, 7, 'Mt awesome title', 0, 0, 0, 4, '171121960401 Breeze.mp3', '2024-04-13 12:34:56'),
-(8, 4, 'Song 1', 0, 0, 0, 3, '171121970002 Adrenaline.mp3', '2024-04-13 12:34:56'),
-(9, 4, 'Song 2', 0, 0, 0, 4, '171121972303 Shrimp Dance.mp3', '2024-04-13 12:34:56'),
-(10, 4, 'Song 3', 0, 0, 0, 2, '171121974005 Qualia.mp3', '2024-04-13 12:34:56'),
-(11, 4, 'Song 4', 0, 0, 0, 2, '171121981006 Sweet Tears.mp3', '2024-04-13 12:34:56'),
-(12, 4, 'Song 5', 0, 0, 0, 4, '171121986204 - Sonatine en trio_ III. Animé.mp3', '2024-04-13 12:34:56'),
+(7, 7, 'Mt awesome title', 0, 6, 0, 4, '171121960401 Breeze.mp3', '2024-04-13 12:34:56'),
+(8, 4, 'Song 1', 0, 3, 0, 3, '171121970002 Adrenaline.mp3', '2024-04-13 12:34:56'),
+(9, 4, 'Song 2', 0, 4, 0, 4, '171121972303 Shrimp Dance.mp3', '2024-04-13 12:34:56'),
+(10, 4, 'Song 3', 0, 2, 0, 2, '171121974005 Qualia.mp3', '2024-04-13 12:34:56'),
+(11, 4, 'Song 4', 0, 7, 0, 2, '171121981006 Sweet Tears.mp3', '2024-04-13 12:34:56'),
+(12, 4, 'Song 5', 0, 1, 0, 4, '171121986204 - Sonatine en trio_ III. Animé.mp3', '2024-04-13 12:34:56'),
 (17, 1, 'Mr Song', 0, 0, 0, 4, '171122309701-03- Trumpet Concerto in E-flat major (Hob VIIe 1) iii Allegro.mp3', '2024-04-13 12:34:56'),
 (18, 8, 'Pic pic', 0, 0, 0, 4, '171122616906 - Piano Trio_ II. Pantoum. Assez vif.mp3', '2024-04-13 12:34:56'),
 (38, 1, '123 abc', 0, 7, 0, 3, '1712798842100 - Andante Spianato et Grand Polonaise Brillante, Op. 22_ II. Grande Polonaise Br.mp3', '2024-04-13 12:34:56'),
@@ -390,7 +449,64 @@ INSERT INTO `songs` (`song_id`, `artist_id`, `title`, `duration`, `listens`, `ra
 (65, 3, 'Liquid Gold', NULL, NULL, NULL, 64, NULL, '2020-05-08 00:00:00'),
 (66, 3, 'Timeless Melodies', NULL, NULL, NULL, 65, NULL, '2020-05-08 00:00:00'),
 (67, 3, 'Midnight Rendezvous', NULL, NULL, NULL, 66, NULL, '2020-05-08 00:00:00'),
-(68, 3, 'Euphoric Escape', NULL, NULL, NULL, 67, NULL, '2020-05-08 00:00:00');
+(68, 3, 'Euphoric Escape', NULL, NULL, NULL, 67, NULL, '2020-05-08 00:00:00'),
+(69, 18, 'Aural Illusion', 0, 0, 0, 61, '1713242535auralillusion.mp3', '2024-04-15 23:42:15'),
+(70, 18, 'Imagination', 0, 0, 0, 61, '1713242597imagination.mp3', '2024-04-15 23:43:17'),
+(71, 18, 'Darkness', 0, 0, 0, 3, '1713242613darkness.mp3', '2024-04-15 23:43:33'),
+(72, 18, 'Take My Hand', 0, 0, 0, 65, '1713242635takemyhand.mp3', '2024-04-15 23:43:55'),
+(73, 18, 'Ciribay', 0, 0, 0, 65, '1713242656ciribay.mp3', '2024-04-15 23:44:16'),
+(74, 18, 'Ilhabela', 0, 0, 0, 61, '1713242673ilhabela.mp3', '2024-04-15 23:44:33'),
+(75, 18, 'Harmony', 0, 0, 0, 61, '1713242686harmony.mp3', '2024-04-15 23:44:46'),
+(76, 18, 'Flight Across The Serene Waters', 0, 0, 0, 3, '1713242740flightacrosstheserenewaters.mp3', '2024-04-15 23:45:40'),
+(77, 18, 'Seawalk', 0, 0, 0, 61, '1713242750seawalk.mp3', '2024-04-15 23:45:50'),
+(78, 18, 'Night Rider', 0, 0, 0, 63, '1713242772nightrider.mp3', '2024-04-15 23:46:12'),
+(79, 19, 'Part of Me', 0, 0, 0, 61, '1713243854partofme.mp3', '2024-04-16 00:04:14'),
+(80, 19, 'Kaleidoscope', 0, 0, 0, 57, '1713243876kaleidoscope.mp3', '2024-04-16 00:04:36'),
+(81, 19, 'After Light', 0, 0, 0, 57, '1713243889afterlight.mp3', '2024-04-16 00:04:49'),
+(82, 19, 'World on Fire', 0, 0, 0, 73, '1713243905worldonfire.mp3', '2024-04-16 00:05:05'),
+(83, 8, 'Gravity', 0, 0, 0, 73, '1713243983intothenight.mp3', '2024-04-16 00:06:23'),
+(84, 13, 'Dreams', 0, 0, 0, 66, '1713244097dreams.mp3', '2024-04-16 00:08:17'),
+(85, 15, 'Winterbeams', 0, 0, 0, 56, '1713244177winterbeams.mp3', '2024-04-16 00:09:37'),
+(86, 15, 'Sleepless', 0, 0, 0, 59, '1713244192sleepless.mp3', '2024-04-16 00:09:52'),
+(87, 15, 'Serene Discovery', 0, 0, 0, 3, '1713244302closertothesun.mp3', '2024-04-16 00:11:34'),
+(88, 15, 'Ghost Town', 0, 0, 0, 64, '1713244337ghosttown.mp3', '2024-04-16 00:12:17'),
+(89, 15, 'Nova Scotia', 0, 0, 0, 56, '1713244351novascotia.mp3', '2024-04-16 00:12:31'),
+(90, 15, 'Merchurochrome', 0, 0, 0, 76, '1713244368merchurochrome.mp3', '2024-04-16 00:12:48'),
+(91, 17, 'Hallow', 0, 0, 0, 3, '1713244589hollow.mp3', '2024-04-16 00:16:29'),
+(92, 17, 'Flow Like A River', 0, 0, 0, 65, '1713244610flowlikeariver.mp3', '2024-04-16 00:16:50'),
+(93, 17, 'Don\'t Leave', 0, 0, 0, 56, '1713246174dontleave.mp3', '2024-04-16 00:42:54'),
+(94, 17, 'Day of the Sun', 0, 0, 0, 56, '1713246212smoothmoves.mp3', '2024-04-16 00:43:32'),
+(95, 17, 'Aftermath', 0, 0, 0, 76, '1713246227aftermath.mp3', '2024-04-16 00:43:47'),
+(96, 17, 'The Thirteenth Day', 0, 0, 0, 57, '1713246243thethirteenthday.mp3', '2024-04-16 00:44:03'),
+(97, 17, 'The Girl and the Tree', 0, 0, 0, 73, NULL, '2024-04-16 00:44:52'),
+(98, 17, 'Don\'t Look Behind', 0, 0, 0, 59, '1713246337dontlookbehind.mp3', '2024-04-16 00:45:37'),
+(99, 17, 'Long Road', 0, 0, 0, 3, '1713246352longroad.mp3', '2024-04-16 00:45:52'),
+(100, 17, 'I\'m Ready', 0, 0, 0, 3, '1713246365imready.mp3', '2024-04-16 00:46:05'),
+(101, 17, 'Window to The World', 0, 0, 0, 64, '1713246390windowtotheworld.mp3', '2024-04-16 00:46:30'),
+(102, 17, 'Outlaws of the Old West', 0, 0, 0, 3, '1713246405outlawsoftheoldwest.mp3', '2024-04-16 00:46:45'),
+(103, 14, 'A Glipse Of Truth', 0, 0, 0, 63, '1713249360flightacrosstheserenewaters.mp3', '2024-04-16 01:36:00'),
+(104, 14, 'Event Horizon', 0, 0, 0, 63, '1713249376eventhorizon.mp3', '2024-04-16 01:36:16'),
+(105, 14, 'Age of Machines', 0, 0, 0, 70, '1713249396ageofmachines.mp3', '2024-04-16 01:36:36'),
+(106, 14, 'Unbreakable Reslove', 0, 0, 0, 57, '1713249415unbreakableresolve.mp3', '2024-04-16 01:36:55'),
+(107, 14, 'Digging Up Secrets', 0, 0, 0, 64, '1713249435diggingupsecrets.mp3', '2024-04-16 01:37:15'),
+(108, 14, 'A Moment To Cherish', 0, 0, 0, 56, '1713249455amomenttocherish.mp3', '2024-04-16 01:37:35'),
+(109, 12, 'Warm Memory', 0, 0, 0, 63, '1713249697outlawsoftheoldwest.mp3', '2024-04-16 01:41:37'),
+(110, 12, 'On Repeat', 0, 0, 0, 69, '1713249714onrepeat.mp3', '2024-04-16 01:41:54'),
+(111, 12, 'Smooth Moves', 0, 0, 0, 74, '1713249724onrepeat.mp3', '2024-04-16 01:42:04'),
+(112, 12, 'Shine Up', 0, 0, 0, 60, '1713249751shineup.mp3', '2024-04-16 01:42:31'),
+(113, 12, 'Back to the Future', 0, 0, 0, 60, '1713249764backtothefuture.mp3', '2024-04-16 01:42:44'),
+(114, 12, 'Moving Way Up', 0, 0, 0, 76, '1713249775backtothefuture.mp3', '2024-04-16 01:42:55'),
+(115, 12, 'Sunny Evening', 0, 0, 0, 75, '1713249789backtothefuture.mp3', '2024-04-16 01:43:09'),
+(116, 12, 'Good Vibes', 0, 0, 0, 57, '1713249803goodvibes.mp3', '2024-04-16 01:43:23'),
+(117, 12, 'Last Night', 0, 0, 0, 60, '1713249815lastnight.mp3', '2024-04-16 01:43:35'),
+(118, 20, 'Closer to the Sun', 0, 0, 0, 67, '1713250111closertothesun.mp3', '2024-04-16 01:48:31'),
+(119, 20, 'Oblivion', 0, 0, 0, 72, '1713250124oblivion.mp3', '2024-04-16 01:48:44'),
+(120, 20, 'Elevation', 0, 0, 0, 74, '1713250147elevation.mp3', '2024-04-16 01:49:07'),
+(121, 20, 'Breath', 0, 0, 0, 2, '1713250162breath.mp3', '2024-04-16 01:49:22'),
+(122, 16, 'Stomp', 0, 0, 0, 65, '1713250835windowtotheworld.mp3', '2024-04-16 02:00:35'),
+(123, 16, 'Easy', 0, 0, 0, 72, NULL, '2024-04-16 02:00:48'),
+(124, 16, 'Progress', 0, 0, 0, 56, '1713250867partofme.mp3', '2024-04-16 02:01:07'),
+(125, 16, 'Morning Coffee', 0, 0, 0, 1, '1713250888novascotia.mp3', '2024-04-16 02:01:28');
 
 -- --------------------------------------------------------
 
@@ -426,7 +542,64 @@ INSERT INTO `songs_in_album` (`song_id`, `album_id`) VALUES
 (65, 11),
 (66, 11),
 (67, 11),
-(68, 11);
+(68, 11),
+(69, 56),
+(70, 56),
+(71, 56),
+(72, 56),
+(73, 56),
+(74, 56),
+(75, 57),
+(76, 57),
+(77, 57),
+(78, 58),
+(79, 59),
+(80, 59),
+(81, 59),
+(82, 59),
+(84, 60),
+(85, 61),
+(86, 61),
+(87, 61),
+(88, 61),
+(89, 61),
+(90, 61),
+(93, 62),
+(94, 62),
+(95, 62),
+(96, 62),
+(97, 62),
+(91, 63),
+(92, 63),
+(96, 64),
+(97, 64),
+(98, 64),
+(99, 64),
+(101, 64),
+(103, 65),
+(104, 65),
+(105, 65),
+(106, 65),
+(107, 65),
+(108, 65),
+(109, 66),
+(110, 66),
+(111, 66),
+(111, 67),
+(112, 67),
+(113, 67),
+(114, 67),
+(115, 67),
+(116, 67),
+(117, 67),
+(118, 68),
+(119, 68),
+(120, 68),
+(121, 69),
+(122, 70),
+(123, 70),
+(124, 70),
+(125, 71);
 
 -- --------------------------------------------------------
 
@@ -453,7 +626,8 @@ INSERT INTO `songs_in_playlist` (`song_id`, `playlist_id`) VALUES
 (17, 19),
 (11, 20),
 (12, 20),
-(38, 53);
+(38, 53),
+(38, 54);
 
 -- --------------------------------------------------------
 
@@ -479,7 +653,30 @@ INSERT INTO `song_play_count` (`song_id`, `account_id`, `event_time`) VALUES
 (38, 2, '2024-04-13 12:22:06'),
 (38, 2, '2024-04-13 12:22:17'),
 (43, 2, '2024-04-13 12:22:35'),
-(38, 2, '2024-04-13 13:29:44');
+(38, 2, '2024-04-13 13:29:44'),
+(7, 1, '2024-04-14 16:22:19'),
+(7, 1, '2024-04-14 16:22:23'),
+(8, 1, '2024-04-14 16:22:26'),
+(9, 1, '2024-04-14 16:22:32'),
+(7, 1, '2024-04-14 16:22:37'),
+(7, 1, '2024-04-14 16:22:40'),
+(9, 1, '2024-04-14 16:22:42'),
+(10, 1, '2024-04-14 16:22:44'),
+(8, 1, '2024-04-14 16:22:48'),
+(7, 1, '2024-04-14 16:22:52'),
+(9, 1, '2024-04-14 16:22:54'),
+(11, 1, '2024-04-14 16:23:03'),
+(12, 1, '2024-04-14 16:23:06'),
+(10, 1, '2024-04-15 12:05:12'),
+(9, 1, '2024-04-15 12:05:17'),
+(8, 1, '2024-04-15 12:05:23'),
+(7, 1, '2024-04-15 12:05:30'),
+(11, 1, '2024-04-15 12:05:35'),
+(11, 1, '2024-04-15 12:05:39'),
+(11, 1, '2024-04-15 12:05:42'),
+(11, 1, '2024-04-15 12:05:42'),
+(11, 1, '2024-04-15 12:05:43'),
+(11, 1, '2024-04-15 12:05:43');
 
 --
 -- Triggers `song_play_count`
@@ -553,7 +750,8 @@ CREATE TABLE `token_storage` (
 --
 
 INSERT INTO `token_storage` (`account_id`, `token`, `createdDate`) VALUES
-(2, '7b1408258c2b30cf9900448532faf73f', '1713112138'),
+(1, '8ebfce2424891e1449335417ddfb6c59', '1713251320'),
+(2, 'da76893fe0d0cb4ba887c0000af67dfa', '1713130504'),
 (4, '4a25c66a46b4cf2209547c9a981e652e', '1711175722');
 
 -- --------------------------------------------------------
@@ -623,6 +821,12 @@ ALTER TABLE `genres`
   ADD PRIMARY KEY (`genre_id`);
 
 --
+-- Indexes for table `notifications`
+--
+ALTER TABLE `notifications`
+  ADD PRIMARY KEY (`notification_id`);
+
+--
 -- Indexes for table `playlists`
 --
 ALTER TABLE `playlists`
@@ -679,7 +883,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `account_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -691,13 +895,13 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `albums`
 --
 ALTER TABLE `albums`
-  MODIFY `album_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `album_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 
 --
 -- AUTO_INCREMENT for table `artists`
 --
 ALTER TABLE `artists`
-  MODIFY `artist_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `artist_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `events`
@@ -712,16 +916,22 @@ ALTER TABLE `genres`
   MODIFY `genre_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
+-- AUTO_INCREMENT for table `notifications`
+--
+ALTER TABLE `notifications`
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `playlists`
 --
 ALTER TABLE `playlists`
-  MODIFY `playlist_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `playlist_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
 --
 -- AUTO_INCREMENT for table `songs`
 --
 ALTER TABLE `songs`
-  MODIFY `song_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `song_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT for table `subscriptions`

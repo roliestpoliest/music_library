@@ -187,16 +187,7 @@ class accountsModel{
         }
         return $result;
     }
-    // Detele
-    function Delete(){
-        $db = new db();
-        $query = $db->query("DELETE FROM accounts
-            WHERE account_id = ?",
-                $this->account_id
-        );
-        $result = $query->affectedRows();
-        $db->close();
-    }
+
     function logIn($userInfo){
         $account = new accountsModel();
         $savedInfo = $account->GetAccountByUsername($userInfo->username);
@@ -211,5 +202,30 @@ class accountsModel{
         }
         return $result;
     }
+    
+    // Detele
+    function Delete(){
+        $db = new db();
+        $query = $db->query("DELETE FROM accounts
+            WHERE account_id = ?",
+                $this->account_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+    }
+
+    // delete songs
+    // function Delete(){
+    //     $db = new db();
+    //     $query = $db->query("DELETE FROM songs
+    //         WHERE account_id = ?",
+    //             $this->account_id
+    //     );
+    //     $result = $query->affectedRows();
+    //     $db->close();
+    // }
+    // delete albums
+    // delete playlists
+    // delete followers
 }
 ?>

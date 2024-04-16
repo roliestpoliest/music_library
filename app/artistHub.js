@@ -62,6 +62,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
     $scope.showArtistAlbumHub = ()=>{
         $scope.myAlbumsSection = true;
         $scope.mySongsSection = false;
+        $scope.cancelSongMenuOption();
         $scope.getAlbums();
     }
 
@@ -124,7 +125,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             $scope.selectedAlbum = album;
             $scope.getSongsInAlbum(album.album_id);
         }else{
-            $scope.selectedAlbum = null;
+            $scope.selectedAlbum = {artist_id: $scope.myArtistId};
         }
         $scope.albumCardView = true;
     };
@@ -139,10 +140,13 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             }
         }).then(function (response) {
             var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                $scope.artistList = data;
+            validateResponse(data);
+            $scope.artistList = [];
+
+            for(this.i = 0; this.i < data.length; this.i++){
+                if(data[this.i].account_id.toString() == $scope.myArtistId.toString()){
+                    $scope.artistList.push(data[this.i]);
+                }
             }
         },
         function errorCallback(response) {
@@ -217,8 +221,8 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             }
         }).then(function (response) {
             var data = response.data;
-            // console.log(data);
             validateResponse(data);
+            $scope.showArtistAlbumHub();
             $scope.albumCardView = false;
         },
         function errorCallback(response) {
@@ -284,8 +288,12 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
     };
     $scope.cancelSongMenuOption = ()=>{
         $scope.showSongMenuOption = false;
-        $scope.selectedMenuSong.song_id = null;
-        $scope.addToAlbum.album_id = null;
+        if($scope.selectedMenuSong != null){
+            $scope.selectedMenuSong.song_id = null;
+        }
+        if($scope.addToAlbum != null){
+            $scope.addToAlbum.album_id = null;
+        }
     };
 
     $scope.saveSongToAlbum = ()=>{
@@ -313,7 +321,56 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
         });
     };
 
-    $scope.getArtists();
+    $scope.RemoveSongFromAlbum = (songId, albumId)=>{
+        var params = {
+            "song_id": songId,
+            "album_id": albumId
+        };
+        $http({
+            url: "/api/songs_in_album.php",
+            method: "DELETE",
+            data: params,
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            console.log(response.data);
+            validateResponse(data);
+            // $scope.cancelSongMenuOption();
+            $scope.getSongsInAlbum(albumId);
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+            $scope.loading = false;
+        });
+    }
+
+    $scope.getuserInfo = function(callback){
+        $http({
+            url: "/api/artists.php?getArtistId=true",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            var data = response.data;
+            validateResponse(data);
+            $scope.myArtistId = parseInt(data);
+            if(callback){callback()};
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+        });
+    }; 
+
+
+    $scope.getuserInfo(function(){
+        $scope.getArtists();
+        $scope.getArtistSongs();
+    });
     $scope.getGeres();
     $scope.getArtistSongs();
 }]);

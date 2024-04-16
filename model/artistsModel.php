@@ -89,6 +89,22 @@ class artistsModel{
         return $result;
     }
     // Assign User as Artist
+    function GetArtistId($account_id){
+        $db = new db();
+        $result = Array();
+        $query = $db->query("SELECT *
+        FROM `artists` 
+        WHERE account_id = ?
+        ORDER BY account_id", $account_id)->fetchSingle();
+        $result = $query["artist_id"];
+        // foreach($query as $row){
+        //     $obj = new artistsModel();
+        //     $obj->artist_id = $row["artist_id"];
+        //     array_push($result, $obj);
+        // }
+        $db->close();
+        return $result;
+    }
     // Unassign User as Artist
     // Save
     function Save(){

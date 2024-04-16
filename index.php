@@ -30,7 +30,7 @@
                     <p class="clickable" ng-click="hideLogInWindow()">Not enrolled yet? <br> Create an account</p>
                 </form>
 
-                <form name="CreateNewAccount" id="newAccountForm" ng-if="!loginWindow">
+                <form name="CreateNewAccount" id="newAccountForm" ng-show="!loginWindow">
                     <h3>Create an Account</h3>
                     <p class="clickable" ng-click="showLogInWindow();;">Already have an account? Log in</p>
                     <div>
