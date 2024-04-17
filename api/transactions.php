@@ -13,7 +13,8 @@ if(!$canGo){
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $model = new transactionsModel();
     if(isset($_GET['account_id'])){
-        $result = $model->GetTransactionsByAccountId($_GET['account_id']);
+        //$result = $model->GetTransactionsByAccountId($_GET['account_id']);
+        $result = $model->GetTransactionsByAccountId($canGo->account_id);
     }else{
         $result = $model->GetAllTransactions();
     }
