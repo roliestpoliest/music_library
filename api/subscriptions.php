@@ -30,7 +30,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $model->end_date = $data->end_date;
     $model->length = $data->length;
     $model->price = $data->price;
-    $model->account_id = $data->account_id;
+    //$model->account_id = $data->account_id;
+    $model->account_id = $canGo->account_id;
     $model->description = $data->description;
     $result = $model->SaveOrUpdate();
     echo(json_encode($result));
