@@ -37,6 +37,40 @@
                     <span>{{ getSubscriptionPrice(newSubscription.description) }}</span>
                 </div>
                 <div>
+                    <label for="payment_type">Payment Method</label>
+                    <select id="payment_type" 
+                        class="browser-default"
+                        ng-model="newPayment.payment_source"
+                        ng-options='g.name as g.name for g in payment_source'>
+                        <option value="">Select Method</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="subscription_months">Amount of Months</label>
+                    <input autocomplete="off" type="text" ng-model="login.password">
+                </div>
+
+                <div>
+                    <label for="payment_name">First Name</label>
+                    <input autocomplete="off" type="text" ng-model="login.password">
+                </div>
+
+                <div>
+                    <label for="payment_name"> Last Name</label>
+                    <input autocomplete="off" type="text" ng-model="login.password">
+                </div>
+
+                <div>
+                    <label for="payment_number"> Card Number </label>
+                    <input autocomplete="off" type="text" ng-model="login.password">
+                </div>
+
+                <div>
+                    <label for="payment_securityCode"> Card CCV </label>
+                    <input autocomplete="off" type="text" ng-model="login.password">
+                </div>
+
+                <div>
                     <button class="btn blue" ng-click="submitSubscription();">Submit</button>
                 </div>
                 </form>
