@@ -5,6 +5,7 @@ class errorMessage{
 	public function __construct(
         public string $title,
         public string $description,
+		public ? int $indicator = null,
     ){}
 }
 

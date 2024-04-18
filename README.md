@@ -113,7 +113,7 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its prevel
               WHERE a.artist_id = NEW.artist_id
               END;
 
-f. Automatically decrese the number of follower when a user follows an artist
+5. Automatically decrese the number of follower when a user follows an artist
 
           CREATE TRIGGER reduce_follower_count
               AFTER DELETE ON followed_artists FOR EACH ROW
@@ -122,6 +122,63 @@ f. Automatically decrese the number of follower when a user follows an artist
               SET a.followers = a.followers - 1
               WHERE a.artist_id = OLD.artist_id
               END;
+
+6. Notify Artist when a user starts following
+
+            CREATE TRIGGER new_follower_notification
+            AFTER INSERT ON followed_artists FOR EACH ROW
+                BEGIN
+                    INSERT INTO notifications (account_id, message)
+                    VALUES
+                    ((SELECT ar.account_id FROM artists AS ar 
+                    WHERE ar.artist_id = NEW.artist_id),
+
+                    (SELECT
+                    CONCAT(ac.fname, ' ', ac.lname, ' has started following you!')
+                    FROM accounts AS ac
+                    WHERE ac.account_id = NEW.account_id))
+                END;
+
+7. Send welcome message after creating account
+            CREATE TRIGGER send_welcome_message
+            AFTER INSERT ON accounts FOR EACH ROW
+                BEGIN
+                INSERT INTO notifications (account_id, message)
+                VALUES
+                (NEW.account_id, ' Welcome to our music library!')
+                END;
+
+8. Reset notification counter
+        CREATE TRIGGER reset_notification_counter
+            AFTER UPDATE ON notifications FOR EACH ROW
+            BEGIN
+                UPDATE accounts SET new_notifications = 0
+                WHERE account_id = OLD.account_id
+            END;
+
+9. increase notification counter
+        CREATE TRIGGER increase_notification_counter
+            AFTER UPDATE ON notifications FOR EACH ROW
+            BEGIN
+                UPDATE accounts SET new_notifications = new_notifications + 1
+                WHERE account_id = (SELECT ar.account_id FROM artists AS ar 
+                    WHERE ar.artist_id = NEW.artist_id)
+            END;
+
+10. when a song reaches 10 plays send notification to artist
+
+            BEGIN
+                IF OLD.listens = 10 THEN
+                    INSERT INTO notifications (account_id, message)
+                    VALUES (
+                        (SELECT ar.account_id FROM artists AS ar WHERE ar.artist_id = OLD.artist_id),
+                        CONCAT('Your song ', OLD.title, ' just reached 10 listens!')
+                    );
+                    UPDATE accounts SET new_notifications = new_notifications + 1
+            WHERE account_id = (SELECT ar.account_id FROM artists AS ar 
+            WHERE ar.artist_id = OLD.artist_id);
+                END IF;
+            END
 
 ## Types of queries in your application
 

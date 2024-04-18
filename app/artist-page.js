@@ -112,6 +112,7 @@ app.controller('ArtistPageController', function ($scope, $http) {
             }
         }).then(function (response) {
             var data = response.data;
+            console.log(data);
             validateResponse(data);
             $scope.isFollowingArtist();
         },

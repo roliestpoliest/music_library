@@ -138,6 +138,9 @@
     padding: 10px 20px;
     width: 200px;
 }
+.albumReleaseCard:nth-child(5){
+    clear: both;
+}
 .albumReleaseCover{
     border-radius: 10px;
     background-size: 100px;

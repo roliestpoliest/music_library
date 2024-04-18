@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }elseif (isset($_GET['username'])){
         $result = $model->GetAccountByUsername($_GET['username']);
     }elseif (isset($_GET['role'])){
-      $result = new errorMessage('role', $canGo->user_role);
+      $result = new errorMessage('role', $canGo->user_role, $canGo->new_notifications);
     }else{
       $result = $model->GetAllAccounts();
     }

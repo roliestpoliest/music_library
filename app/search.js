@@ -89,12 +89,10 @@ app.controller('SearchController', ['$scope', '$http', 'Upload', '$timeout', fun
             }
         }).then(function (response) {
             var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                $scope.cancelSongMenuOption();
-                $scope.getPlaylist();
-            }
+            console.log(data);
+            validateResponse(data);
+            $scope.cancelSongMenuOption();
+            $scope.getPlaylist();
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
@@ -103,8 +101,12 @@ app.controller('SearchController', ['$scope', '$http', 'Upload', '$timeout', fun
     };
     $scope.cancelSongMenuOption = function(){
         $scope.showSongMenuOption = false;
-        $scope.selectedMenuSong.song_id = null;
-        $scope.addToPlaylist.playlist_id = null;
+        if($scope.selectedMenuSong != null){
+            $scope.selectedMenuSong.song_id = null;
+        }
+        if($scope.addToPlaylist != null){
+            $scope.addToPlaylist.playlist_id = null;
+        }
     };
     setTimeout(() => {
         $('#searchBar').focus();
@@ -120,11 +122,8 @@ app.controller('SearchController', ['$scope', '$http', 'Upload', '$timeout', fun
             }
         }).then(function (response) {
             var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                $scope.playlists = data;
-            }
+            validateResponse(data);
+            $scope.playlists = data;
         },
         function errorCallback(response) {
             validateStatusCode(response, true);

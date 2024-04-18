@@ -17,11 +17,14 @@ class accountsModel{
         public ? string $email = null,
         public ? string $password = null,
         public ? string $image_path = null,
+        public ? int $new_notifications = null,
+        private ? int $artist_id = null,
+        private ? int $admin_id = null,
     ) {}
     // Get by id
     function GetAccountById($id){
         $db = new db();
-        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
+        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, a.new_notifications, 
         CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path 
         FROM accounts as a WHERE account_id = ?", $id)->fetchSingle();
         $result = new accountsModel();
@@ -37,6 +40,7 @@ class accountsModel{
         $result->email = $query["email"];
         $result->password = $query["password"];
         $result->image_path = $query["image_path"];
+        $result->new_notifications = $query["new_notifications"];
         $db->close();
         return $result;
     }
@@ -205,6 +209,13 @@ class accountsModel{
     
     // Detele
     function Delete(){
+        $this->GetArtistId();
+        $this->GetAdminId();
+        $this->DeleteAlbums();
+        $this->DeleteSongs();
+        $this->DeletePlaylists();
+        $this->RemoveFromFollowers();
+        
         $db = new db();
         $query = $db->query("DELETE FROM accounts
             WHERE account_id = ?",
@@ -214,18 +225,65 @@ class accountsModel{
         $db->close();
     }
 
+    // get artist id
+    function GetArtistId(){
+        $db = new db();
+        $query = $db->query("SELECT `artist_id` FROM artists WHERE `account_id` = ?", $this->account_id)->fetchSingle();
+        $this->artist_id = $query['artist_id'];
+        $db->close();
+    }
+    // get admin id
+    function GetAdminId(){
+        // $db = new db();
+        // $query = $db->query("SELECT `admin_id` FROM admins WHERE `account_id` = ?",
+        //         $this->account_id
+        // );
+        $db = new db();
+        $query = $db->query("SELECT `admin_id` FROM admins WHERE `account_id` = ?", $this->account_id)->fetchSingle();
+        if(isset($query['admin_id'])){
+            $this->admin_id = $query['admin_id'];
+        }
+        $db->close();
+    }
     // delete songs
-    // function Delete(){
-    //     $db = new db();
-    //     $query = $db->query("DELETE FROM songs
-    //         WHERE account_id = ?",
-    //             $this->account_id
-    //     );
-    //     $result = $query->affectedRows();
-    //     $db->close();
-    // }
+    function DeleteSongs(){
+        $db = new db();
+        $query = $db->query("DELETE FROM songs
+            WHERE artist_id = ?",
+                $this->artist_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+    }
     // delete albums
+    function DeleteAlbums(){
+        $db = new db();
+        $query = $db->query("DELETE FROM albums
+            WHERE artist_id = ?",
+                $this->artist_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+    }
     // delete playlists
+    function DeletePlaylists(){
+        $db = new db();
+        $query = $db->query("DELETE FROM playlists
+            WHERE account_id = ?",
+                $this->account_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+    }
     // delete followers
+    function RemoveFromFollowers(){
+        $db = new db();
+        $query = $db->query("DELETE FROM followed_artists
+            WHERE artist_id = ?",
+                $this->artist_id
+        );
+        $result = $query->affectedRows();
+        $db->close();
+    }
 }
 ?>
