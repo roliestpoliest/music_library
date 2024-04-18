@@ -69,13 +69,11 @@ class accountsModel{
     // Get all accounts
     function GetAllAccounts(){
         $db = new db();
-        //$result = Array();
+        $result = Array();
         $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
-        (SELECT COUNT(1) FROM followed_artists as fa WHERE fa.account_id = a.account_id ) AS number_of_artistsFollowed,
-        (SELECT COUNT(1) FROM playlists AS p WHERE p.account_id = a.account_id ) AS number_of_playlist,
         CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path
         FROM `accounts` as a")->fetchAll();
-        /*foreach($query as $row){
+        foreach($query as $row){
             $obj = new accountsModel();
             $obj->account_id = $row["account_id"];
             $obj->user_role = $row["user_role"];
@@ -90,10 +88,10 @@ class accountsModel{
             $obj->password = $row["password"];
             $obj->image_path = $row["image_path"];
             array_push($result, $obj);
-        } */
+        } 
         $db->close();
-        return $query;
-        //return $result;
+        //return $query;
+        return $result;
     }
     // Save
     function Save(){

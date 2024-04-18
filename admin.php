@@ -78,8 +78,6 @@
                                     <th ng-click="sortByProperty('username','userList')">Username</th>
                                     <th ng-click="sortByProperty('bio','userList')">Bio</th>
                                     <th ng-click="sortByProperty('gender','userList')">Gender</th>
-                                    <th ng-click="sortByNumericProperty('number_of_artistsFollowed','userList')"># of artists followed</th>
-                                    <th ng-click="sortByNumericProperty('number_of_playlist','userList')"># of playlist</th>
                                     <th ng-click="sortByProperty('DOB','userList')">DOB</th>
                                     <th ng-click="sortByProperty('region','userList')">Region</th>
                                     <th ng-click="sortByProperty('email','userList')">email</th>
@@ -92,8 +90,6 @@
                                     <td>{{user.username}}</td>
                                     <td>{{user.bio}}</td>
                                     <td>{{user.gender}}</td>
-                                    <td>{{user.number_of_artistsFollowed}}</td>
-                                    <td>{{user.number_of_playlist}}</td>
                                     <td>{{user.DOB}}</td>
                                     <td>{{user.region}}</td>
                                     <td>{{user.email}}</td>
