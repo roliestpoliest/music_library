@@ -160,13 +160,13 @@
                                             <input autocomplete="off" type="text" ng-model="selectedAlbum.title">
                                         </div>
                                         <div>
-                                            <label for="selectedAlbum_artist_id">Artist</label>
+                                            <label for="selectedAlbum_artist_id">{{selectedAlbum.artist_id}} Artist</label>
                                             <select id="selectedAlbum_artist_id" 
                                                 class="browser-default"
                                                 ng-model="selectedAlbum.artist_id"
                                                 ng-options='p.artist_id as p.artist_name for p in artistList'
                                                 ng-init="selectedAlbum.artist_id = p.artist_id">
-                                                <option value="">Select Artist</option>
+                                                <option value="">{{selectedAlbum.artist_name}}</option>
                                             </select>
                                         </div>
                                         <div>
@@ -224,6 +224,10 @@
                                     <i class="tiny material-icons" ng-if="song.general_rating < 4">star_border</i>
                                     <i class="tiny material-icons" ng-if="song.general_rating == 5">star</i>
                                     <i class="tiny material-icons" ng-if="song.general_rating < 5">star_border</i>
+                                </td>
+                                <td title="Remove From Album"
+                                        ng-click="RemoveSongFromAlbum(song.song_id, selectedAlbum.album_id);">
+                                    Remove
                                 </td>
                             </tr>
                         </table>
@@ -285,7 +289,7 @@
                 class="browser-default"
                 ng-model="addToAlbum.album_id"
                 ng-options='p.album_id as p.title for p in myAlbums'>
-                <option value="">Select Playlist</option>
+                <option value="">Select Album</option>
             </select>
             <button class="btn" ng-click="saveSongToAlbum();">Save</button>
             <button class="btn red" ng-click="cancelSongMenuOption();" style="float:right">Cancel</button>

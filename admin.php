@@ -13,9 +13,9 @@
                 <!-- <div class="col s2"> -->
                     <div class="col s2 sidebar">
                         <div class="sidebarGroup">
-                            <div class="sidebarButton" ng-click="showGenresSections();">Generes</div>
+                            <!-- <div class="sidebarButton" ng-click="showGenresSections();">Generes</div> -->
                             <div class="sidebarButton" ng-click="showReportsSections();">Reports</div>
-                            <div class="" ng-if="reportsView">
+                            <div>
                                 <ul>
                                     <li ng-click="showReport('user');">User Report</li>
                                     <li ng-click="showReport('artist');">Artist Report</li>
@@ -34,7 +34,7 @@
                         <div class="genresList" ng-repeat="genere in genres">{{genere.title}}</div>
                     </div>
                 </div>
-                <div class="col s10" ng-if="reportsView">
+                <div class="col s10">
                     <div class="contentWrapper">
                         <!-- User Report -->
                         <div ng-if="userReportView">
@@ -81,6 +81,7 @@
                                     <th ng-click="sortByProperty('DOB','userList')">DOB</th>
                                     <th ng-click="sortByProperty('region','userList')">Region</th>
                                     <th ng-click="sortByProperty('email','userList')">email</th>
+                                    <th></th>
                                 </tr>
                                 <tr ng-repeat="user in userList">
                                     <td>{{user.account_id}}</td>
@@ -90,9 +91,12 @@
                                     <td>{{user.username}}</td>
                                     <td>{{user.bio}}</td>
                                     <td>{{user.gender}}</td>
-                                    <td>{{user.DOB}}</td>
+                                    <td>{{user.DOB | date: 'MMM dd, yyyy'}}</td>
                                     <td>{{user.region}}</td>
                                     <td>{{user.email}}</td>
+                                    <td>
+                                        <span class="deletePlaylistButton" ng-click="showDeleteUserWarning(user);">Delete</span>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -178,7 +182,18 @@
                                     <td class="text_right">{{song.number_of_albums}}</td>
                                     <td class="text_right">{{song.number_of_playlist | number:0}}</td>
                                     <td class="text_right">{{song.listens}}</td>
-                                    <td class="text_right">{{song.general_rating}}</td>
+                                    <td class="text_right">
+                                        <i class="tiny material-icons" ng-if="song.general_rating >= 1">star</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating < 1">star_border</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating >= 2">star</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating < 2">star_border</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating >= 3">star</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating < 3">star_border</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating >= 4">star</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating < 4">star_border</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating == 5">star</i>
+                                        <i class="tiny material-icons" ng-if="song.general_rating < 5">star_border</i>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
@@ -233,15 +248,50 @@
                                     <td>{{album.artist_name}}</td>
                                     <td>{{album.format}}</td>
                                     <td class="text_right">{{album.songs_in_album}}</td>
-                                    <td class="text_left">{{album.release_date}}</td>
-                                    <td class="text_right">{{album.general_rating}}</td>
-                                    <td class="text_right">{{album.total_listens}}</td>
+                                    <td class="text_center">{{album.release_date | date: 'MMM dd, yyyy'}}</td>
+                                    <td class="text_right">
+                                        <i class="tiny material-icons" ng-if="album.general_rating >= 1">star</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating < 1">star_border</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating >= 2">star</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating < 2">star_border</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating >= 3">star</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating < 3">star_border</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating >= 4">star</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating < 4">star_border</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating == 5">star</i>
+                                        <i class="tiny material-icons" ng-if="album.general_rating < 5">star_border</i>
+                                    </td>
                                 </tr>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="deleteUserWarningWrapper" ng-if="deleteUserWarning">
+        <div class="row" ng-click="hideDeleteUserWarning()">
+            <div class="col s12" style="height: 75px;"></div>
+        </div>
+        <div class="row">
+            <div class="col s4"></div>
+            <div class="col s4 warningSrea">
+                Are you sure you want to delete 
+                <br>
+                {{selectedUser.fname}} {{selectedUser.lname}}'s account?
+                <br>
+                This will delete all data related to this user
+                <br> all songs, albums, and playlists.
+                <div>
+                    <button class="btn blue" style="float: left; margin:10px 0;" ng-click="deleteUser();">Delete</button>
+                    <button class="btn red" style="float: right; margin:10px 0;" ng-click="hideDeleteUserWarning();">Cancel</button>
+                </div>
+            </div>
+            <div class="col s4"></div>
+        </div>
+        <div class="row"  ng-click="hideDeleteUserWarning()">
+            <div class="col s12" style="height: 375px;"></div>
         </div>
     </div>
     <script type="text/javascript" src="./app/admin.js"></script>

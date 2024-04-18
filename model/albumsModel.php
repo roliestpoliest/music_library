@@ -104,7 +104,7 @@ class albumsModel{
                 FROM albums AS al
                 LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
                 LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
-                ORDER BY al.release_date
+                ORDER BY al.release_date DESC
                 LIMIT 6")->fetchAll();
         foreach($query as $row){
             array_push($result, $row);
@@ -345,8 +345,18 @@ class albumsModel{
     }
     // Delete Album
     function Delete(){
+        $this->DeleteSongsInAlbum();
         $db = new  db();
         $query = $db->query("DELETE FROM albums WHERE album_id = ?", $this->album_id);
+        $result = $query->affectedRows();
+        $db->close();
+        return $result;
+    }
+
+    // Delete songs in album
+    function DeleteSongsInAlbum(){
+        $db = new  db();
+        $query = $db->query("DELETE FROM songs_in_album WHERE album_id = ?", $this->album_id);
         $result = $query->affectedRows();
         $db->close();
         return $result;

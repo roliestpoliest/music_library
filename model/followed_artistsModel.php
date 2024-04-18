@@ -83,6 +83,7 @@ class followed_artistsModels{
             $this->account_id
         );
         $result = $query->lastInsertID();
+
         $db->close();
         return $result;
     }

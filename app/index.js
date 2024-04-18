@@ -99,7 +99,7 @@ app.controller('LogInController', function ($scope, $http) {
             }
         }).then(function (response) {
             var data = response.data;
-            // console.log(data);
+            console.log(data);
             if(!validateResponse(data)){
                 displayErrorMessage(data.description);
             }else{

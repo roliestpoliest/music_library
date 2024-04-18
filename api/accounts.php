@@ -48,9 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     }elseif (isset($_GET['username'])){
         $result = $model->GetAccountByUsername($_GET['username']);
     }elseif (isset($_GET['role'])){
-      // print_r($canGo);
-      $result = new errorMessage('role', $canGo->user_role);
-      // $result = $canGo->user_role;
+      $result = new errorMessage('role', $canGo->user_role, $canGo->new_notifications);
     }else{
       $result = $model->GetAllAccounts();
     }
@@ -94,4 +92,13 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     return;
   }
   
+  // DELETE
+  if ($_SERVER["REQUEST_METHOD"] == "DELETE") {
+    $json = file_get_contents('php://input');
+    $data = json_decode($json);
+    $model = new accountsModel();
+    $model->account_id = $data->account_id;
+    // print_r($data);
+    $model->delete();
+  }
 ?>

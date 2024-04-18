@@ -32,10 +32,10 @@
     z-index: 5;
 }
 .albumCoverEditingPanel{
-    border-radius: 150px;
+    border-radius: 10px;
     background-position: center;
     background-size: 350px;
-    box-shadow: 0px 0px 17px #525252;
+    box-shadow: 2px 3px 7px #525252;
     height: 200px;
     line-height: 200px;
     margin: auto;

@@ -33,11 +33,7 @@ class validationModel{
     }
     // Search Account Info By Token
     function ValidateToken($headers){
-        // return true;
         $g = getallheaders();
-        // print_r($headers);
-        // echo("----------");
-        // print_r($g);
         if(isset($_COOKIE["Auth"])){
             $token = $_COOKIE["Auth"];
         }else{
@@ -70,6 +66,7 @@ class validationModel{
         $generatedToken = hash('md5', $token);
 
         if($generatedToken == $tokenObj->token){
+            // print_r($savedInfo);
             return $savedInfo;
         }
         return false;
