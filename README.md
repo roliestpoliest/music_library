@@ -20,7 +20,7 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
   * Create Albums under you artist name
   * Organize songs into albums
 * Admin
-    * Everithing under the "User" role plus
+    * Everithing under the "User" and "Artist" roles plus
     * View Reports
 
 # Getting Started
