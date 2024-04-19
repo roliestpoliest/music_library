@@ -226,8 +226,7 @@
                                     <i class="tiny material-icons" ng-if="song.general_rating < 5">star_border</i>
                                 </td>
                                 <td title="Remove From Album"
-                                        ng-click="RemoveSongFromAlbum(song.song_id, selectedAlbum.album_id);">
-                                    Remove
+                                    <button class="btn-small red" ng-click="RemoveSongFromAlbum(song.song_id, selectedAlbum.album_id)">Remove</button>
                                 </td>
                             </tr>
                         </table>
@@ -246,7 +245,7 @@
                     <h3>Song Details</h3>
                     <form>
                         <div>
-                            <label for="selectedSong_title">title</label>
+                            <label for="selectedSong_title">Title</label>
                             <input autocomplete="off" ng-model="selectedSong.title">
                         </div>
                         <div>
@@ -272,6 +271,7 @@
                             <!-- <input autocomplete="off" ng-model="selectedSong.genre_id"> -->
                         </div>
                         <div>
+                        <label for="audioFile">Select an audio file:</label>
                             <input type="file" id="audioFile" ng-model="selectedSong.audioFile" name="file"/>
                         </div>
                             <button class="btn blue" ng-click="saveSongInfo();">Save</button>
