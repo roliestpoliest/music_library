@@ -237,6 +237,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
     };
 
     $scope.deleteSongButton = ()=>{
+        // console.log($scope.selectedAlbum);
         if(confirm("Are you sure you want to delete this song?")){
             $http({
                 url: "/api/songs.php",
@@ -249,12 +250,15 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             }).then(function (response) {
                 var data = response.data;
                 validateResponse(data);
-                alert("Song successfully deleted!")
             },
             function errorCallback(response) {
                 validateStatusCode(response, true);
                 $scope.loading = false;
             });
+            $scope.songCardView = false; 
+            $scope.getArtistSongs();
+            $scope.showArtistSongsHub();
+            alert("Song sucessfully deleted!")
         }
     };
 
