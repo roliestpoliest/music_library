@@ -210,7 +210,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
     };
     
     $scope.deleteAlbumButton = ()=>{
-        if(confirm("Are you sure you want to delete this song?")){
+        if(confirm("Are you sure you want to delete this album?")){
             $http({
                 url: "/api/albums.php",
                 method: "DELETE",
