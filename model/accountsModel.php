@@ -94,8 +94,18 @@ class accountsModel{
             array_push($result, $obj);
         } 
         $db->close();
-        //return $query;
         return $result;
+    }
+
+    function GetAccountReport(){
+        $db = new db();
+        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
+        CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path
+        (SELECT COUNT(1) FROM followed_artists as fa WHERE fa.account_id = a.account_id ) AS number_of_artistsFollowed,
+        (SELECT COUNT(1) FROM playlists AS p WHERE p.account_id = a.account_id ) AS number_of_playlist,
+        FROM `accounts` as a")->fetchAll();
+        $db->close();
+        return $query;
     }
     // Save
     function Save(){

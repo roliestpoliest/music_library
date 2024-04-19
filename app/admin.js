@@ -51,6 +51,26 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         })
     };
 
+
+    $scope.getAccountsReport = function() {
+        $http({
+            url: "/api/accounts.php?accountReports = true",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            $scope.userList = response.data;
+            $scope.userListObject = response.data;
+            $scope.userList.forEach(user => {
+                if(!$scope.regions.includes(user.region)){
+                    $scope.regions.push(user.region);
+                }
+            });
+        })
+    };
+
     $scope.userFilter = [];
 
     $scope.filterUserList = ()=>{

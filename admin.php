@@ -261,6 +261,7 @@
                                         <i class="tiny material-icons" ng-if="album.general_rating == 5">star</i>
                                         <i class="tiny material-icons" ng-if="album.general_rating < 5">star_border</i>
                                     </td>
+                                    <td class="text_right">{{album.total_listens}}</td>
                                 </tr>
                             </table>
                         </div>
