@@ -37,7 +37,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
         });
     };
 
-    $scope.getGeres = ()=>{
+    $scope.getGenres = ()=>{
         $http({
             url: "/api/genres.php",
             method: "GET",
@@ -371,6 +371,6 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
         $scope.getArtists();
         $scope.getArtistSongs();
     });
-    $scope.getGeres();
+    $scope.getGenres();
     $scope.getArtistSongs();
 }]);
