@@ -169,6 +169,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             file.result = response.data;
             $scope.albumCardView = false;
             $scope.getAlbums();
+            alert("Album successfully added!")
           });
         }, function (response) {
           if (response.status > 0)
@@ -199,6 +200,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             file.result = response.data;
             $scope.songCardView = false;
             $scope.getArtistSongs();
+            alert("Song successfully added!")
           });
         }, function (response) {
           if (response.status > 0)
@@ -225,6 +227,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
                 $scope.showArtistAlbumHub();
                 $scope.albumCardView = false;
                 $scope.myAlbums = data;
+                alert("Album successfully deleted!")
             },
             function errorCallback(response) {
                 validateStatusCode(response, true);
@@ -246,13 +249,12 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             }).then(function (response) {
                 var data = response.data;
                 validateResponse(data);
+                alert("Song successfully deleted!")
             },
             function errorCallback(response) {
                 validateStatusCode(response, true);
                 $scope.loading = false;
             });
-            $scope.showArtistSongsHub();
-            $scope.songCardView = false; 
         }
     };
 
