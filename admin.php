@@ -119,6 +119,34 @@
                         <!-- Arist Report -->
                         <div ng-show="artistReportView">
                             <h3>Artist Report</h3>
+                            <h6>Report Filters</h6>
+                            <label for="artistFilter_artist">Artist</label>
+                            <select id="artistFilter_artist" 
+                                class="browser-default reportfilterDropdown"
+                                ng-model="artistFilter.artist"
+                                ng-options='a as a for a in artistFilter.artists'
+                                ng-init="a = artistFilter.artist"
+                                ng-change="filterArtistReport();">
+                                <option value="">Select Artist</option>
+                            </select>
+                            <select id="artistFilter_genre" 
+                                class="browser-default reportfilterDropdown"
+                                ng-model="artistFilter.genre"
+                                ng-options='a as a for a in artistFilter.genres'
+                                ng-init="a = artistFilter.genre"
+                                ng-change="filterArtistReport();">
+                                <option value="">Select Genre</option>
+                            </select>
+                            <form>
+                            <div>
+                                <label for="artistFilter_startDate">Start Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="artistFilter.startDate" ng-change="filterArtistReport();" id="artistFilter_startDate">
+                            </div>
+                            <div>
+                                <label for="artistFilter_endDate">End Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="artistFilter.endDate" ng-change="filterArtistReport();" id="artistFilter_endDate">
+                            </div>
+                            </form>
                             <table class="table-border">
                                 <tr>
                                     <th ng-click="sortByNumericProperty('account_id','artistList')">Account Id</th>

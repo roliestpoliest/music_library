@@ -153,36 +153,33 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         });
     };
 
-   /* $scope.artistFilter = [];
+    $scope.artistFilter = [];
     $scope.filterArtistReport = ()=>{
         $scope.artistReport = [];
         $scope.artistReportObject.forEach(artist => {
-            const check = [1,1,1,1,1];
-            let canAdd = [1,1,1,1,1]
+            const check = [1,1,1,1];
+            let canAdd = [1,1,1,1]
             if(!isEmptyOrNull($scope.artistFilter.artist) && $scope.artistFilter.artist != artist.artist_name){
                 canAdd[0] = 0;
             }
-            if(!isEmptyOrNull($scope.artistFilter.genre) && $scope.artistFilter.genre != artist.genre){
+            if(!isEmptyOrNull($scope.artistFilter.genre) && $scope.artistFilter.genre != artist.prominent_genre){
                 canAdd[1] = 0;
-            }
-            if(!isEmptyOrNull($scope.artistFilter.rating) && $scope.artistFilter.rating != artist.general_rating){
-                canAdd[2] = 0;
             }
             if(!isEmptyOrNull($scope.artistFilter.startDate))
             {
-                var releaseDate = $scope.toDate(artist.release_date);
-                var filterStartDate = $scope.toDate($scope.songFilter.startDate);
+                var releaseDate = $scope.toDate(artist.latest_album_release);
+                var filterStartDate = $scope.toDate($scope.artistFilter.startDate);
                 if (releaseDate < filterStartDate) {
-                    canAdd[3] = 0;
+                    canAdd[2] = 0;
                 }
             
             }
             if(!isEmptyOrNull($scope.artistFilter.endDate))
             {
-                var releaseDate = $scope.toDate(artist.release_date);
+                var releaseDate = $scope.toDate(artist.latest_album_release);
                 var filterEndDate = $scope.toDate($scope.artistFilter.endDate);
                 if (releaseDate > filterEndDate) {
-                    canAdd[4] = 0;
+                    canAdd[3] = 0;
                 }
             }
         
@@ -190,7 +187,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 $scope.artistReport.push(artist);
             }
         });
-    }; */
+    }; 
 
     $scope.albumFilter = [];
     $scope.filterAlbumReport = ()=>{
@@ -311,6 +308,19 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             validateResponse(data)
             $scope.artistReport = data;
             $scope.artistReportObject = data;
+            $scope.artistFilter = {
+                artists: [],
+                genres: []
+            }
+            $scope.artistReport.forEach(artist => {
+                if(!$scope.artistFilter.artists.includes(artist.artist_name)){
+                    $scope.artistFilter.artists.push(artist.artist_name);
+                }
+                if(!$scope.artistFilter.genres.includes(artist.prominent_genre)){
+                    $scope.artistFilter.genres.push(artist.prominent_genre);
+                }                                                        
+
+            });
         },
         function errorCallback(response) {
             validateStatusCode(response, true);
