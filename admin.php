@@ -131,7 +131,7 @@
                                     <th>Average Songs/Album</th>
                                     <th ng-click="sortByProperty('latest_album_release')">Latest Album Release</th>
                                 </tr>
-                                <tr ng-repeat="artist in artistList">
+                                <tr ng-repeat="artist in artistReport">
                                     <td class="text_right">{{artist.account_id}}</td>
                                     <td class="text_right">{{artist.artist_id}}</td>
                                     <td>{{artist.artist_name}}</td>

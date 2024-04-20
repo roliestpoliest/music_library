@@ -153,6 +153,45 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         });
     };
 
+   /* $scope.artistFilter = [];
+    $scope.filterArtistReport = ()=>{
+        $scope.artistReport = [];
+        $scope.artistReportObject.forEach(artist => {
+            const check = [1,1,1,1,1];
+            let canAdd = [1,1,1,1,1]
+            if(!isEmptyOrNull($scope.artistFilter.artist) && $scope.artistFilter.artist != artist.artist_name){
+                canAdd[0] = 0;
+            }
+            if(!isEmptyOrNull($scope.artistFilter.genre) && $scope.artistFilter.genre != artist.genre){
+                canAdd[1] = 0;
+            }
+            if(!isEmptyOrNull($scope.artistFilter.rating) && $scope.artistFilter.rating != artist.general_rating){
+                canAdd[2] = 0;
+            }
+            if(!isEmptyOrNull($scope.artistFilter.startDate))
+            {
+                var releaseDate = $scope.toDate(artist.release_date);
+                var filterStartDate = $scope.toDate($scope.songFilter.startDate);
+                if (releaseDate < filterStartDate) {
+                    canAdd[3] = 0;
+                }
+            
+            }
+            if(!isEmptyOrNull($scope.artistFilter.endDate))
+            {
+                var releaseDate = $scope.toDate(artist.release_date);
+                var filterEndDate = $scope.toDate($scope.artistFilter.endDate);
+                if (releaseDate > filterEndDate) {
+                    canAdd[4] = 0;
+                }
+            }
+        
+            if(check.toString() == canAdd.toString()){
+                $scope.artistReport.push(artist);
+            }
+        });
+    }; */
+
     $scope.albumFilter = [];
     $scope.filterAlbumReport = ()=>{
         $scope.albumReport = [];
@@ -257,6 +296,27 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         });
     };
 
+
+    $scope.getArtistReports = ()=>{
+        $http({
+            url: "/api/artists.php?artistReport=true",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            console.log(response.data);
+            var data = response.data;
+            validateResponse(data)
+            $scope.artistReport = data;
+            $scope.artistReportObject = data;
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+        });
+    };
+
     $scope.getSongsReport = ()=>{
         $http({
             url: "/api/songs.php?songReport=true",
@@ -266,6 +326,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 "Authorization": localStorage.getItem("token")
             }
         }).then(function (response) {
+            console.log(response.data);
             var data = response.data;
             validateResponse(data)
             $scope.songsReport = data;
@@ -293,6 +354,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 "Authorization": localStorage.getItem("token")
             }
         }).then(function (response) {
+            console.log(response.data);
             var data = response.data;
             validateResponse(data)
             $scope.albumReport = data;
@@ -443,6 +505,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
     $scope.getAccountsReport();
     $scope.getGenres();
     $scope.getArtists();
+    $scope.getArtistReports();
     $scope.getSongsReport();
     $scope.getAlbumsReport();
 }]);
