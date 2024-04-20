@@ -129,6 +129,9 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 * Songs Report wiith filters  _available for Admin Role_
 * Album Reports with filters _available for Admin Role_
 
+# Deployment
+* http://bfh.gheron.com/
+
 # Contributors
 
 * Carolyn Heron
