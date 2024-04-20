@@ -131,6 +131,6 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 
 # Contributors
 
-Carolyn Heron
-Madison Emshousen
-Larry Nguyen
+* Carolyn Heron
+* Madison Emshousen
+* Larry Nguyen
