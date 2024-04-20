@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 17, 2024 at 07:07 AM
+-- Generation Time: Apr 20, 2024 at 04:36 AM
 -- Server version: 5.7.39
 -- PHP Version: 8.2.0
 
@@ -49,18 +49,18 @@ CREATE TABLE `accounts` (
 --
 
 INSERT INTO `accounts` (`account_id`, `user_role`, `fname`, `lname`, `username`, `bio`, `gender`, `DOB`, `region`, `email`, `password`, `image_path`, `member_since`, `new_notifications`) VALUES
-(1, 'Artist', 'Mr. Beats', 'Badaboom', 'lol', 'I didn\'t know happiness until I heard about City Pop', 'M', '2005-04-08', 'Foreing', 'beat@boot.com', '123456', '1712541928NowShowing-A4-210x222.jpg', '2024-04-13 12:39:21', 0),
-(2, 'Admin', 'Lucas', 'Comegalletas', 'lucas', 'I like cookies', 'M', '2024-03-04', 'SW', 'lucas@boing.com', '123456', '1712799499ef01676872a6c6970b-800wi.jpeg', '2024-04-13 12:39:21', 1),
-(3, 'Artist', 'Al', 'Coholic', 'al', 'One more for the road!', 'F', '2024-03-06', 'SW', 'llkjd@kjjhf.cc', '123456', '171280805320150307-bns2.jpg', '2024-04-13 12:39:21', 0),
-(4, 'Artist', 'Bea', 'O\'Problem', 'poo', 'pooh baby', 'F', '2024-03-04', NULL, 'Comp#re.com', '123456', 'Buzz.jpg', '2024-04-13 12:39:21', 1),
-(9, 'Artist', 'Delirious', 'Dreamz', 'asdfaa', 'Hit da snooze button again!', 'F', '2024-03-05', 'SE', 'dsacs@ed.cc', '123456', '171296970701-sp12.jpg', '2024-04-13 12:39:21', 0),
-(10, 'Artist', 'Amanda', 'Hugginkiss', 'aaa', 'My car isn\'t old... It\'s vintage', 'F', '2024-03-07', 'MW', 'pet@oo.com', '123456', '171280805320150307-johansen.jpg', '2024-04-13 12:39:21', 0),
-(11, 'Artist', 'Armando', 'Legos', 'armand', 'I said I wanted to be firefighter only once', 'M', '2024-03-01', 'SE', 'asxasxa', '123456', '171116517620150307-SP6A7738.jpg', '2024-04-13 12:39:21', 2),
-(12, 'Artist', 'Anita', 'Bath', 'anita', 'DJ KK was my teacher', 'F', '2024-03-01', 'SW', 'coto@foo.com', '123456', '1711210738ef0176166785e6970c-800wi.jpeg', '2024-04-13 12:39:21', 0),
-(13, 'Artist', 'U', 'Kuddulmee', 'uk', 'Just Do It!', 'F', '2024-03-01', 'W', 'nana@lala.com', '123456', '17127988421001qearggo1_500.png', '2024-04-13 12:39:21', 0),
-(14, 'Artist', 'Ura', 'Snotball', 'ura', 'Just be like that', 'F', '2024-03-02', 'SE', 'pepe@lala.com', '123456', '17125275068104531-am5.jpg', '2024-04-13 12:39:21', 0),
-(15, 'Artist', 'Drew P', 'Wiener', 'drew', 'Everyone has their own problems', 'M', '2024-03-09', 'SW', 'asdasdasd', '123456', '171279884210001b6051a7bf7.jpg', '2024-04-13 12:39:21', 6),
-(16, 'User', 'Moe', 'Ron', 'moe', 'lollllo', 'M', '2024-04-25', 'Southeast', 'matko@lolo.com', '123456', '171280805320150307banksy-robot.jpg', '2024-04-13 12:39:21', 0),
+(1, 'Artist', 'Mr. Beats', 'Badaboom', 'lol', 'I didn\'t know happiness until I heard about City Pop', 'M', '2005-04-08', 'Northeast', 'beat@boot.com', '123456', '1712541928NowShowing-A4-210x222.jpg', '2024-04-13 12:39:21', 0),
+(2, 'Admin', 'Lucas', 'Comegalletas', 'lucas', 'I like cookies', 'M', '2024-03-04', 'Southeast', 'lucas@boing.com', '123456', '1712799499ef01676872a6c6970b-800wi.jpeg', '2024-04-13 12:39:21', 0),
+(3, 'Artist', 'Al', 'Coholic', 'al', 'One more for the road!', 'F', '2024-03-06', 'Midwest', 'llkjd@kjjhf.cc', '123456', '171280805320150307-bns2.jpg', '2024-04-13 12:39:21', 0),
+(4, 'Artist', 'Bea', 'O\'Problem', 'poo', 'pooh baby', 'F', '2024-03-04', 'Southwest', 'Comp#re.com', '123456', 'Buzz.jpg', '2024-04-13 12:39:21', 1),
+(9, 'Artist', 'Delirious', 'Dreamz', 'asdfaa', 'Hit da snooze button again!', 'F', '2024-03-05', 'West', 'dsacs@ed.cc', '123456', '171296970701-sp12.jpg', '2024-04-13 12:39:21', 0),
+(10, 'Artist', 'Amanda', 'Hugginkiss', 'aaa', 'My car isn\'t old... It\'s vintage', 'F', '2024-03-07', 'West', 'pet@oo.com', '123456', '171280805320150307-johansen.jpg', '2024-04-13 12:39:21', 0),
+(11, 'Artist', 'Armando', 'Legos', 'armand', 'I said I wanted to be firefighter only once', 'M', '2024-03-01', 'Northeast', 'asxasxa', '123456', '171116517620150307-SP6A7738.jpg', '2024-04-13 12:39:21', 2),
+(12, 'Artist', 'Anita', 'Bath', 'anita', 'DJ KK was my teacher', 'F', '2024-03-01', 'Southeast', 'coto@foo.com', '123456', '1711210738ef0176166785e6970c-800wi.jpeg', '2024-04-13 12:39:21', 0),
+(13, 'Artist', 'U', 'Kuddulmee', 'uk', 'Just Do It!', 'F', '2024-03-01', 'Midwest', 'nana@lala.com', '123456', '17127988421001qearggo1_500.png', '2024-04-13 12:39:21', 0),
+(14, 'Artist', 'Ura', 'Snotball', 'ura', 'Just be like that', 'F', '2024-03-02', 'Southwest', 'pepe@lala.com', '123456', '17125275068104531-am5.jpg', '2024-04-13 12:39:21', 0),
+(15, 'Artist', 'Drew P', 'Wiener', 'drew', 'Everyone has their own problems', 'M', '2024-03-09', 'West', 'asdasdasd', '123456', '171279884210001b6051a7bf7.jpg', '2024-04-13 12:39:21', 6),
+(16, 'User', 'Moe', 'Ron', 'moe', 'lollllo', 'M', '2024-04-25', 'Northeast', 'matko@lolo.com', '123456', '171280805320150307banksy-robot.jpg', '2024-04-13 12:39:21', 0),
 (17, 'Artist', 'Marcus', 'P.', 'marcusp', 'Back to the future!', 'M', '1993-11-04', 'Northeast', 'marcus@email.com', '123456', '1713251138A2CRO.webp', '2024-04-15 23:06:30', 0),
 (18, 'Artist', 'Benjamin', 'Tissot', 'benjamintissot', 'Benedict eggs on Sunday morning', 'M', '1994-09-20', 'Midwest', 'tissot@email.com', '123456', '1713251260JELC3M.jpg', '2024-04-15 23:16:48', 0),
 (19, 'Artist', 'Lunar', 'Years', 'lunaryears', 'Year of the Dragon', 'F', '1976-01-01', 'Midwest', 'lunaryears@email.com', '123456', '1713251199BARM3BR.jpg', '2024-04-15 23:19:04', 1),
@@ -69,7 +69,8 @@ INSERT INTO `accounts` (`account_id`, `user_role`, `fname`, `lname`, `username`,
 (23, 'Artist', 'Evert', 'Zeevalkink', 'evert', 'Solar Eclipse', 'F', '2024-02-18', 'Midwest', 'evert@email.com', '123456', '1713251214BAS3B.jpg', '2024-04-15 23:24:36', 0),
 (24, 'Artist', 'Andriy', 'Mashtalir', 'andriy', 'Pure imagination', 'M', '2024-04-01', 'Midwest', 'andriy@email.com', '123456', '1713251280SMG2F.webp', '2024-04-15 23:25:41', 0),
 (25, 'Artist', 'Andy', 'Bird', 'andybird', 'Two birds on a wire', 'M', '2024-04-01', 'Southwest', 'andybird@email.com', '123456', '1713251312SWM4S.webp', '2024-04-15 23:26:20', 0),
-(26, 'Artist', 'Veace', 'D', 'veaced', 'missing the point', 'M', '2024-01-20', 'Southeast', 'veaced@email.com', '123456', '1713251157A2DIR.jpg', '2024-04-15 23:31:04', 0);
+(26, 'Artist', 'Veace', 'D', 'veaced', 'missing the point', 'M', '2024-01-20', 'Southeast', 'veaced@email.com', '123456', '1713251157A2DIR.jpg', '2024-04-15 23:31:04', 0),
+(27, 'User', 'bob', 'bobs', 'bobby', 'My name is Bobby bobs', 'M', '2024-01-08', 'Southeast', 'bob@email.com', '123456', NULL, '2024-04-19 23:32:37', 0);
 
 --
 -- Triggers `accounts`
@@ -91,7 +92,7 @@ DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `send_welcome_message` AFTER INSERT ON `accounts` FOR EACH ROW INSERT INTO notifications (account_id, message)
 VALUES
-(NEW.account_id, ' Welcom to our music library!')
+(NEW.account_id, ' Welcome to our music library!')
 $$
 DELIMITER ;
 
@@ -408,8 +409,8 @@ INSERT INTO `notifications` (`notification_id`, `account_id`, `date_created`, `h
 (10, 4, '2024-04-17 00:16:24', 0, 'Lucas Comegalletas has started following you!'),
 (11, 15, '2024-04-17 00:16:46', 0, 'Lucas Comegalletas has started following you!'),
 (12, 3, '2024-04-17 00:22:41', 1, 'Drew P Wiener has started following you!'),
-(13, 2, '2024-04-17 00:22:44', 0, 'Drew P Wiener has started following you!'),
-(18, 2, '2024-04-17 00:30:08', 0, 'Drew P Wiener has started following you!'),
+(13, 2, '2024-04-17 00:22:44', 1, 'Drew P Wiener has started following you!'),
+(18, 2, '2024-04-17 00:30:08', 1, 'Drew P Wiener has started following you!'),
 (19, 10, '2024-04-17 00:30:13', 0, 'Drew P Wiener has started following you!'),
 (20, 22, '2024-04-17 00:30:18', 1, 'Drew P Wiener has started following you!'),
 (21, 11, '2024-04-17 00:31:01', 0, 'Drew P Wiener has started following you!'),
@@ -424,7 +425,8 @@ INSERT INTO `notifications` (`notification_id`, `account_id`, `date_created`, `h
 (30, 24, '2024-04-17 01:58:05', 1, 'Your song Night Rider just reached 100 listens!'),
 (31, 4, '2024-04-17 02:00:21', 0, 'Your song Song 3 just reached 100 listens!'),
 (32, 19, '2024-04-17 02:00:21', 0, 'Your song Event Horizon just reached 100 listens!'),
-(33, 11, '2024-04-17 02:06:46', 0, 'Your song Mt awesome title just reached 10 listens!');
+(33, 11, '2024-04-17 02:06:46', 0, 'Your song Mt awesome title just reached 10 listens!'),
+(34, 27, '2024-04-19 23:32:37', 1, ' Welcom to our music library!');
 
 --
 -- Triggers `notifications`
@@ -886,7 +888,8 @@ INSERT INTO `token_storage` (`account_id`, `token`, `createdDate`) VALUES
 (1, '3837b93dfc9f35387e136cd21e3a357e', '1713327568'),
 (4, '4a25c66a46b4cf2209547c9a981e652e', '1711175722'),
 (24, '5e25005c6c7437fe9e067da3be0941ed', '1713337035'),
-(25, '16697104f2f56d0c288cf1aaa09ffbbe', '1713327142');
+(25, '16697104f2f56d0c288cf1aaa09ffbbe', '1713327142'),
+(27, '2fdb7490264263dbeb38ffe759e10a12', '1713587560');
 
 -- --------------------------------------------------------
 
@@ -1010,7 +1013,7 @@ ALTER TABLE `transactions`
 -- AUTO_INCREMENT for table `accounts`
 --
 ALTER TABLE `accounts`
-  MODIFY `account_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `account_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `admins`
@@ -1046,7 +1049,7 @@ ALTER TABLE `genres`
 -- AUTO_INCREMENT for table `notifications`
 --
 ALTER TABLE `notifications`
-  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `notification_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `playlists`
