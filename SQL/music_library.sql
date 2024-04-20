@@ -142,7 +142,7 @@ INSERT INTO `albums` (`album_id`, `record_label`, `artist_id`, `title`, `format`
 (5, 'Last Try', 3, 'Ok Ok', 'Album', '2024-03-01', '1711232406datsun-240z-rb26-by-wheelsbywovka-4-1200x800.jpg'),
 (8, NULL, 1, 'Mira La', 'LP', '2024-04-26', '1712632652RideJournal2.jpg'),
 (9, NULL, 1, 'Da GOAT', 'Single', '2024-04-05', '1712799499images.jpeg'),
-(10, NULL, 2, 'My Name is Lucas', 'Album', '2024-04-09', '171280686020150311-IMG_1784.jpg'),
+(10, NULL, 2, 'My Name is Lucas', 'EP', '2024-04-09', '171280686020150311-IMG_1784.jpg'),
 (11, NULL, 3, 'Neon Nights', 'Album', '2020-05-08', NULL),
 (12, NULL, 3, 'Euphoric Beats', 'LP', '2021-08-02', NULL),
 (13, NULL, 3, 'Synth Odyssey', 'Album', '2022-06-18', NULL),
