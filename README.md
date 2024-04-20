@@ -56,6 +56,10 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its prevel
 # Project Document
 
 ## Types of data that can be added, modified, and edited
+*Songs
+*Playlists
+*Accounts
+*Albums
 
 ## Types of user roles in your application
 
@@ -187,13 +191,13 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its prevel
 
 ## Reports available in your application.
 
-* Search For Songs _abailable for All Roles_
-* Artist Albums _abailable for Artist Role_
-* Artist Songs _abailable for Artist Role_
-* All Users Report with search filters _abailable for Admin Role_
-* Artist Report _abailable for Admin Role_
-* Songs Report wiith filters  _abailable for Admin Role_
-* Album Reports with filters _abailable for Admin Role_
+* Search For Songs _available for All Roles_
+* Artist Albums _available for Artist Role_
+* Artist Songs _available for Artist Role_
+* All Users Report with search filters _available for Admin Role_
+* Artist Report _available for Admin Role_
+* Songs Report wiith filters  _available for Admin Role_
+* Album Reports with filters _available for Admin Role_
 
 # Contribute
 
