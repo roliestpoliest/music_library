@@ -71,14 +71,11 @@ app.controller('LogInController', function ($scope, $http) {
             }
         }).then(function (response) {
             var data = response.data;
-            if(!validateResponse(data)){
-                displayErrorMessage(data.description);
-            }else{
-                // location.assign('/login.html');
-                $scope.loginWindow = true;
-                $('#login.username').focus();
-            }
-            // console.log(data);
+            console.log(data);
+            validateResponse(data)
+            // location.assign('/login.html');
+            $scope.loginWindow = true;
+            $('#login.username').focus();
         },
         function errorCallback(response) {
             validateStatusCode(response, true);

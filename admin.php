@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 <!-- </div> -->
-                <div class="col s10" ng-if="generesView">
+                <div class="col s10" ng-show="generesView">
                     <div class="contentWrapper">
                         <h3>Generes</h3>
                         <button>Add Genere</button>
@@ -37,7 +37,7 @@
                 <div class="col s10">
                     <div class="contentWrapper">
                         <!-- User Report -->
-                        <div ng-if="userReportView">
+                        <div ng-show="userReportView">
                             <h3>User Report</h3>
                             <h6>Report Filters</h6>
                             <label>Role</label>
@@ -98,7 +98,7 @@
 
                                     <th></th>
                                 </tr>
-                                <tr ng-repeat="user in userList">
+                                <tr ng-repeat="user in userReport">
                                     <td>{{user.account_id}}</td>
                                     <td>{{user.user_role}}</td>
                                     <td>{{user.fname}}</td>
@@ -121,7 +121,7 @@
                         </div>
 
                         <!-- Arist Report -->
-                        <div ng-if="artistReportView">
+                        <div ng-show="artistReportView">
                             <h3>Artist Report</h3>
                             <table class="table-border">
                                 <tr>
@@ -148,7 +148,7 @@
                         </div>
 
                         <!-- Songs Report -->
-                        <div ng-if="songReportView">
+                        <div ng-show="songReportView">
                             <h3>Songs Report</h3>
                             <h6>Report Filters</h6>
                             <label for="songFilter_artist">Artist</label>
@@ -230,7 +230,7 @@
                         </div>
 
                         <!-- Albums Report -->
-                        <div ng-if="albumReportView">
+                        <div ng-show="albumReportView">
                             <h3>Albums Report</h3>
                             <h6>Report Filters</h6>
                             <label for="albumFilter_artist">Artist</label>
@@ -264,15 +264,15 @@
                                 <option value="5">5 Stars</option>
                             </select>
                             <form>
-                            <div>
-                                <label for="albumFilter_startDate">Start Date</label>
-                                <input class="datepicker" autocomplete="off" type="text" ng-model="albumFilter.startDate" ng-change="filterAlbumReport();" id="albumFilter_startDate">
-                            </div>
-                            <div>
-                                <label for="albumFilter_endDate">End Date</label>
-                                <input class="datepicker" autocomplete="off" type="text" ng-model="albumFilter.endDate" ng-change="filterAlbumReport();" id="albumFilter_endDate">
-                            </div>
-                            </form>
+                                <div>
+                                    <label for="albumFilter_startDate">Start Date</label>
+                                    <input class="datepicker" autocomplete="off" type="text" ng-model="albumFilter.startDate" ng-change="filterAlbumReport();" id="albumFilter_startDate">
+                                </div>
+                                <div>
+                                    <label for="albumFilter_endDate">End Date</label>
+                                    <input class="datepicker" autocomplete="off" type="text" ng-model="albumFilter.endDate" ng-change="filterAlbumReport();" id="albumFilter_endDate">
+                                </div>
+                                </form>
                             <!-- <span class="btn blue">Apply Filter</span> -->
                             <table class="table-border">
                                 <tr>
@@ -337,14 +337,14 @@
         </div>
     </div>
     <script type="text/javascript" src="./app/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var options = {
+                format:'yyyy-mm-dd'
+            }
+        var elems = document.querySelectorAll('.datepicker', options);
+        var instances = M.Datepicker.init(elems);
+    });
+    </script>
 </body>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var options = {
-            format:'yyyy-mm-dd'
-        }
-    var elems = document.querySelectorAll('.datepicker', options);
-    var instances = M.Datepicker.init(elems);
-  });
-</script>
 </html>
