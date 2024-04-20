@@ -4,23 +4,23 @@ Music Library
 
 # Introduction
 
-This project is music library music library web applications capable of storing, organizing, and playing songs via web interface. I this platform Users can upload their music and make it readyly available to users, search songs, create playlist and listen to music.
+This project is music library web application capable of storing, organizing, and playing songs via a web interface. This platform allows Users to listen and rate songs, add songs to playlists, and follow artist. This platform allows Artist to upload their music and make it readily available to users, search songs, create playlist and listen to music. Finally, this platform allows Admin roles the ability to do what a user does but also can generate reports to show progress about how the application is running and important business statistics.
 
-Users are clasified under 3 roles: User, Artist, Admin. Each role has its preveligies and limitations.
+Users are clasified under 3 roles: User, Artist, Admin. Each role has its privileges and limitations.
 
 * User
   * Search songs
-  * Create playlist
+  * Create playlist and add music to them
   * Rate Songs
   * Rate Albums
   * Listen to music
 * Artist
-  * Everithing under the "User" role plus
+  * Everything under the "User" role plus
   * Upload Songs
   * Create Albums under you artist name
   * Organize songs into albums
 * Admin
-    * Everithing under the "User" role plus
+    * Everithing under the "User" and "Artist" roles plus
     * View Reports
 
 # Getting Started
@@ -33,7 +33,7 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its prevel
 ## Installation process
 
 1. Upload Repository to the public root of the server. There is no need to compile.
-2. Use the privided SQL dump to create the database
+2. Use the provided SQL dump to create the database
 3. Change the Database credentials in the file /model/db.php to the new MySQL credentials on your server
 
         'public function __construct() {
@@ -42,6 +42,7 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its prevel
             $dbpass = 'your_database_password';
             $dbname = 'your_database_name';
             $charset = 'utf8';'
+
 4. By default, A user can be created without permission by filling the form in index.php
 
 ## Dependencies
@@ -56,6 +57,15 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its prevel
 # Project Document
 
 ## Types of data that can be added, modified, and edited
+*Songs
+*Playlists
+*Accounts
+*Albums
+
+* Albums
+* Songs
+* Accounts
+* Playlists
 
 ## Types of user roles in your application
 
@@ -187,14 +197,14 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its prevel
 
 ## Reports available in your application.
 
-* Search For Songs _abailable for All Roles_
-* Artist Albums _abailable for Artist Role_
-* Artist Songs _abailable for Artist Role_
-* All Users Report with search filters _abailable for Admin Role_
-* Artist Report _abailable for Admin Role_
-* Songs Report wiith filters  _abailable for Admin Role_
-* Album Reports with filters _abailable for Admin Role_
+* Search For Songs _available for All Roles_
+* Artist Albums _available for Artist Role_
+* Artist Songs _available for Artist Role_
+* All Users Report with search filters _available for Admin Role_
+* Artist Report _available for Admin Role_
+* Songs Report wiith filters  _available for Admin Role_
+* Album Reports with filters _available for Admin Role_
 
 # Contribute
 
-This is a private project and only members of the team ca contribute .
+This is a private project and only members of the team can contribute.

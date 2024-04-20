@@ -37,7 +37,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
         });
     };
 
-    $scope.getGeres = ()=>{
+    $scope.getGenres = ()=>{
         $http({
             url: "/api/genres.php",
             method: "GET",
@@ -169,6 +169,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             file.result = response.data;
             $scope.albumCardView = false;
             $scope.getAlbums();
+            alert("Album successfully added!")
           });
         }, function (response) {
           if (response.status > 0)
@@ -199,6 +200,7 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             file.result = response.data;
             $scope.songCardView = false;
             $scope.getArtistSongs();
+            alert("Song successfully added!")
           });
         }, function (response) {
           if (response.status > 0)
@@ -210,48 +212,56 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
     };
     
     $scope.deleteAlbumButton = ()=>{
-        // console.log($scope.selectedAlbum);
-        $http({
-            url: "/api/albums.php",
-            method: "DELETE",
-            data: $scope.selectedAlbum,
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
-            }
-        }).then(function (response) {
-            var data = response.data;
-            validateResponse(data);
-            $scope.showArtistAlbumHub();
-            $scope.albumCardView = false;
-        },
-        function errorCallback(response) {
-            validateStatusCode(response, true);
-            $scope.loading = false;
-        });
+        if(confirm("Are you sure you want to delete this album?")){
+            $http({
+                url: "/api/albums.php",
+                method: "DELETE",
+                data: $scope.selectedAlbum,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": localStorage.getItem("token")
+                }
+            }).then(function (response) {
+                var data = response.data;
+                validateResponse(data);
+                $scope.showArtistAlbumHub();
+                $scope.albumCardView = false;
+                $scope.myAlbums = data;
+                alert("Album successfully deleted!")
+            },
+            function errorCallback(response) {
+                validateStatusCode(response, true);
+                $scope.loading = false;
+            });
+        }
     };
 
     $scope.deleteSongButton = ()=>{
         // console.log($scope.selectedAlbum);
-        $http({
-            url: "/api/songs.php",
-            method: "DELETE",
-            data: $scope.selectedSong,
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("token")
-            }
-        }).then(function (response) {
-            var data = response.data;
-            // console.log(data);
-            validateResponse(data);
-            $scope.albumCardView = false;
-        },
-        function errorCallback(response) {
-            validateStatusCode(response, true);
-            $scope.loading = false;
-        });
+        if(confirm("Are you sure you want to delete this song?")){
+            $http({
+                url: "/api/songs.php",
+                method: "DELETE",
+                data: $scope.selectedSong,
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": localStorage.getItem("token")
+                }
+            }).then(function (response) {
+                var data = response.data;
+                validateResponse(data);
+            },
+            function errorCallback(response) {
+                validateStatusCode(response, true);
+                $scope.loading = false;
+            });
+            $scope.songCardView = false; 
+            $scope.getArtistSongs();
+            $scope.showArtistSongsHub();
+            alert("Song sucessfully deleted!")
+        }
     };
+
     $scope.getArtistSongs = ()=>{
         $http({
             url: "/api/songs.php?artist_id=true",
@@ -371,6 +381,6 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
         $scope.getArtists();
         $scope.getArtistSongs();
     });
-    $scope.getGeres();
+    $scope.getGenres();
     $scope.getArtistSongs();
 }]);

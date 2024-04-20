@@ -49,6 +49,13 @@
     float: right;
 }
 
+.deleteSongButton{
+    color: red;
+    cursor: pointer;
+    float: right;
+}
+
+
 .songeditingArea{
     background-color: #000000;
     border-radius: 10px;

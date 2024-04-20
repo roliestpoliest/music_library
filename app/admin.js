@@ -203,7 +203,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         email: 0,
     }
 
-    $scope.getGeres = ()=>{
+    $scope.getGenres = ()=>{
         $http({
             url: "/api/genres.php",
             method: "GET",
@@ -437,9 +437,8 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
     };
 
     $scope.getAccountInfo();
-    //$scope.getAccounts();
-    $scope.getAccountsReport();
-    $scope.getGeres();
+    $scope.getAccounts();
+    $scope.getGenres();
     $scope.getArtists();
     $scope.getSongsReport();
     $scope.getAlbumsReport();
