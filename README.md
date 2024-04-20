@@ -1,6 +1,6 @@
 # Project Title
 
-Music Library
+Music Library - COSC3380, Section: 12651, Team 11
 
 # Introduction
 
