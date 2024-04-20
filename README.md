@@ -126,13 +126,20 @@ END
 
 ## Reports available in your application.
 
-* Search For Songs _available for All Roles_
-* Artist Albums _available for Artist Role_
-* Artist Songs _available for Artist Role_
-* All Users Report with search filters _available for Admin Role_
-* Artist Report _available for Admin Role_
-* Songs Report wiith filters  _available for Admin Role_
-* Album Reports with filters _available for Admin Role_
+* Search For Songs available for All Roles where every role can search for any particular song by title, artist, or genre and be able to play that song or even add it to a playlist. 
+
+* Artist Albums available for Artist Role so that Artists are able to access their own albums and change it to how they see fit such as being able to add or delete albums, change what songs are part of the album's track list or even change other aspects of the albums such as their title, release date, cover, and format. 
+  
+* Artist Songs are available for Artist Role in order for Artists to manage their own songss in the Music Library such as being able to manage what albums their songs go to, delete or add songs, or change something else about their song such as the title, audio file, or genre. 
+  
+* All Users Report with search filters available for Admin Role where there's multiple purposes of the Users Report. The first purpose is to get better insight onto the demographic of the music library
+  by being able to see each user's most played songs and genres and being able to use the region and gender filters to see any connections. The 2nd purpose is to be able to keep track of when a new account is created especially if the account is an Admin/Artist role. And we can use the user-role filters to mainly keep track of artists and admins along with the start and end date filters. Albeit able to filter to users only is nice for the first purpose.   
+
+* Artist Report available for Admin Role where the Artist Report displays the activities of every Artist in the music app ranging from their Latest Album release to the amount of songs/albums they made and their most prominent genre for their songs.
+  
+* Songs Report wiith filters are available for Admin Role so that Admins can get better insight into the popularity of songs such as the amount of listens, the amount of user playlists the songs are a part of, and the rating that the songs have. Admins can also look at the song's popularity among certain groups of people by showing gender preferences and the region where the song is most popular in. There are the Artist, and Genre filters to see if there's more correlations involved in a song's popularity. And there's the filter for ratings to see which songs are most popular.
+  
+* Album Reports with filters are available for Admin Role to see information about the albums such as the Artist, Ratings, Total amount of listens within the songs of the albums, and the format the Album is in. 
 
 # Deployment
 * http://bfh.gheron.com/
