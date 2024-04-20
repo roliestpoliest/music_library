@@ -9,6 +9,9 @@ app.config(['$compileProvider',
 app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', function ($scope, $http, Upload, $timeout) {
     $scope.pageName = "foo";
     $scope.regions = [];
+    $scope.toDate = function(dateString) {
+        return new Date(dateString);
+    };
 
     $scope.getAccountInfo = function(){
         $http({
@@ -32,7 +35,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         });
     };
     
-    $scope.getAccounts = function() {
+    /* $scope.getAccounts = function() {
         $http({
             url: "/api/accounts.php",
             method: "GET",
@@ -49,12 +52,12 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 }
             });
         })
-    };
+    }; */
 
 
     $scope.getAccountsReport = function() {
         $http({
-            url: "/api/accounts.php?accountReports = true",
+            url: "/api/accounts.php?accountReport=true",
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -69,15 +72,15 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 }
             });
         })
-    };
+    }; 
 
     $scope.userFilter = [];
 
     $scope.filterUserList = ()=>{
         $scope.userList = [];
         $scope.userListObject.forEach(user => {
-            const check = [1, 1, 1];
-            let canAdd = [1, 1, 1];
+            const check = [1, 1, 1, 1, 1];
+            let canAdd = [1, 1, 1, 1, 1];
             if(!isEmptyOrNull($scope.userFilter.role) && user.user_role != $scope.userFilter.role){
                 canAdd[0] = 0;
             }
@@ -86,6 +89,23 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             }
             if(!isEmptyOrNull($scope.userFilter.gender) && user.gender != $scope.userFilter.gender){
                 canAdd[2] = 0;
+            }
+            if(!isEmptyOrNull($scope.userFilter.startDate))
+            {
+                var memberSinceDate = $scope.toDate(user.member_since);
+                var filterStartDate = $scope.toDate($scope.userFilter.startDate);
+                if (memberSinceDate < filterStartDate) {
+                    canAdd[3] = 0;
+                }
+            
+            }
+            if(!isEmptyOrNull($scope.userFilter.endDate))
+            {
+                var memberSinceDate = $scope.toDate(user.member_since);
+                var filterEndDate = $scope.toDate($scope.userFilter.endDate);
+                if (memberSinceDate > filterEndDate) {
+                    canAdd[4] = 0;
+                }
             }
             if(check.toString() == canAdd.toString()){
                 $scope.userList.push(user);
@@ -96,8 +116,8 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
     $scope.filterSongsReport = ()=>{
         $scope.songsReport = [];
         $scope.songsReportObject.forEach(song => {
-            const check = [1,1,1];
-            let canAdd = [1,1,1]
+            const check = [1,1,1,1,1];
+            let canAdd = [1,1,1,1,1]
             if(!isEmptyOrNull($scope.songFilter.artist) && $scope.songFilter.artist != song.artist_name){
                 canAdd[0] = 0;
             }
@@ -106,6 +126,23 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             }
             if(!isEmptyOrNull($scope.songFilter.rating) && $scope.songFilter.rating != song.general_rating){
                 canAdd[2] = 0;
+            }
+            if(!isEmptyOrNull($scope.songFilter.startDate))
+            {
+                var releaseDate = $scope.toDate(song.release_date);
+                var filterStartDate = $scope.toDate($scope.songFilter.startDate);
+                if (releaseDate < filterStartDate) {
+                    canAdd[3] = 0;
+                }
+            
+            }
+            if(!isEmptyOrNull($scope.songFilter.endDate))
+            {
+                var releaseDate = $scope.toDate(song.release_date);
+                var filterEndDate = $scope.toDate($scope.songFilter.endDate);
+                if (releaseDate > filterEndDate) {
+                    canAdd[4] = 0;
+                }
             }
         
             if(check.toString() == canAdd.toString()){
@@ -118,8 +155,8 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
     $scope.filterAlbumReport = ()=>{
         $scope.albumReport = [];
         $scope.albumReportObject.forEach(album => {
-            const check = [1,1,1];
-            let canAdd = [1,1,1]
+            const check = [1,1,1,1,1];
+            let canAdd = [1,1,1,1,1]
             if(!isEmptyOrNull($scope.albumFilter.artist) && $scope.albumFilter.artist != album.artist_name){
                 canAdd[0] = 0;
             }
@@ -128,6 +165,23 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             }
             if(!isEmptyOrNull($scope.albumFilter.rating) && $scope.albumFilter.rating != album.general_rating){
                 canAdd[2] = 0;
+            }
+            if(!isEmptyOrNull($scope.albumFilter.startDate))
+            {
+                var releaseDate = $scope.toDate(album.release_date);
+                var filterStartDate = $scope.toDate($scope.albumFilter.startDate);
+                if (releaseDate < filterStartDate) {
+                    canAdd[3] = 0;
+                }
+            
+            }
+            if(!isEmptyOrNull($scope.albumFilter.endDate))
+            {
+                var releaseDate = $scope.toDate(album.release_date);
+                var filterEndDate = $scope.toDate($scope.albumFilter.endDate);
+                if (releaseDate > filterEndDate) {
+                    canAdd[4] = 0;
+                }
             }
         
             if(check.toString() == canAdd.toString()){
@@ -251,7 +305,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         function errorCallback(response) {
             validateStatusCode(response, true);
         });
-    };
+    }; 
 
     $scope.showReport = (report) => {
         $scope.userReportView = false;
@@ -383,7 +437,8 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
     };
 
     $scope.getAccountInfo();
-    $scope.getAccounts();
+    //$scope.getAccounts();
+    $scope.getAccountsReport();
     $scope.getGeres();
     $scope.getArtists();
     $scope.getSongsReport();

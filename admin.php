@@ -68,6 +68,16 @@
                                 <option value="M">Male</option>
                                 <option value="F">Female</option>
                             </select>
+                            <form>
+                            <div>
+                                <label for="userFilter_startDate">Start Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="userFilter.startDate" ng-change="filterUserList();" id="userFilter_startDate">
+                            </div>
+                            <div>
+                                <label for="userFilter_endDate">End Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="userFilter.endDate" ng-change="filterUserList();" id="userFilter_endDate">
+                            </div>
+                            </form>
                             <!-- <span class="btn blue" ng-click="filterUserList();">Apply Filter</span> -->
                             <table class="table-border">
                                 <tr>
@@ -81,6 +91,11 @@
                                     <th ng-click="sortByProperty('DOB','userList')">DOB</th>
                                     <th ng-click="sortByProperty('region','userList')">Region</th>
                                     <th ng-click="sortByProperty('email','userList')">email</th>
+                                    <th ng-click="sortByProperty('member_since','userList')">Member Since</th>
+                                    <th ng-click="sortByNumericProperty('number_of_artistsFollowed','userList')"># of artists followed</th>
+                                    <th ng-click="sortByNumericProperty('number_of_playlist','userList')"># of playlist</th>
+                                    <th ng-click="sortByNumericProperty('number_of_playcount','userList')"># of songs played</th>
+
                                     <th></th>
                                 </tr>
                                 <tr ng-repeat="user in userList">
@@ -94,6 +109,10 @@
                                     <td>{{user.DOB | date: 'MMM dd, yyyy'}}</td>
                                     <td>{{user.region}}</td>
                                     <td>{{user.email}}</td>
+                                    <td>{{toDate(user.member_since) | date: 'MMM dd, yyyy'}}</td>
+                                    <td>{{user.number_of_artistsFollowed}}</td>
+                                    <td>{{user.number_of_playlist}}</td>
+                                    <td>{{user.number_of_playcount}}</td>
                                     <td>
                                         <span class="deletePlaylistButton" ng-click="showDeleteUserWarning(user);">Delete</span>
                                     </td>
@@ -111,7 +130,7 @@
                                     <th ng-click="sortByProperty('artist_name','artistList')">Artist Name</th>
                                     <th ng-click="sortByNumericProperty('number_of_albums','artistList')">Number of Albums</th>
                                     <th ng-click="sortByNumericProperty('number_of_songs','artistList')">Number of songs</th>
-                                    <th ng-click="sortByProperty('followers','artistList')">followers</th>
+                                    <th ng-click="sortByProperty('followers','artistList')">Followers</th>
                                     <th>Average Songs/Album</th>
                                     <th ng-click="sortByProperty('latest_album_release')">Latest Album Release</th>
                                 </tr>
@@ -150,7 +169,7 @@
                                 ng-change="filterSongsReport();">
                                 <option value="">Select Genre</option>
                             </select>
-                            <labe>Rating</labe>
+                            <label>Rating</label>
                             <select id="songFilter_rating" 
                                 class="browser-default reportfilterDropdown"
                                 ng-model="songFilter.rating"
@@ -162,6 +181,16 @@
                                 <option value="4">4 Stars</option>
                                 <option value="5">5 Stars</option>
                             </select>
+                            <form>
+                            <div>
+                                <label for="songFilter_startDate">Start Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="songFilter.startDate" ng-change="filterSongsReport();" id="songFilter_startDate">
+                            </div>
+                            <div>
+                                <label for="userFilter_endDate">End Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="songFilter.endDate" ng-change="filterSongsReport();" id="songFilter_endDate">
+                            </div>
+                            </form>
                             <!-- <span class="btn blue">Apply Filter</span> -->
                             <table class="table-border">
                                 <tr>
@@ -169,6 +198,7 @@
                                     <th ng-click="sortByProperty('title','songsReport')">Title</th>
                                     <th ng-click="sortByProperty('artist_name','songsReport')">Artist</th>
                                     <th ng-click="sortByProperty('genre','songsReport')">Genre</th>
+                                    <th ng-click="sortByProperty('release_date','songsReport')">Release Date</th>
                                     <th ng-click="sortByNumericProperty('number_of_albums','songsReport')">Album Count</th>
                                     <th ng-click="sortByNumericProperty('number_of_playlist','songsReport')">Playlist Count</th>
                                     <th ng-click="sortByNumericProperty('listens','songsReport')">Listens</th>
@@ -179,6 +209,7 @@
                                     <td>{{song.title}}</td>
                                     <td>{{song.artist_name}}</td>
                                     <td class="text_left">{{song.genre}}</td>
+                                    <td>{{toDate(song.release_date)| date: 'MMM dd, yyyy'}}</td>
                                     <td class="text_right">{{song.number_of_albums}}</td>
                                     <td class="text_right">{{song.number_of_playlist | number:0}}</td>
                                     <td class="text_right">{{song.listens}}</td>
@@ -232,6 +263,16 @@
                                 <option value="4">4 Stars</option>
                                 <option value="5">5 Stars</option>
                             </select>
+                            <form>
+                            <div>
+                                <label for="albumFilter_startDate">Start Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="albumFilter.startDate" ng-change="filterAlbumReport();" id="albumFilter_startDate">
+                            </div>
+                            <div>
+                                <label for="albumFilter_endDate">End Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="albumFilter.endDate" ng-change="filterAlbumReport();" id="albumFilter_endDate">
+                            </div>
+                            </form>
                             <!-- <span class="btn blue">Apply Filter</span> -->
                             <table class="table-border">
                                 <tr>
@@ -297,4 +338,13 @@
     </div>
     <script type="text/javascript" src="./app/admin.js"></script>
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var options = {
+            format:'yyyy-mm-dd'
+        }
+    var elems = document.querySelectorAll('.datepicker', options);
+    var instances = M.Datepicker.init(elems);
+  });
+</script>
 </html>
