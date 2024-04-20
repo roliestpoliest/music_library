@@ -35,7 +35,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         });
     };
     
-    /* $scope.getAccounts = function() {
+     $scope.getAccounts = function() {
         $http({
             url: "/api/accounts.php",
             method: "GET",
@@ -52,7 +52,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 }
             });
         })
-    }; */
+    }; 
 
 
     $scope.getAccountsReport = function() {
