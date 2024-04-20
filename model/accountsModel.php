@@ -99,11 +99,11 @@ class accountsModel{
 
     function GetAccountsReport(){
         $db = new db();
-        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
-        CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path, a.member_since,
-        (SELECT COUNT(1) FROM followed_artists as fa WHERE fa.account_id = a.account_id ) AS number_of_artistsFollowed,
-        (SELECT COUNT(1) FROM playlists AS p WHERE p.account_id = a.account_id ) AS number_of_playlist,
-        (SELECT COUNT(1) FROM song_play_count AS pc WHERE pc.account_id = a.account_id ) AS number_of_playcount
+        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.email, a.gender, a.DOB, a.region,
+         a.member_since,
+        (SELECT s.title FROM song_play_count AS sp JOIN songs AS s ON sp.song_id = s.song_id WHERE sp.account_id = a.account_id GROUP BY sp.song_id ORDER BY COUNT(sp.song_id) DESC LIMIT 1) AS most_played_song,
+        (SELECT g.title FROM song_play_count AS pc JOIN songs AS s ON pc.song_id = s.song_id JOIN genres AS g ON s.genre_id = g.genre_id WHERE pc.account_id = a.account_id GROUP BY g.title ORDER BY 
+        COUNT(pc.song_id) DESC LIMIT 1) AS most_prominent_genre
         FROM `accounts` as a")->fetchAll();
         $db->close();
         return $query;
