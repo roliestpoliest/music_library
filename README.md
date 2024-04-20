@@ -44,14 +44,15 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 1. Upload Repository to the public root of the server. There is no need to compile.
 2. Use the provided SQL dump to create the database
 3. Change the Database credentials in the file /model/db.php to the new MySQL credentials on your server
-
-        'public function __construct() {
-            $dbhost = 'your-mysql-server';
-            $dbuser = 'your_database_user';
-            $dbpass = 'your_database_password';
-            $dbname = 'your_database_name';
-            $charset = 'utf8';'
-
+```
+public function __construct() {
+    $dbhost = 'your-mysql-server';
+    $dbuser = 'your_database_user';
+    $dbpass = 'your_database_password';
+    $dbname = 'your_database_name';
+    $charset = 'utf8';
+}
+```
 4. By default, A user can be created without permission by filling the form in index.php
 
 ## Dependencies
