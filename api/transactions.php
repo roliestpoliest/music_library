@@ -13,7 +13,8 @@ if(!$canGo){
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $model = new transactionsModel();
     if(isset($_GET['account_id'])){
-        $result = $model->GetTransactionsByAccountId($_GET['account_id']);
+        //$result = $model->GetTransactionsByAccountId($_GET['account_id']);
+        $result = $model->GetTransactionsByAccountId($canGo->account_id);
     }else{
         $result = $model->GetAllTransactions();
     }
@@ -27,7 +28,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $model = new transactionsModel();
     // $model->playlist_id = $data->playlist_id;
     $model->transaction_id = $data->transaction_id;
-    $model->account_id = $data->account_id;
+    //$model->account_id = $data->account_id;
+    $model -> account_id = $canGo -> account_id;
     $model->payment_date = $data->payment_date;
     $model->payment_source = $data->payment_source;
     $model->total = $data->total;

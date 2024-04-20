@@ -83,6 +83,7 @@ class songsModel{
         CONCAT(ac.fname, ' ', ac.lname) AS artist_name,
         s.title,
         s.listens,
+        s.release_date,
         (SELECT 
                     CASE WHEN CEILING(AVG(sr.user_rating)) IS NOT NULL THEN CEILING(AVG(sr.user_rating))
                     ELSE 0 END

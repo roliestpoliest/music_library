@@ -139,7 +139,8 @@ class albumsModel{
 
         CASE WHEN al.image_path IS NULL THEN 'defaultAlbumCover.jpg'
         ELSE al.image_path END AS image_path,
-                CONCAT(ac.fname, ' ', ac.lname) AS artist_name
+                CONCAT(ac.fname, ' ', ac.lname) AS artist_name,
+                COALESCE((SELECT SUM(listens) FROM songs WHERE song_id IN (SELECT song_id FROM songs_in_album WHERE album_id = al.album_id)), 0) AS total_listens
                 FROM albums AS al
                 LEFT JOIN artists AS ar ON al.artist_id = ar.artist_id
                 LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id

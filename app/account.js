@@ -62,6 +62,10 @@ app.controller('AccountController', ['$scope', '$http', 'Upload', '$timeout', fu
             displayErrorMessage(data.description);
         }else{
           $scope.userInfo = data;
+          //$scope.currentUserRole = data.user_role;
+          console.log(data);
+          $scope.currentUserRole = data.user_role;
+          console.log($scope.currentUserRole);
           $scope.userInfo.DOB = moment($scope.userInfo.DOB, "YYYY-MM-DD").format('MMM DD, YYYY');
         }
     },

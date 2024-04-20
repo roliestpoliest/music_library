@@ -92,9 +92,21 @@ class accountsModel{
             $obj->password = $row["password"];
             $obj->image_path = $row["image_path"];
             array_push($result, $obj);
-        }
+        } 
         $db->close();
         return $result;
+    }
+
+    function GetAccountsReport(){
+        $db = new db();
+        $query = $db->query("SELECT a.account_id, a.user_role, a.fname, a.lname, a.username, a.bio, a.gender, a.DOB, a.region, a.email, a.password, 
+        CASE WHEN a.image_path IS NULL THEN 'defaultImage.jpg' ELSE a.image_path END AS image_path, a.member_since,
+        (SELECT COUNT(1) FROM followed_artists as fa WHERE fa.account_id = a.account_id ) AS number_of_artistsFollowed,
+        (SELECT COUNT(1) FROM playlists AS p WHERE p.account_id = a.account_id ) AS number_of_playlist,
+        (SELECT COUNT(1) FROM song_play_count AS pc WHERE pc.account_id = a.account_id ) AS number_of_playcount
+        FROM `accounts` as a")->fetchAll();
+        $db->close();
+        return $query;
     }
     // Save
     function Save(){
