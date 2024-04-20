@@ -149,15 +149,15 @@
                             </form>
                             <table class="table-border">
                                 <tr>
-                                    <th ng-click="sortByNumericProperty('account_id','artistList')">Account Id</th>
-                                    <th ng-click="sortByNumericProperty('artist_id','artistList')">Artist Id</th>
-                                    <th ng-click="sortByProperty('artist_name','artistList')">Artist Name</th>
-                                    <th ng-click="sortByProperty('prominent_genre','artistList')">Primary Genre</th>
-                                    <th ng-click="sortByNumericProperty('number_of_albums','artistList')">Number of Albums</th>
-                                    <th ng-click="sortByNumericProperty('number_of_songs','artistList')">Number of songs</th>
-                                    <th ng-click="sortByProperty('followers','artistList')">Followers</th>
+                                    <th ng-click="sortByNumericProperty('account_id','artistReport')">Account Id</th>
+                                    <th ng-click="sortByNumericProperty('artist_id','artistReport')">Artist Id</th>
+                                    <th ng-click="sortByProperty('artist_name','artistReport')">Artist Name</th>
+                                    <th ng-click="sortByProperty('prominent_genre','artistReport')">Primary Genre</th>
+                                    <th ng-click="sortByNumericProperty('number_of_albums','artistReport')">Number of Albums</th>
+                                    <th ng-click="sortByNumericProperty('number_of_songs','artistReport')">Number of songs</th>
+                                    <th ng-click="sortByProperty('followers','artistReport')">Followers</th>
                                     <th>Average Songs/Album</th>
-                                    <th ng-click="sortByProperty('latest_album_release')">Latest Album Release</th>
+                                    <th ng-click="sortByProperty('latest_album_release', 'artistReport')">Latest Album Release</th>
                                 </tr>
                                 <tr ng-repeat="artist in artistReport">
                                     <td class="text_right">{{artist.account_id}}</td>

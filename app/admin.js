@@ -409,8 +409,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
@@ -426,8 +431,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
@@ -448,8 +458,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (a[property] || 0) - (b[property] || 0));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (a[property] || 0) - (b[property] || 0));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (a[property] || 0) - (b[property] || 0));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (a[property] || 0) - (b[property] || 0));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (a[property] || 0) - (b[property] || 0));
@@ -465,8 +480,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (b[property] || 0) - (a[property] || 0));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (b[property] || 0) - (a[property] || 0));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (b[property] || 0) - (a[property] || 0));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (b[property] || 0) - (a[property] || 0));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (b[property] || 0) - (a[property] || 0));
