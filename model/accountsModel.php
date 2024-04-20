@@ -241,7 +241,9 @@ class accountsModel{
     function GetArtistId(){
         $db = new db();
         $query = $db->query("SELECT `artist_id` FROM artists WHERE `account_id` = ?", $this->account_id)->fetchSingle();
-        $this->artist_id = $query['artist_id'];
+        if(isset($query['artist_id'])){
+            $this->artist_id = $query['artist_id'];
+        }
         $db->close();
     }
     // get admin id

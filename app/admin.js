@@ -44,6 +44,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 "Authorization": localStorage.getItem("token")
             }
         }).then(function (response) {
+            console.log(response.data);
             $scope.userList = response.data;
             $scope.userListObject = response.data;
             $scope.userList.forEach(user => {
@@ -64,9 +65,10 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 "Authorization": localStorage.getItem("token")
             }
         }).then(function (response) {
-            $scope.userList = response.data;
-            $scope.userListObject = response.data;
-            $scope.userList.forEach(user => {
+            console.log(response.data);
+            $scope.userReport = response.data;
+            $scope.userReportObject = response.data;
+            $scope.userReport.forEach(user => {
                 if(!$scope.regions.includes(user.region)){
                     $scope.regions.push(user.region);
                 }
@@ -77,8 +79,8 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
     $scope.userFilter = [];
 
     $scope.filterUserList = ()=>{
-        $scope.userList = [];
-        $scope.userListObject.forEach(user => {
+        $scope.userReport = [];
+        $scope.userReportObject.forEach(user => {
             const check = [1, 1, 1, 1, 1];
             let canAdd = [1, 1, 1, 1, 1];
             if(!isEmptyOrNull($scope.userFilter.role) && user.user_role != $scope.userFilter.role){
@@ -108,7 +110,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 }
             }
             if(check.toString() == canAdd.toString()){
-                $scope.userList.push(user);
+                $scope.userReport.push(user);
             }
         });
     };
@@ -438,6 +440,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
 
     $scope.getAccountInfo();
     $scope.getAccounts();
+    $scope.getAccountsReport();
     $scope.getGenres();
     $scope.getArtists();
     $scope.getSongsReport();

@@ -98,7 +98,7 @@
 
                                     <th></th>
                                 </tr>
-                                <tr ng-repeat="user in userList">
+                                <tr ng-repeat="user in userReport">
                                     <td>{{user.account_id}}</td>
                                     <td>{{user.user_role}}</td>
                                     <td>{{user.fname}}</td>
