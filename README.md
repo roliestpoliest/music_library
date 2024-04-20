@@ -14,14 +14,23 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
   * Rate Songs
   * Rate Albums
   * Listen to music
+  * Login as:
+    * username: bobby
+    * password: 123456
 * Artist
   * Everything under the "User" role plus
   * Upload Songs
   * Create Albums under you artist name
   * Organize songs into albums
+  * Login as:
+    * username: andybird
+    * password: 123456
 * Admin
     * Everithing under the "User" and "Artist" roles plus
     * View Reports
+    * Login as:
+      * username: lucas
+      * password: 123456
 
 # Getting Started
 
@@ -49,7 +58,6 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
   
 * PHP 8.1
 * MySQL 5.7
-* AngularJS
 * moment JS
 * Materialize CSS
 * Google Fonts
@@ -57,10 +65,6 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 # Project Document
 
 ## Types of data that can be added, modified, and edited
-*Songs
-*Playlists
-*Accounts
-*Albums
 
 * Albums
 * Songs
@@ -75,81 +79,18 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 
 ## The semantic constraints which are implemented as triggers
 
-1. Update monthly play count after a song is played
+1. Notify Artist when a user starts following
+           INSERT INTO notifications (account_id, message)
+           VALUES
+           ((SELECT ar.account_id FROM artists AS ar 
+           WHERE ar.artist_id = NEW.artist_id),
+           
+           (SELECT
+           CONCAT(ac.fname, ' ', ac.lname, ' has started following you!')
+           FROM accounts AS ac
+           WHERE ac.account_id = NEW.account_id))
 
-        CREATE TRIGGER Calc_Recent_Ratings
-          AFTER INSERT ON song_play_count FOR EACH ROW 
-          BEGIN
-          UPDATE songs c 
-          SET `listens` = (
-          SELECT COUNT(1) FROM `song_play_count` AS s
-              WHERE s.event_time <= LAST_DAY(CURRENT_TIMESTAMP)
-              AND s.event_time >= CAST(DATE_FORMAT(NOW() ,'%Y-%m-01') as DATE)
-              AND s.song_id = NEW.song_id)
-          WHERE c.song_id = NEW.song_id
-          END;
-
-2. Create Artitst relationship when new account is created with an Artist role
-
-          CREATE TRIGGER `add_account_to_artists`
-          AFTER INSERT ON `accounts`
-          FOR EACH ROW
-          BEGIN
-              IF NEW.user_role = 'Artist' THEN
-                  INSERT INTO `artists` (`account_id`)
-                  VALUES (NEW.account_id);
-              END IF;
-          END
-
-3. Create Admin relationship when new account is created with an Admin role
-
-          CREATE TRIGGER `add_account_to_admins`
-          AFTER INSERT ON `accounts`
-          FOR EACH ROW
-          BEGIN
-              IF NEW.user_role = 'Admin' THEN
-                  INSERT INTO `admins` (`account_id`)
-                  VALUES (NEW.account_id);
-              END IF;
-          END
-
-4. Automatically increse the number of follower when a user follows an artist
-
-          CREATE TRIGGER increase_follower_count
-              AFTER INSERT ON followed_artists FOR EACH ROW
-              BEGIN
-              UPDATE artists a
-              SET a.followers = a.followers + 1
-              WHERE a.artist_id = NEW.artist_id
-              END;
-
-5. Automatically decrese the number of follower when a user follows an artist
-
-          CREATE TRIGGER reduce_follower_count
-              AFTER DELETE ON followed_artists FOR EACH ROW
-              BEGIN
-              UPDATE artists a
-              SET a.followers = a.followers - 1
-              WHERE a.artist_id = OLD.artist_id
-              END;
-
-6. Notify Artist when a user starts following
-
-            CREATE TRIGGER new_follower_notification
-            AFTER INSERT ON followed_artists FOR EACH ROW
-                BEGIN
-                    INSERT INTO notifications (account_id, message)
-                    VALUES
-                    ((SELECT ar.account_id FROM artists AS ar 
-                    WHERE ar.artist_id = NEW.artist_id),
-
-                    (SELECT
-                    CONCAT(ac.fname, ' ', ac.lname, ' has started following you!')
-                    FROM accounts AS ac
-                    WHERE ac.account_id = NEW.account_id))
-                END;
-
-7. Send welcome message after creating account
+2. Send welcome message after creating account
             CREATE TRIGGER send_welcome_message
             AFTER INSERT ON accounts FOR EACH ROW
                 BEGIN
@@ -158,37 +99,20 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
                 (NEW.account_id, ' Welcome to our music library!')
                 END;
 
-8. Reset notification counter
-        CREATE TRIGGER reset_notification_counter
-            AFTER UPDATE ON notifications FOR EACH ROW
-            BEGIN
-                UPDATE accounts SET new_notifications = 0
-                WHERE account_id = OLD.account_id
-            END;
 
-9. increase notification counter
-        CREATE TRIGGER increase_notification_counter
-            AFTER UPDATE ON notifications FOR EACH ROW
-            BEGIN
-                UPDATE accounts SET new_notifications = new_notifications + 1
-                WHERE account_id = (SELECT ar.account_id FROM artists AS ar 
-                    WHERE ar.artist_id = NEW.artist_id)
-            END;
-
-10. when a song reaches 10 plays send notification to artist
-
-            BEGIN
-                IF OLD.listens = 10 THEN
-                    INSERT INTO notifications (account_id, message)
-                    VALUES (
-                        (SELECT ar.account_id FROM artists AS ar WHERE ar.artist_id = OLD.artist_id),
-                        CONCAT('Your song ', OLD.title, ' just reached 10 listens!')
-                    );
-                    UPDATE accounts SET new_notifications = new_notifications + 1
-            WHERE account_id = (SELECT ar.account_id FROM artists AS ar 
-            WHERE ar.artist_id = OLD.artist_id);
-                END IF;
-            END
+3. when a song reaches 10 plays send notification to artist
+             BEGIN
+                 IF OLD.listens = 10 THEN
+                     INSERT INTO notifications (account_id, message)
+                     VALUES (
+                         (SELECT ar.account_id FROM artists AS ar WHERE ar.artist_id = OLD.artist_id),
+                         CONCAT('Your song ', OLD.title, ' just reached 10 listens!')
+                     );
+                     UPDATE accounts SET new_notifications = new_notifications + 1
+               WHERE account_id = (SELECT ar.account_id FROM artists AS ar 
+               WHERE ar.artist_id = OLD.artist_id);
+                 END IF;
+             END
 
 ## Types of queries in your application
 
@@ -205,6 +129,8 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 * Songs Report wiith filters  _available for Admin Role_
 * Album Reports with filters _available for Admin Role_
 
-# Contribute
+# Contributors
 
-This is a private project and only members of the team can contribute.
+Carolyn Heron
+Madison Emshousen
+Larry Nguyen
