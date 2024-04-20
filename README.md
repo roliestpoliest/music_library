@@ -64,7 +64,7 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 
 # Project Document
 
-## Types of data that can be added, modified, and edited
+## Types of data that can be added, modified, and deleted
 
 * Albums
 * Songs
