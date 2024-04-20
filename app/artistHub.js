@@ -169,7 +169,6 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             file.result = response.data;
             $scope.albumCardView = false;
             $scope.getAlbums();
-            alert("Album successfully added!")
           });
         }, function (response) {
           if (response.status > 0)
@@ -200,7 +199,6 @@ app.controller('ArtistHubController', ['$scope', '$http', 'Upload', '$timeout', 
             file.result = response.data;
             $scope.songCardView = false;
             $scope.getArtistSongs();
-            alert("Song successfully added!")
           });
         }, function (response) {
           if (response.status > 0)
