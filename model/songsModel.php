@@ -92,6 +92,10 @@ class songsModel{
         s.genre_id,
         (SELECT COUNT(1) FROM songs_in_album as sia WHERE sia.song_id = s.song_id ) AS number_of_albums,
         (SELECT COUNT(1) FROM songs_in_playlist AS sip WHERE sip.song_id = s.song_id ) AS number_of_playlist,
+        (SELECT a.region FROM song_play_count AS sp JOIN accounts AS a ON sp.account_id = a.account_id WHERE sp.song_id = s.song_id 
+        GROUP BY a.region ORDER BY COUNT(sp.account_id) DESC LIMIT 1) AS most_popular_region,
+        (SELECT a.gender FROM song_play_count AS sp JOIN accounts AS a ON sp.account_id = a.account_id WHERE sp.song_id = s.song_id 
+        GROUP BY a.gender ORDER BY COUNT(sp.account_id) DESC LIMIT 1) AS most_popular_gender,
         g.title AS genre
         FROM `songs` AS s
         LEFT JOIN genres AS g ON s.genre_id = g.genre_id

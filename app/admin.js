@@ -153,6 +153,42 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         });
     };
 
+    $scope.artistFilter = [];
+    $scope.filterArtistReport = ()=>{
+        $scope.artistReport = [];
+        $scope.artistReportObject.forEach(artist => {
+            const check = [1,1,1,1];
+            let canAdd = [1,1,1,1]
+            if(!isEmptyOrNull($scope.artistFilter.artist) && $scope.artistFilter.artist != artist.artist_name){
+                canAdd[0] = 0;
+            }
+            if(!isEmptyOrNull($scope.artistFilter.genre) && $scope.artistFilter.genre != artist.prominent_genre){
+                canAdd[1] = 0;
+            }
+            if(!isEmptyOrNull($scope.artistFilter.startDate))
+            {
+                var releaseDate = $scope.toDate(artist.latest_album_release);
+                var filterStartDate = $scope.toDate($scope.artistFilter.startDate);
+                if (releaseDate < filterStartDate) {
+                    canAdd[2] = 0;
+                }
+            
+            }
+            if(!isEmptyOrNull($scope.artistFilter.endDate))
+            {
+                var releaseDate = $scope.toDate(artist.latest_album_release);
+                var filterEndDate = $scope.toDate($scope.artistFilter.endDate);
+                if (releaseDate > filterEndDate) {
+                    canAdd[3] = 0;
+                }
+            }
+        
+            if(check.toString() == canAdd.toString()){
+                $scope.artistReport.push(artist);
+            }
+        });
+    }; 
+
     $scope.albumFilter = [];
     $scope.filterAlbumReport = ()=>{
         $scope.albumReport = [];
@@ -257,6 +293,40 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
         });
     };
 
+
+    $scope.getArtistReports = ()=>{
+        $http({
+            url: "/api/artists.php?artistReport=true",
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": localStorage.getItem("token")
+            }
+        }).then(function (response) {
+            console.log(response.data);
+            var data = response.data;
+            validateResponse(data)
+            $scope.artistReport = data;
+            $scope.artistReportObject = data;
+            $scope.artistFilter = {
+                artists: [],
+                genres: []
+            }
+            $scope.artistReport.forEach(artist => {
+                if(!$scope.artistFilter.artists.includes(artist.artist_name)){
+                    $scope.artistFilter.artists.push(artist.artist_name);
+                }
+                if(!$scope.artistFilter.genres.includes(artist.prominent_genre)){
+                    $scope.artistFilter.genres.push(artist.prominent_genre);
+                }                                                        
+
+            });
+        },
+        function errorCallback(response) {
+            validateStatusCode(response, true);
+        });
+    };
+
     $scope.getSongsReport = ()=>{
         $http({
             url: "/api/songs.php?songReport=true",
@@ -266,6 +336,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 "Authorization": localStorage.getItem("token")
             }
         }).then(function (response) {
+            console.log(response.data);
             var data = response.data;
             validateResponse(data)
             $scope.songsReport = data;
@@ -293,6 +364,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
                 "Authorization": localStorage.getItem("token")
             }
         }).then(function (response) {
+            console.log(response.data);
             var data = response.data;
             validateResponse(data)
             $scope.albumReport = data;
@@ -337,8 +409,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (a[property] || "").localeCompare(b[property] || ""));
@@ -354,8 +431,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (b[property] || "").localeCompare(a[property] || ""));
@@ -376,8 +458,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (a[property] || 0) - (b[property] || 0));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (a[property] || 0) - (b[property] || 0));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (a[property] || 0) - (b[property] || 0));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (a[property] || 0) - (b[property] || 0));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (a[property] || 0) - (b[property] || 0));
@@ -393,8 +480,13 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
             switch (reportName) {
                 case 'userList':
                     $scope.userList.sort((a, b) => (b[property] || 0) - (a[property] || 0));
+                case 'userReport':
+                    $scope.userReport.sort((a, b) => (b[property] || 0) - (a[property] || 0));
                 case 'artistList':
                     $scope.artistList.sort((a, b) => (b[property] || 0) - (a[property] || 0));
+                    break;
+                case 'artistReport':
+                    $scope.artistReport.sort((a, b) => (b[property] || 0) - (a[property] || 0));
                     break;
                 case 'albumReport':
                     $scope.albumReport.sort((a, b) => (b[property] || 0) - (a[property] || 0));
@@ -443,6 +535,7 @@ app.controller('AdminController', ['$scope', '$http', 'Upload', '$timeout', func
     $scope.getAccountsReport();
     $scope.getGenres();
     $scope.getArtists();
+    $scope.getArtistReports();
     $scope.getSongsReport();
     $scope.getAlbumsReport();
 }]);

@@ -86,15 +86,13 @@
                                     <th ng-click="sortByProperty('fname','userList')">First Name</th>
                                     <th ng-click="sortByProperty('lname','userList')">Last Name</th>
                                     <th ng-click="sortByProperty('username','userList')">Username</th>
-                                    <th ng-click="sortByProperty('bio','userList')">Bio</th>
                                     <th ng-click="sortByProperty('gender','userList')">Gender</th>
                                     <th ng-click="sortByProperty('DOB','userList')">DOB</th>
                                     <th ng-click="sortByProperty('region','userList')">Region</th>
+                                    <th ng-click="sortByProperty('most_played_song','userList')">Most Played Song</th>
+                                    <th ng-click="sortByProperty('most_prominent_genre','userList')">Most Played Genre</th>
                                     <th ng-click="sortByProperty('email','userList')">email</th>
                                     <th ng-click="sortByProperty('member_since','userList')">Member Since</th>
-                                    <th ng-click="sortByNumericProperty('number_of_artistsFollowed','userList')"># of artists followed</th>
-                                    <th ng-click="sortByNumericProperty('number_of_playlist','userList')"># of playlist</th>
-                                    <th ng-click="sortByNumericProperty('number_of_playcount','userList')"># of songs played</th>
 
                                     <th></th>
                                 </tr>
@@ -104,15 +102,13 @@
                                     <td>{{user.fname}}</td>
                                     <td>{{user.lname}}</td>
                                     <td>{{user.username}}</td>
-                                    <td>{{user.bio}}</td>
                                     <td>{{user.gender}}</td>
                                     <td>{{user.DOB | date: 'MMM dd, yyyy'}}</td>
                                     <td>{{user.region}}</td>
+                                    <td>{{user.most_played_song ? user.most_played_song : 'N/A'}}</td>
+                                    <td>{{user.most_prominent_genre ? user.most_prominent_genre : 'N/A'}}</td>
                                     <td>{{user.email}}</td>
                                     <td>{{toDate(user.member_since) | date: 'MMM dd, yyyy'}}</td>
-                                    <td>{{user.number_of_artistsFollowed}}</td>
-                                    <td>{{user.number_of_playlist}}</td>
-                                    <td>{{user.number_of_playcount}}</td>
                                     <td>
                                         <span class="deletePlaylistButton" ng-click="showDeleteUserWarning(user);">Delete</span>
                                     </td>
@@ -123,21 +119,51 @@
                         <!-- Arist Report -->
                         <div ng-show="artistReportView">
                             <h3>Artist Report</h3>
+                            <h6>Report Filters</h6>
+                            <label for="artistFilter_artist">Artist</label>
+                            <select id="artistFilter_artist" 
+                                class="browser-default reportfilterDropdown"
+                                ng-model="artistFilter.artist"
+                                ng-options='a as a for a in artistFilter.artists'
+                                ng-init="a = artistFilter.artist"
+                                ng-change="filterArtistReport();">
+                                <option value="">Select Artist</option>
+                            </select>
+                            <select id="artistFilter_genre" 
+                                class="browser-default reportfilterDropdown"
+                                ng-model="artistFilter.genre"
+                                ng-options='a as a for a in artistFilter.genres'
+                                ng-init="a = artistFilter.genre"
+                                ng-change="filterArtistReport();">
+                                <option value="">Select Genre</option>
+                            </select>
+                            <form>
+                            <div>
+                                <label for="artistFilter_startDate">Start Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="artistFilter.startDate" ng-change="filterArtistReport();" id="artistFilter_startDate">
+                            </div>
+                            <div>
+                                <label for="artistFilter_endDate">End Date</label>
+                                <input class="datepicker" autocomplete="off" type="text" ng-model="artistFilter.endDate" ng-change="filterArtistReport();" id="artistFilter_endDate">
+                            </div>
+                            </form>
                             <table class="table-border">
                                 <tr>
-                                    <th ng-click="sortByNumericProperty('account_id','artistList')">Account Id</th>
-                                    <th ng-click="sortByNumericProperty('artist_id','artistList')">Artist Id</th>
-                                    <th ng-click="sortByProperty('artist_name','artistList')">Artist Name</th>
-                                    <th ng-click="sortByNumericProperty('number_of_albums','artistList')">Number of Albums</th>
-                                    <th ng-click="sortByNumericProperty('number_of_songs','artistList')">Number of songs</th>
-                                    <th ng-click="sortByProperty('followers','artistList')">Followers</th>
+                                    <th ng-click="sortByNumericProperty('account_id','artistReport')">Account Id</th>
+                                    <th ng-click="sortByNumericProperty('artist_id','artistReport')">Artist Id</th>
+                                    <th ng-click="sortByProperty('artist_name','artistReport')">Artist Name</th>
+                                    <th ng-click="sortByProperty('prominent_genre','artistReport')">Primary Genre</th>
+                                    <th ng-click="sortByNumericProperty('number_of_albums','artistReport')">Number of Albums</th>
+                                    <th ng-click="sortByNumericProperty('number_of_songs','artistReport')">Number of songs</th>
+                                    <th ng-click="sortByProperty('followers','artistReport')">Followers</th>
                                     <th>Average Songs/Album</th>
-                                    <th ng-click="sortByProperty('latest_album_release')">Latest Album Release</th>
+                                    <th ng-click="sortByProperty('latest_album_release', 'artistReport')">Latest Album Release</th>
                                 </tr>
-                                <tr ng-repeat="artist in artistList">
+                                <tr ng-repeat="artist in artistReport">
                                     <td class="text_right">{{artist.account_id}}</td>
                                     <td class="text_right">{{artist.artist_id}}</td>
                                     <td>{{artist.artist_name}}</td>
+                                    <td>{{artist.prominent_genre  ? artist.prominent_genre : 'N/A'}}</td>
                                     <td class="text_center">{{artist.number_of_albums}}</td>
                                     <td class="text_center">{{artist.number_of_songs}}</td>
                                     <td class="text_center">{{artist.followers}}</td>
@@ -199,9 +225,10 @@
                                     <th ng-click="sortByProperty('artist_name','songsReport')">Artist</th>
                                     <th ng-click="sortByProperty('genre','songsReport')">Genre</th>
                                     <th ng-click="sortByProperty('release_date','songsReport')">Release Date</th>
-                                    <th ng-click="sortByNumericProperty('number_of_albums','songsReport')">Album Count</th>
                                     <th ng-click="sortByNumericProperty('number_of_playlist','songsReport')">Playlist Count</th>
                                     <th ng-click="sortByNumericProperty('listens','songsReport')">Listens</th>
+                                    <th ng-click="sortByProperty('most_popular_region','songsReport')">Most Popular Region</th>
+                                    <th ng-click="sortByProperty('most_popular_gender','songsReport')">Gender Preferences</th>
                                     <th ng-click="sortByNumericProperty('general_rating','songsReport')">Ratings</th>
                                 </tr>
                                 <tr ng-repeat="song in songsReport">
@@ -210,9 +237,10 @@
                                     <td>{{song.artist_name}}</td>
                                     <td class="text_left">{{song.genre}}</td>
                                     <td>{{toDate(song.release_date)| date: 'MMM dd, yyyy'}}</td>
-                                    <td class="text_right">{{song.number_of_albums}}</td>
                                     <td class="text_right">{{song.number_of_playlist | number:0}}</td>
                                     <td class="text_right">{{song.listens}}</td>
+                                    <td class="text_right">{{song.most_popular_region}}</td>
+                                    <td class="text_right">{{song.most_popular_gender}}</td>
                                     <td class="text_right">
                                         <i class="tiny material-icons" ng-if="song.general_rating >= 1">star</i>
                                         <i class="tiny material-icons" ng-if="song.general_rating < 1">star_border</i>

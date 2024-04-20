@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Apr 20, 2024 at 04:36 AM
+-- Generation Time: Apr 20, 2024 at 11:50 PM
 -- Server version: 5.7.39
 -- PHP Version: 8.2.0
 
@@ -886,6 +886,7 @@ CREATE TABLE `token_storage` (
 
 INSERT INTO `token_storage` (`account_id`, `token`, `createdDate`) VALUES
 (1, '3837b93dfc9f35387e136cd21e3a357e', '1713327568'),
+(2, '89201a04be9fc403c0fad09fd805e616', '1713656393'),
 (4, '4a25c66a46b4cf2209547c9a981e652e', '1711175722'),
 (24, '5e25005c6c7437fe9e067da3be0941ed', '1713337035'),
 (25, '16697104f2f56d0c288cf1aaa09ffbbe', '1713327142'),

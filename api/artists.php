@@ -19,6 +19,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $result = $model->GetArtistByArtistId($_GET['artist_id']);
     }elseif (isset($_GET['getArtistId'])){
         $result = $model->GetArtistId($canGo->account_id);
+    }elseif (isset($_GET['artistReport'])){
+        $result = $model->GetArtistReport();
     }else{
         $result = $model->GetAllArtist();
     }

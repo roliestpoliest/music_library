@@ -12,7 +12,7 @@
             <div class="sidebarButton" ng-click="getNotifications();">
                 <i class="tiny material-icons">playlist_play</i> 
                 Notifications 
-                <span class="indicatorBadge ng-if="user_role.indicator">{{user_role.indicator}}</span>
+                <span class="indicatorBadge ng-if="user_role.indicator>{{user_role.indicator}}</span>
             </div>
             <div class="sidebarButton" ng-click="logOff();"><i class="tiny material-icons red-text">highlight_off</i> Log out</div>
         </div>
