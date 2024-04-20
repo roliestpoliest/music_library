@@ -46,10 +46,15 @@ class artistsModel{
         (SELECT COUNT(1) FROM albums AS al WHERE al.artist_id = ar.artist_id) AS number_of_albums,
         (SELECT al2.release_date FROM albums AS al2 WHERE al2.artist_id = ar.artist_id ORDER BY al2.release_date DESC LIMIT 1 ) AS latest_album_release,
         (SELECT al3.title FROM albums AS al3 WHERE al3.artist_id = ar.artist_id ORDER BY al3.release_date DESC LIMIT 1 ) AS latest_album_title,
-        (SELECT g.title FROM songs s JOIN artists a ON s.artist_id = ar.artist_id JOIN genres g ON s.genre_id = g.genre_id WHERE a.artist_id = ar.artist_id GROUP BY g.title ORDER BY COUNT(*) DESC LIMIT 1) AS prominent_genre
+        (SELECT g.title
+        FROM genres AS g
+        LEFT JOIN songs AS s ON s.genre_id = g.genre_id
+        WHERE s.artist_id = ar.artist_id
+        GROUP BY g.genre_id ORDER BY COUNT(g.genre_id) LIMIT 1) AS prominent_genre
+        -- (SELECT g.title FROM songs s JOIN artists a ON a.artist_id = ar.artist_id JOIN genres g ON s.genre_id = g.genre_id WHERE a.artist_id = ar.artist_id GROUP BY g.title ORDER BY COUNT(*) DESC LIMIT 1) AS prominent_genre
                 FROM `artists` AS ar
                 LEFT JOIN accounts AS ac ON ar.account_id = ac.account_id
-                ORDER BY artist_name;")->fetchAll();
+                ORDER BY artist_name;;")->fetchAll();
         $db->close();
         return $query;
     }
