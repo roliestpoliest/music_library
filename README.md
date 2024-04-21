@@ -42,7 +42,7 @@ Users are clasified under 3 roles: User, Artist, Admin. Each role has its privil
 ## Installation process
 
 1. Upload Repository to the public root of the server. There is no need to compile.
-2. Use the provided SQL dump to create the database
+2. Use the provided SQL dump of the populated database which is located in SQL/music_library.sql
 3. Change the Database credentials in the file /model/db.php to the new MySQL credentials on your server
 ```
 public function __construct() {
